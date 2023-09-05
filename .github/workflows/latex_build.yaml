@@ -9,16 +9,14 @@ jobs:
     - name: Set up Git repository
       uses: actions/checkout@v2
 
-    - name: Compile LaTeX
+    - name: Compile LaTeX using Docker
       run: |
-        sudo apt-get -y update
-        sudo apt-get -y install texlive-full
-        pdflatex main.tex
+        docker run --rm -i --user="$(id -u):$(id -g)" --net=none -v "$PWD":/data blang/latex:ctanfull latexmk -pdf main.tex
 
     - name: Push PDF to repository
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
-        git add your_latex_filename.pdf
+        git add updated_notes.pdf
         git commit -m "Add generated PDF" -a
         git push
