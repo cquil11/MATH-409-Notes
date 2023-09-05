@@ -1,0 +1,24 @@
+name: Build LaTeX document
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Set up Git repository
+      uses: actions/checkout@v2
+
+    - name: Compile LaTeX
+      run: |
+        sudo apt-get -y update
+        sudo apt-get -y install texlive-full
+        pdflatex main.tex
+
+    - name: Push PDF to repository
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add your_latex_filename.pdf
+        git commit -m "Add generated PDF" -a
+        git push
