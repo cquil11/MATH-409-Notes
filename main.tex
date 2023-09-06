@@ -20,6 +20,8 @@
 \newcommand{\seq}[2]{(#1_{#2})_{#2 \in \N}}
 \newcommand{\set}[2]{\{ #1 \mid #2 \}}
 \newcommand{\sg}[1]{\langle#1\rangle}
+\newcommand{\mylim}[2]{\lim_{#1 \to #2}}
+\newcommand{\mylimmm}[2]{\lim\limits_{#1 \to #2}}
 \newcommand{\bigslant}[2]{{\raisebox{.2em}{$#1$}\left/\raisebox{-.2em}{$#2$}\right.}}
 \newcommand{\?}{\stackrel{?}{=}}
 \def\checkmark{\tikz\fill[scale=0.4](0,.35) -- (.25,0) -- (1,.7) -- (.25,.15) -- cycle;}
@@ -364,6 +366,71 @@
             \end{itemize}
         \end{itemize}
     \end{proof}
+\end{itemize}
+
+\subsection*{Comparison Results}
+
+\begin{itemize}
+    \item \textbf{Lemma}. Let $\seq{x}{n}$ and $\seq{y}{n}$ be two convergent sequences such that there exists $N_0 \in \N$ such that
+    $$x_n \leq y_n \ \forall n \geq N_0.$$
+    Then
+    $$\lim\limits_{n \to \infty} x_n \leq \lim\limits_{n \to \infty} y_n.$$
+    \begin{proof}
+        Let $x := \mylim{n}{\infty} x_n, y := \mylim{n}{\infty}$. For the sake of contradiction, assume that $y < x$. Because $\mylim{n}{\infty} x_n = x$ and $\mylim{n}{\infty} y_n = y$, we have that for $\varepsilon = \nicefrac{(x - y)}{4}$, there exists some $N \in \N$ such that
+        $$|x_n - x| \leq \varepsilon \quad \text{and} \quad |y_n - y| \leq \varepsilon \ \forall n \geq N.$$
+        Note that
+        \begin{alignat*}{2}
+            |x_n - x| &\leq \varepsilon &&\implies x \leq x_n + \varepsilon \\
+            |y_n - y| &\leq\varepsilon && \implies y \geq y_n - \varepsilon.
+        \end{alignat*}
+        This means that for $n \geq \max\{N_0, N\}$, we have
+        \begin{align*}
+            y_n \leq y + \varepsilon &= y + \frac{x - y}{4} \\
+            &< \underbrace{y + \frac{x - y}{2}}_{(x + y)/2} \\
+            &= x - \frac{x - y}{2} \\
+            &\leq x - \frac{x - y}{4} \\
+            &= x - \varepsilon < x_n
+        \end{align*}
+        which implies that $y_n < x_n$ which is a contradiction.
+    \end{proof}
+    \item \textbf{Theorem (Squeeze)}. Let $\seq{x}{n}$, $\seq{y}{n}$, $\seq{z}{n}$ be sequences such that
+    \begin{itemize}[label=\smallblacksquare]
+        \item Sequences $\seq{x}{n}$ and $\seq{z}{n}$ are both converging to some limit $L$, and
+        \item There exists some $N_0 \in \N$ such that
+        $$x_n \leq y_n \leq z_n \ \forall n \geq N_0.$$
+        Then $\seq{y}{n}$ is convergent and $\mylim{n}{\infty} = L$.
+    \end{itemize}
+        \begin{proof}
+            Since $\mylim{n}{\infty} x_n = L$ and $\mylim{n}{\infty} z_n = L$, we have that $\forall \varepsilon > 0 \ \exists N(\varepsilon) \in \N$ such that
+            $$|x_n - L| \leq \varepsilon \quad \text{and} \quad |z_n - L| \leq \varepsilon \ \forall n \geq N(\varepsilon).$$
+            Then, consider $N \geq \max\{N(\varepsilon), N_0\}$ and we have
+            \begin{align*}
+                L - \varepsilon \leq x_n \leq y_n \leq z_n \leq L + \varepsilon
+            \end{align*}
+            i.e., $L - \varepsilon \leq y_n \leq L + \varepsilon$ or $|L - y_n| \leq \varepsilon \ \forall n \geq \max\{N(\varepsilon), N_0\} \implies \mylim{n}{\infty} y_n = L$.
+        \end{proof}
+\end{itemize}
+
+\section*{Limit Infimum and Limit Supremum}
+
+\begin{itemize}
+    \item Let $\seq{x}{n}$ be a bounded sequence. Construct a new sequence $y_n = \{x_k \ : \ k \geq n\}$. We want to show two things about this sequence:
+    \begin{enumerate}[label=(\arabic*)]
+        \item $\seq{y}{n}$ is decreasing: \\\\
+        Consider $n < m$, then we have $y_n = \sup\underbrace{\{x_k \ : \ k \geq n\}}_{A}$ and $y_m = \sup\underbrace{\{x_k \ : \ k \geq m\}}_{B}$. It is clear that $B \subset A \implies \sup(B) \leq \sup(A)$ (by an exercise) which altogether implies that $y_m \leq y_n$.
+        \item $\seq{y}{n}$ is bounded below: \\\\
+        Since $\seq{x}{n}$ is bounded below, so is $\seq{y}{n}$.
+    \end{enumerate}
+    \item \textbf{Definition}. Let $\seq{x}{n}$ be a sequence that is bounded above. Then we define the \textbf{limit superior} as
+    $$\limsup_{n \to \infty} x_n = \mylimmm{n}{\infty} \left(\underbrace{\sup\{x_k \ : \ k \geq n\}}_{y_n}\right).$$
+    Similarly, when $\seq{x}{n}$ is bounded above, we define the \textbf{limit inferior} as
+    $$\liminf_{n \to \infty} x_n = \mylimmm{n}{\infty} \left(\underbrace{\inf\{x_k \ : \ k \geq n\}}_{y_n}\right).$$
+    \item \textbf{Example}. Consider the sequence $x_n = (-1)^n$. Then we have
+    \begin{align*}
+        \limsup_{n \to \infty} x_n &= \mylimmm{n}{\infty} \sup\{x_k \ : \ k \geq n\} = 1 \\
+        \liminf_{n \to \infty} x_n &= \mylimmm{n}{\infty} \inf\{x_k \ : \ k \geq n\} = -1.
+    \end{align*}
+    Since $\limsup_{n \to \infty} x_n \neq \liminf_{n \to \infty} x_n$, $\seq{x}{n}$ diverges.
 \end{itemize}
  
 \end{document}
