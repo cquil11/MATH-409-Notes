@@ -16,7 +16,7 @@ jobs:
 
     - name: Convert PDF to HTML using pdf2htmlEX Docker
       run: |
-        docker run --rm -v "$PWD":/pdf bwits/pdf2htmlex pdf2htmlEX --zoom 1.3 main.pdf
+        docker run --rm -v "$PWD":/pdf bwits/pdf2htmlex pdf2htmlEX --zoom 1.3 main.pdf index.html
 
     - name: Setup git
       run: |
