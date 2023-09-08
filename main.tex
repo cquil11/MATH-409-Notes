@@ -431,6 +431,64 @@
         \liminf_{n \to \infty} x_n &= \mylimmm{n}{\infty} \inf\{x_k \ : \ k \geq n\} = -1.
     \end{align*}
     Since $\limsup_{n \to \infty} x_n \neq \liminf_{n \to \infty} x_n$, $\seq{x}{n}$ diverges.
+    \item \textbf{Theorem}. Let $\seq{x}{n}$ be a bounded sequence. The sequence $\seq{x}{n}$ is convergent if and only if
+    $$\limsup_{n \to \infty} x_n = \liminf_{n \to \infty} x_n.$$
+    \begin{proof}
+        Assume that $\seq{x}{n}$ is convergent and let $x := \mylim{x}{\infty} x_n$. Further, denote
+        \begin{align*}
+            z_n &= \inf\{x_k \ : \ k \geq n\} \\
+            z &= \mylim{n}{\infty} z_n = \liminf_{n \to \infty} x_n.
+        \end{align*}
+        (we want to show that $x = z$.)
+        Since $x_n$ converges to $x$, we know that for every $\varepsilon > 0$, there exists some $N_1(\varepsilon) \in \N$ such that
+        $$|x - x_n| \leq \frac{\varepsilon}{2} \ \forall n \geq N_1(\varepsilon)$$
+        and since $z_n$ converges to $z$ we similarly have that there exists some $N_2(\varepsilon) \in \N$ such that
+        $$|z - z_n| \leq \frac{\varepsilon}{4} \ \forall n \geq N_2(\varepsilon).$$
+        Recall that $z_n = \inf\{x_k \ : \ k \geq n\}$. Then, thanks to the characterization of infimums, we know that for every $\varepsilon > 0$ (pick our $\varepsilon = \nicefrac{\varepsilon}{4}$), there exists some $x_{m_\varepsilon} \in \{x_n \ : \ k \geq n\}$ such that
+        $$|x_{m_\varepsilon} - z_n| = x_{m_\varepsilon} - z_n \leq \frac{\varepsilon}{4}$$
+        since $m_\varepsilon \geq n$ and $z_n \leq x_{m_\varepsilon}$. \\\\
+        Now, compute
+        \begin{align*}
+            |x - z| &= |x - x_{m_\varepsilon} + x_{m_\varepsilon} - z_n + z_n - z| \\
+            &\leq \underbrace{|x - x_{m_\varepsilon}|}_{\leq \nicefrac{\varepsilon}{2}} + \underbrace{|x_{m_\varepsilon} - z_n|}_{\leq \nicefrac{\varepsilon}{4}} + \underbrace{|z_n - z|}_{\leq \nicefrac{\varepsilon}{4}} \\
+            &\leq \varepsilon \ \forall m \geq n \geq N_1(\varepsilon).
+        \end{align*}
+        So we proved that $\forall \varepsilon > 0$,
+        \begin{align*}
+            |x - z| &\leq \varepsilon \\
+            \implies x - z &= 0 \\
+            \implies x = z.
+        \end{align*}
+        From a similar argument, $\mylim{n}{\infty} x_n = \limsup_{n \to \infty} x_n = y$, i.e., $x = y \implies y = z$. \\\\
+        The other direction is much simpler. Assume $y = \limsup_{n \to \infty} x_n = \liminf_{n \to \infty} x_n = z$. Then, recall
+        \begin{alignat*}{2}
+            y &\leftarrow y_n &&= \sup\{x_k \ : \ k \geq n\} \\
+            z &\leftarrow z_n &&= \inf\{x_k \ : \ k \geq n\}.
+        \end{alignat*}
+        So, by our assumption we have $z_n \leq x_n \leq y_n$ which by the squeeze theorem implies that $z = y$. Therefore, $x_n \rightarrow y = z$ i.e., $\lim_{n \to \infty} x_n = y = z$.
+    \end{proof}
+\end{itemize}
+
+\section*{Subsequences}
+
+\begin{itemize}
+    \item \textbf{Definition}. A \textbf{subsequence} $\seq{x}{n}$ is a sequence $\seq{y}{n}$ such that for all $k \in \N$, there exists $n_1, n_2, \ldots, n_k \in \N$ with $n_1 < n_2 < \cdots < n_k$ with $y_k = x_{n_k}$.
+    \item \textbf{Lemma}. Any subsequence $(x_{n_k})$ of a convergent sequence $\seq{x}{k}$ is convergent to the same limit.
+    \item \textbf{Lemma}. Let $(n_k)_{k = 1}^{\infty}$ be a sequence of increasing natural numbers. Then
+    $$n_k \geq k$$.
+    \begin{proof}
+        By induction (left as an exercise).
+    \end{proof}
+    \begin{proof}
+        \textbf{(Of first Lemma)}. For every $\varepsilon > 0$, there exists some $N(\varepsilon) \in \N$ such that
+        $$|x - x_k| \leq \varepsilon \ \forall k \geq N(\varepsilon)$$
+        (because $x_k \rightarrow x$). From previous Lemma (above), $n_k \geq k \geq N(\varepsilon)$ so we have
+        $$|x - \underbrace{x_{n_k}}_{ = y_k}| \leq \varepsilon \ \forall n_k \geq N(\varepsilon).$$
+    \end{proof}
+    \item \textbf{Lemma}. Any subsequence of a bounded sequence is bounded.
+    \begin{proof}
+        Left as an exercise.
+    \end{proof}
 \end{itemize}
  
 \end{document}
