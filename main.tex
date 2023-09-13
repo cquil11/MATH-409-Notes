@@ -5,6 +5,7 @@
 \usepackage{enumerate}
 \usepackage{mathtools}
 \usepackage{nicefrac}
+\usepackage{tikz}
 \usepackage[inline,shortlabels]{enumitem}
 
 \title{Analysis on the Real Line}
@@ -26,6 +27,9 @@
 \newcommand{\?}{\stackrel{?}{=}}
 \def\checkmark{\tikz\fill[scale=0.4](0,.35) -- (.25,0) -- (1,.7) -- (.25,.15) -- cycle;}
 \newcommand{\smallblacksquare}{\rule{0.5em}{0.5em}}
+\newcommand\encircle[1]{%
+  \tikz[baseline=(X.base)] 
+    \node (X) [draw, shape=circle, inner sep=0] {\strut #1};}
 
 \DeclareMathOperator{\ord}{ord}
 \DeclareMathOperator{\norm}{Nm}
@@ -411,7 +415,7 @@
         \end{proof}
 \end{itemize}
 
-\section*{Limit Infimum and Limit Supremum}
+\subsection*{Limit Infimum and Limit Supremum}
 
 \begin{itemize}
     \item Let $\seq{x}{n}$ be a bounded sequence. Construct a new sequence $y_n = \{x_k \ : \ k \geq n\}$. We want to show two things about this sequence:
@@ -469,7 +473,7 @@
     \end{proof}
 \end{itemize}
 
-\section*{Subsequences}
+\subsection*{Subsequences}
 
 \begin{itemize}
     \item \textbf{Definition}. A \textbf{subsequence} $\seq{x}{n}$ is a sequence $\seq{y}{n}$ such that for all $k \in \N$, there exists $n_1, n_2, \ldots, n_k \in \N$ with $n_1 < n_2 < \cdots < n_k$ with $y_k = x_{n_k}$.
@@ -489,6 +493,65 @@
     \begin{proof}
         Left as an exercise.
     \end{proof}
+\end{itemize}
+
+\subsection*{Bolzano-Weirstrass}
+
+\begin{itemize}
+    \item \textbf{Definition}. A \textbf{peak point} of a sequence $\seq{x}{n}$ is a term $x_p$ such that $x_p > q_p$ means $q > p$.
+    \item \textbf{Lemma (Monotone Subsequence)}. Every sequence has a monotone subsequence.
+    \begin{proof}
+        We argue on whether the sequence has either (A) no peak point, (B) finitely many peak points, or (C) infinitely many peak points.
+        \begin{enumerate}[label=(\Alph*)]
+            \item We construct $(x_{n_k})_{k \in \N}$ as follows:
+            \begin{alignat*}{2}
+                n_1 &&= 1, x_{n_1} &= x_1 \text{ is not a peak point (no peak points)} \\
+                && &\implies q>1 \text{ such that } x_q > x_1 > x_{n_1}. \\
+                n_2 &&= q, x_{n_2} &= x_q \\
+                && &\hspace{6pt}\vdots \\
+                && & x_{n_1} \leq x_{n_2} \leq \cdots \text{montonically increasing}
+            \end{alignat*}
+            \item If $x_p$ is the final peak point ($p$ is the largest index where $x_p$ is a peak point), then take $n_1 = p + 1$, $x_{n_1} = x_{p + 1}$. Then proceed as before.
+            \item In this case
+            $$p_1 < p_2 < \cdots < p_n < \cdots.$$
+            By definition, $x_{p_i} > x_{p_j}$ for $j > i$. So we have a decreasing subsequence taking $x_{n_k} = x_{p_k}$.
+        \end{enumerate}
+    \end{proof}
+    \item \textbf{Theorem (Bolzano-Weirstrass)}. Every bounded sequence has a convergent subsequence.
+    \begin{proof}
+        We have that $\seq{x}{n}$ implies that $(x_{n_k})_{k \in \N}$ is monotone. Further, $\seq{x}{n}$ bounded implies that $(x_{n_k})_{k \in \N}$ is bounded. So we have a montone and bounded subsequence which is thus convergent.
+    \end{proof}
+    \item \textbf{Lemma}. Let $\seq{x}{n}$ be a bounded sequence. There is a convergent subsequence $x_{n_k}$ such that
+    $$\lim_{k \to \infty} x_{n_k} = \limsup_{n \to \infty} x_n.$$
+    \begin{proof}
+        We proceed by induction. Let $y = \lim_{n \to \infty} y_n$, $y_n = \sup\{x_k \ : \ k \geq n\}$ such that $y = \limsup_{n \to \infty} y_n$. \\\\
+        $P(k)$: There are $n_1 < n_2 < \cdots < n_k$ and $x_{n_1}, x_{n_2}, \ldots, x_{n_k}$ such that
+        $$\underbrace{y - \frac{1}{i}}_{\rightarrow y} < x_{n_i} < \underbrace{y + \frac{1}{i}}_{\rightarrow y} \ \forall 1 \leq i \leq k$$
+        which implies that $x_{n_i} \rightarrow y$ as well by squeeze theorem. \\\\
+        $P(1)$: There is $n_1 \in \N$ and $x_{n_1}$ such that $y - 1 < x_{n_1} < y + 1$. \\\\
+        We have $y_n \rightarrow y \implies \exists N \in \N$ such that $|y_n - y| \leq \nicefrac{1}{4} \ \forall n \geq N$. Further we have $y_n = \sup\{x_n \ : \ k \geq n\} \implies \exists x_m, m \geq n$ such that $y_n - x_m \leq \nicefrac{1}{4}$ by the characterization of suprema. Then compute
+        \begin{align*}
+            |y - x_n| &= |y - y_n + y_n - x_m| \\
+            &\leq |y - y_n| + |y_n - x_m| \\
+            &\leq \frac{1}{4} + \frac{1}{4} = \frac{1}{2}
+        \end{align*}
+        so $y - \nicefrac{1}{2} \leq x_m \leq y + \nicefrac{1}{2} \implies y - 1 < x_m < y + 1$. \\\\ 
+        Next, assume $P(k)$ is true: There is $n_1 < n_2 < \cdots < n_k$ and $x_{n_1}, x_{n_2}, \ldots, x_{n_k}$ such that
+        $$y - \frac{1}{i} < x_{n_i} < y + \frac{1}{i} \ \forall 1 \leq i \leq k.$$
+        Since $y_n \rightarrow y$, $\exists N \in \N$ such that $|y - y_n| \leq \nicefrac{1}{(4(k + 1))}$, $n \geq \max\{N, n_{k + 1}\} > N_k$. Further, we have $y_n = \sup\{x_k \ : \ k \geq n\}$ which implies there exists some $m \in \N$ with $m \geq n > n_k$ such that
+        $$y_n - x_m < \frac{1}{4(k + 1)}.$$
+        Therefore, we have
+        \begin{alignat*}{2}
+            && |y - y_m| &\leq |y - y_n| + |y_n - x_m| \\
+            && &\leq \frac{1}{4(k + 1)} + \frac{1}{4(k + 1)} \\
+            && &= \frac{1}{2(k + 1)} < \frac{1}{k + 1} \\
+            \implies&& y - \frac{1}{k + 1} &< x_m < y + \frac{1}{k + 1}, n_{k + 1} = m > n_k.
+        \end{alignat*}
+        Therefore, $P(k + 1)$ is true. Thus, we have shown that $P(k)$ is true for all $k \in \N$ and $x_{n_k} \rightarrow y$ by the squeeze theorem.
+    \end{proof}
+    \item \textbf{Remark}. Every bounded sequence $\seq{x}{n}$ has a convergent subsequence $(x_{n_k})_{k \in \N}$ such that
+    $$\lim_{k \to \infty} x_{n_k} = \liminf_{n \to \infty} x_n.$$
+    (Proof is the same).
 \end{itemize}
  
 \end{document}
