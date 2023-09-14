@@ -8,11 +8,19 @@
 \usepackage{tikz}
 \usepackage[inline,shortlabels]{enumitem}
 \usepackage{hyperref}
+\usepackage{imakeidx}
+\usepackage{thmtools}
+\usepackage[framemethod=TikZ]{mdframed} % Needed for the box and shading
+\usepackage{xcolor} % To define custom colors
+
+\definecolor{lightgray}{gray}{0.9}
+
 
 \title{Analysis on the Real Line}
 \author{Cam Quilici - Instructor Dr. Andrea Bonito}
 \date{Fall 2023}
 
+\setlist[itemize,1]{topsep=pt,itemsep=2em,partopsep=0.5em,parsep=0pt}
 
 \newcommand{\Z}{\mathbb{Z}}
 \newcommand{\C}{\mathbb{C}}
@@ -36,6 +44,41 @@
 \DeclareMathOperator{\ord}{ord}
 \DeclareMathOperator{\norm}{Nm}
 
+\makeatletter
+\renewcommand\thmt@listnumwidth{3.3em}
+\makeatother
+
+\newmdtheoremenv[
+    nobreak=true,
+    backgroundcolor=lightgray,
+    skipabove=1em,
+    innertopmargin=1em, % space added at the top
+    innerbottommargin=.5em, % space added at the bottom
+    innerleftmargin=1em, % space added on the left
+    innerrightmargin=1em, % space added on the right
+]{theorem}{Theorem}[subsection]
+\newmdtheoremenv[
+    nobreak=true,
+    skipabove=1em,
+    innertopmargin=1em, % space added at the top
+    innerbottommargin=.5em, % space added at the bottom
+    innerleftmargin=1em, % space added on the left
+    innerrightmargin=1em, % space added on the right
+]{lemma}[theorem]{Lemma} % shares counter with theorem
+\newmdtheoremenv[
+    nobreak=true,
+    skipabove=1em,
+    innertopmargin=1em, % space added at the top
+    innerbottommargin=.5em, % space added at the bottom
+    innerleftmargin=1em, % space added on the left
+    innerrightmargin=1em, % space added on the right
+]{proposition}{Proposition}[subsection] % Proposition environment
+
+\theoremstyle{definition} % This style is typically used for definitions, examples, etc.
+\newtheorem{definition}[subsection]{Definition} % Numbered by subsection
+
+\makeindex
+
 \begin{document}
 
 \maketitle
@@ -53,14 +96,21 @@
 \subsection{Introduction}
 
 \begin{itemize}
-    \item \textbf{Lemma}. The equation $x^2 - 2 = 0$ has no solution in $\Q$.
+    \item[]
+    \begin{lemma}
+        The equation $x^2 - 2 = 0$ has no solution in $\Q$.
+        \index{Lemma \thelemma}
+    \end{lemma}
     \begin{proof}
         By contradiction, assume there exists some $\nicefrac{p}{q} \in \Q$, $p, q \in \N$, $q \neq 0$ such that
         $$\left(\frac{p}{q}\right)^2 - 2 = 0. \quad (*)$$
         Without loss of generality, we can assume that the greatest common divisor between $p$ and $q$ is 1. We rewrite (*) as $p^2 = 2q^2$ which implies that $p^2$ is even. This means that $p$ is even as well.
     \end{proof}
     \item We say that $\N$ is well-ordered, but not $\Q$ since $\Q$ does not have a least element.
-    \item \textbf{Proposition}. There is no natural number such that $0 < n < 1$.
+    \item[]
+    \begin{proposition}
+        There is no natural number such that $0 < n < 1$.
+    \end{proposition}
     \begin{proof}
         Left as an exercise.
     \end{proof}
@@ -144,24 +194,36 @@
 \subsection{Supremum and Infimum}
 
 \begin{itemize}
-    \item \textbf{Definition}. Let $X \subseteq \R$ be non-empty. A number $m \in \R$ (not necessarily in $X$) is a \textbf{lower bound} for $X$ if for all $x \in X$, $m \leq x$. \\\\
+    \item[] 
+    \begin{definition}
+        Let $X \subseteq \R$ be non-empty. A number $m \in \R$ (not necessarily in $X$) is a \textbf{lower bound} for $X$ if for all $x \in X$, $m \leq x$.
+    \end{definition}
     If a set has a lower bound, it is called \textbf{bounded below} (for instance, $\Z$).
     \item \textbf{Remark}. $X$ either has no lower bounds or infinitely many.
-    \item \textbf{Definition}. Let $X \subseteq \R$ be non-empty. A number $s \in \R$ (not necessarily in $X$) is called an \textbf{infimum} of the set $X$ if it is
+    \item[]
+    \begin{definition}
+        Let $X \subseteq \R$ be non-empty. A number $s \in \R$ (not necessarily in $X$) is called an \textbf{infimum} of the set $X$ if it is
     \begin{enumerate}[label=(\arabic*)]
         \item A lower bound and
         \item For all other lower bounds $r_i$ of $X$, $s \geq r_i$.
     \end{enumerate}
     The infimum is hence known as the ``greatest lower bound." We denote ``$r$ is the infimum of $X$" as
     $$r = \inf(X).$$
-    \item \textbf{Definition}. Let $X \subseteq \R$ be non-empty. A number $s \in \R$ (not necessarily in $X$) is called a \textbf{supremum} of the set $X$ if it is
+    \end{definition}
+    \item[]
+    \begin{definition}
+        Let $X \subseteq \R$ be non-empty. A number $s \in \R$ (not necessarily in $X$) is called a \textbf{supremum} of the set $X$ if it is
     \begin{enumerate}[label=(\arabic*)]
         \item An upper bound and
         \item For all other upper bounds $r_i$ of $X$, $s \leq r_i$.
     \end{enumerate}
     The supremum is hence known as the ``least upper bound." We denote ``$r$ is the supremum of $X$" as
     $$r = \sup(X).$$
-    \item \textbf{Theorem}. Let $X \subseteq \R$ be non-empty. $X$ has an upper bound if and only if $X$ has a finite supremum and the finite supremum is unique.
+    \end{definition}
+    \item[]
+    \begin{theorem}
+         Let $X \subseteq \R$ be non-empty. $X$ has an upper bound if and only if $X$ has a finite supremum and the finite supremum is unique.
+    \end{theorem}
     \begin{proof}
         If $X$ has a supremum then that supremum is an upper bound for $X$. Assume that $b$ is an upper bound of $X$. Let $\overline{X} = \set{b + 1 - y}{y \in X}$, then $\overline{X}$ is non empty and $\overline{X} \subset \{x > 0\}$ (there is a 1 so it is surely greater than 0). \\\\
         So, by Axiom 3, there is a real number $a$ such that
@@ -186,13 +248,19 @@
     \begin{proof}
         By way of contradiction, assume that $n \cdot x \leq y \ \forall n \in \N_*$ (for some $x > 0, y \geq 0)$. Then let $S = \set{n \cdot x}{n \in \N_*} \subset \R$. Clearly $S$ is bounded above by $y$ and $S$ is non-empty. This implies that $\sup(S)$ exists and $n \cdot x \leq \sup(s) \ \forall n \in \N_*$. This all implies that $(m + 1) \cdot x \leq \sup(S) \ \forall m \in \N_*$
     \end{proof}
-    \item \textbf{Lemma}. Let $X \subset \R$ be non-empty and bounded above. Then for every $\varepsilon > 0$, there exists some $x_\varepsilon$ such that
+    \item[]
+    \begin{lemma}
+        Let $X \subset \R$ be non-empty and bounded above. Then for every $\varepsilon > 0$, there exists some $x_\varepsilon$ such that
     $$\sup(X) - \varepsilon < x_\varepsilon \leq \sup(X).$$
+    \end{lemma}
     \begin{proof}
         Since $\sup(X)$ is an upper bound for $X$, then we know $x \leq \sup(X) \ \forall x \in X$. This implies the second part of the inequality. \\\\
         To prove the first part of the inequality, assume by way of contradiction that there exists some $\varepsilon_0 > 0$ such that for every $x \in X$, $\sup(x) - \varepsilon_0 \geq x$. However, this is not possible since $\sup(x)$ is an upper bound, i.e., subtract anything from it and it will be less than $x$.
     \end{proof}
-    \item \textbf{Lemma}. Let $x, y \in \R$ with $y > x$, then there exists some $r \in \Q$ such that $x < r < y$.
+    \item[]
+    \begin{lemma}
+        Let $x, y \in \R$ with $y > x$, then there exists some $r \in \Q$ such that $x < r < y$.
+    \end{lemma}
     \begin{proof}
         Take $y - x > 0$, the Archimidean principle guarantees the existence of $n \in \N$ such that
         $$n \cdot (y - x) > 1 \iff y - x > \frac{1}{n}.$$
@@ -223,12 +291,17 @@
 \subsubsection{Absolute Value}
 
 \begin{itemize}
-    \item \textbf{Definition}. For some $x \in \R$, the \textbf{absolute value} function is defined as follows:
+    \item[]
+    \begin{definition}
+        For some $x \in \R$, the \textbf{absolute value} function is defined as follows:
     \[ |x| := \begin{cases}
         -x & \text{, if } x < 0 \\
         x & \text{, if } x \geq 0.
     \end{cases} \]
-    \item \textbf{Proposition}. Let $x, a \in \R$. Then we have
+    \end{definition}
+    \item[]
+    \begin{proposition}
+        Let $x, a \in \R$. Then we have
     \begin{enumerate}[label=(\roman*)]
         \item $|x| = 0 \iff x = 0$.
         \item Let $a > 0$, then
@@ -236,6 +309,7 @@
             \item $|x| < a \iff -a < x < a$
         \end{itemize}
     \end{enumerate}
+    \end{proposition}
 \end{itemize}
 
 \section{Sequences}
@@ -243,9 +317,12 @@
 \subsection{Convergence}
 
 \begin{itemize}
-    \item \textbf{Definition}. A sequence of real numbers $\seq{x}{n}$ is said to be \textbf{convergent} if there exists $x \in \R$ such that $\forall \varepsilon > 0 \ \exists N(\varepsilon) \in \N$ such that
+    \item[]
+    \begin{definition}
+        A sequence of real numbers $\seq{x}{n}$ is said to be \textbf{convergent} if there exists $x \in \R$ such that $\forall \varepsilon > 0 \ \exists N(\varepsilon) \in \N$ such that
     $$|x - x_n| \leq \varepsilon \ \forall n \geq N(\varepsilon).$$
     Furthermore, we write $\lim_{n \to \infty} x_n = x$.
+    \end{definition}
     \item \textbf{Example}. Show that $\lim_{n \to \infty} 1 + \nicefrac{1}{(n + 1)} = 1$. We want
     $$|x - x_n| = \left|1 - \left(1 + \frac{1}{n + 1}\right)\right| = \left|\frac{1}{n + 1}\right| = \frac{1}{n + 1} \leq \varepsilon \ \forall \varepsilon > 0.$$
     Let $\varepsilon > 0$, set $N(\varepsilon) = \lfloor \nicefrac{1}{\varepsilon} \rfloor = N(\varepsilon)$. This holds for
@@ -253,7 +330,10 @@
         |x - x_n| &= \frac{1}{n + 1} \leq \frac{1}{\lfloor \frac{1}{\varepsilon} \rfloor + 1} \\
         &\leq \frac{1}{\frac{1}{\varepsilon}} \leq \varepsilon.
     \end{align*}
-    \item \textbf{Lemma}. A sequence of real numbers has \textbf{at most} one limit.
+    \item[]
+    \begin{lemma}
+        A sequence of real numbers has \textbf{at most} one limit.
+    \end{lemma}
     \begin{proof}
         Assume $l_1, l_2 \in \R$ are two limits. We will show that $l_1 = l_2$ by showing that for all $\varepsilon > 0$, $|l_1 - l_2| \leq \varepsilon$. Let $\varepsilon > 0$.
         \begin{enumerate}[label=(\arabic*)]
@@ -287,7 +367,10 @@
         &\leq \frac{1}{2} + \frac{1}{2} \leq 1
     \end{align*}
     but this is a contradiction, so $\seq{x}{n}$ must be divergent.
-    \item \textbf{Lemma}. Every convergent sequence is bounded.
+    \item[]
+    \begin{lemma}
+        Every convergent sequence is bounded.
+    \end{lemma}
     \begin{proof}
         Let $\seq{x}{n}$ be a convergent sequence, that is, there exists some $x \in \R$ such that for all $\varepsilon > 0$, there exists some $N(\varepsilon) \in \N$ and
         $$|x - x_n| \leq \varepsilon \ \forall n \geq N(\varepsilon).$$
@@ -306,13 +389,19 @@
         \end{align*}
     \end{proof}
     \item \textbf{Recall}. A sequence $(x_n)_{n \in \N}$ convergent $\implies \exists M \in \N$ such that $|x_n| \leq M \ \forall n \in \N$.
-    \item \textbf{Definition}. A sequence $\seq{x}{n}$ is said to be
-    \begin{itemize}
+    \item[]
+    \begin{definition}
+        A sequence $\seq{x}{n}$ is said to be
+    \begin{itemize}[label=\smallblacksquare]
         \item \textbf{Increasing} if $x_m \geq x_n$ when $m \geq n$,
         \item \textbf{Decreasing} if $x_m \leq x_n$ when $m \geq n$,
         \item \textbf{Monotone} if $\seq{x}{n}$ is increasing or decreasing.
     \end{itemize}
-    \item \textbf{Lemma}. Any increasing sequence that is bounded above is convergent.
+    \end{definition}
+    \item[]
+    \begin{lemma}
+        Any increasing sequence that is bounded above is convergent.
+    \end{lemma}
     \begin{proof}
         Let $X = \set{x_n}{n \in \N}$. Then $x_n \leq M, n \in \N \implies X$ bounded above $\implies x = \sup(X)$. \\\\
         We want to show that $\seq{x}{n}$ converges to $x = \sup(X)$. This means (by definition) that for every $\varepsilon > 0$, there exists $N(\varepsilon) \in \N$ such that
@@ -343,12 +432,15 @@
 \subsection{Algebraic Manipulations of Limits}
 
 \begin{itemize}
-    \item \textbf{Lemma}. Let $\seq{x}{n}, \seq{y}{n}$ be convergent sequences. Set $\lim_{n \to \infty} x_n = x, \lim_{n \to \infty} y_n = y$. Three things are true:
+    \item[]
+    \begin{lemma}
+        Let $\seq{x}{n}, \seq{y}{n}$ be convergent sequences. Set $\lim_{n \to \infty} x_n = x, \lim_{n \to \infty} y_n = y$. Three things are true:
     \begin{enumerate}[label=(\arabic*)]
         \item The sequence $(x_n + y_n)_{n \in \N}$ is convergent and $lim_{n \to \infty} (x_n + y_n) = x + y$,
         \item The sequence $(x_n \cdot y_n)_{n \in \N}$ is convergent and $\lim_{n \to \infty} (x_n \cdot y_n) = x \cdot y$,
         \item Assume $x_n \neq 0, y_n \neq 0$, then the sequence $(\nicefrac{y_n}{x_n})_{n \in \N}$ is convergent and $\lim_{n \to \infty} (\nicefrac{y_n}{x_n}) = \nicefrac{y}{x}$.
     \end{enumerate}
+    \end{lemma}
     \begin{proof}
         of (2). We want to show that $\forall \varepsilon > 0 \ \exists N(\varepsilon) \in \N$ such that
         $$|x_ny_n - xy| \leq \varepsilon \ \forall n \geq N(\varepsilon).$$
@@ -358,7 +450,7 @@
             &\leq |x_n - x||y_n| + |x||y_n - y|
         \end{align*}
         by the triangle inequality.
-        \begin{itemize}
+        \begin{itemize}[label=\smallblacksquare]
             \item \textbf{Case 1: $x \neq 0$}. Because $\seq{y}{n}$ is convergent, there exists $N_1 \in \N$ such that $|y_n - y| \leq \nicefrac{\varepsilon}{2 \cdot |x|} \ \forall n \geq N_1$. Also, $\seq{y}{n}$ is bounded, i.e., $|y_n| \leq M \ \forall n \in \N \ \exists M \geq 1$. \\\\
             Because $\seq{x}{n}$ is convergent, there exists some $N_2 \in \N$ such that
             $$|x - x_n| \leq \frac{\varepsilon}{2M} \ \forall n \geq N_2.$$
@@ -381,10 +473,13 @@
 \subsection{Comparison Results}
 
 \begin{itemize}
-    \item \textbf{Lemma}. Let $\seq{x}{n}$ and $\seq{y}{n}$ be two convergent sequences such that there exists $N_0 \in \N$ such that
+    \item[]
+    \begin{lemma}
+        Let $\seq{x}{n}$ and $\seq{y}{n}$ be two convergent sequences such that there exists $N_0 \in \N$ such that
     $$x_n \leq y_n \ \forall n \geq N_0.$$
     Then
     $$\lim\limits_{n \to \infty} x_n \leq \lim\limits_{n \to \infty} y_n.$$
+    \end{lemma}
     \begin{proof}
         Let $x := \mylim{n}{\infty} x_n, y := \mylim{n}{\infty}$. For the sake of contradiction, assume that $y < x$. Because $\mylim{n}{\infty} x_n = x$ and $\mylim{n}{\infty} y_n = y$, we have that for $\varepsilon = \nicefrac{(x - y)}{4}$, there exists some $N \in \N$ such that
         $$|x_n - x| \leq \varepsilon \quad \text{and} \quad |y_n - y| \leq \varepsilon \ \forall n \geq N.$$
@@ -403,13 +498,16 @@
         \end{align*}
         which implies that $y_n < x_n$ which is a contradiction.
     \end{proof}
-    \item \textbf{Theorem (Squeeze)}. Let $\seq{x}{n}$, $\seq{y}{n}$, $\seq{z}{n}$ be sequences such that
+    \item[]
+    \begin{theorem}[Squeeze Theorem]
+        Let $\seq{x}{n}$, $\seq{y}{n}$, $\seq{z}{n}$ be sequences such that
     \begin{itemize}[label=\smallblacksquare]
         \item Sequences $\seq{x}{n}$ and $\seq{z}{n}$ are both converging to some limit $L$, and
         \item There exists some $N_0 \in \N$ such that
         $$x_n \leq y_n \leq z_n \ \forall n \geq N_0.$$
         Then $\seq{y}{n}$ is convergent and $\mylim{n}{\infty} = L$.
     \end{itemize}
+    \end{theorem}
         \begin{proof}
             Since $\mylim{n}{\infty} x_n = L$ and $\mylim{n}{\infty} z_n = L$, we have that $\forall \varepsilon > 0 \ \exists N(\varepsilon) \in \N$ such that
             $$|x_n - L| \leq \varepsilon \quad \text{and} \quad |z_n - L| \leq \varepsilon \ \forall n \geq N(\varepsilon).$$
@@ -431,18 +529,24 @@
         \item $\seq{y}{n}$ is bounded below: \\\\
         Since $\seq{x}{n}$ is bounded below, so is $\seq{y}{n}$.
     \end{enumerate}
-    \item \textbf{Definition}. Let $\seq{x}{n}$ be a sequence that is bounded above. Then we define the \textbf{limit superior} as
+    \item[]
+    \begin{definition}
+        Let $\seq{x}{n}$ be a sequence that is bounded above. Then we define the \textbf{limit superior} as
     $$\limsup_{n \to \infty} x_n = \mylimmm{n}{\infty} \left(\underbrace{\sup\{x_k \ : \ k \geq n\}}_{y_n}\right).$$
     Similarly, when $\seq{x}{n}$ is bounded above, we define the \textbf{limit inferior} as
     $$\liminf_{n \to \infty} x_n = \mylimmm{n}{\infty} \left(\underbrace{\inf\{x_k \ : \ k \geq n\}}_{y_n}\right).$$
+    \end{definition}
     \item \textbf{Example}. Consider the sequence $x_n = (-1)^n$. Then we have
     \begin{align*}
         \limsup_{n \to \infty} x_n &= \mylimmm{n}{\infty} \sup\{x_k \ : \ k \geq n\} = 1 \\
         \liminf_{n \to \infty} x_n &= \mylimmm{n}{\infty} \inf\{x_k \ : \ k \geq n\} = -1.
     \end{align*}
     Since $\limsup_{n \to \infty} x_n \neq \liminf_{n \to \infty} x_n$, $\seq{x}{n}$ diverges.
-    \item \textbf{Theorem}. Let $\seq{x}{n}$ be a bounded sequence. The sequence $\seq{x}{n}$ is convergent if and only if
+    \item[]
+    \begin{theorem}
+        Let $\seq{x}{n}$ be a bounded sequence. The sequence $\seq{x}{n}$ is convergent if and only if
     $$\limsup_{n \to \infty} x_n = \liminf_{n \to \infty} x_n.$$
+    \end{theorem}
     \begin{proof}
         Assume that $\seq{x}{n}$ is convergent and let $x := \mylim{x}{\infty} x_n$. Further, denote
         \begin{align*}
@@ -482,10 +586,22 @@
 \subsection{Subsequences}
 
 \begin{itemize}
-    \item \textbf{Definition}. A \textbf{subsequence} $\seq{x}{n}$ is a sequence $\seq{y}{n}$ such that for all $k \in \N$, there exists $n_1, n_2, \ldots, n_k \in \N$ with $n_1 < n_2 < \cdots < n_k$ with $y_k = x_{n_k}$.
-    \item \textbf{Lemma}. Any subsequence $(x_{n_k})$ of a convergent sequence $\seq{x}{k}$ is convergent to the same limit.
-    \item \textbf{Lemma}. Let $(n_k)_{k = 1}^{\infty}$ be a sequence of increasing natural numbers. Then
-    $$n_k \geq k$$.
+    \item[]
+    \begin{definition}
+        A \textbf{subsequence} $\seq{x}{n}$ is a sequence $\seq{y}{n}$ such that for all $k \in \N$, there exists $n_1, n_2, \ldots, n_k \in \N$ with $n_1 < n_2 < \cdots < n_k$ with $y_k = x_{n_k}$.
+    \end{definition}
+    \item[]
+    \begin{lemma}
+        Any subsequence $(x_{n_k})$ of a convergent sequence $\seq{x}{k}$ is convergent to the same limit.
+    \end{lemma}
+    \begin{proof}
+        Left as an exercise.
+    \end{proof}
+    \item[]
+    \begin{lemma}
+        Let $(n_k)_{k = 1}^{\infty}$ be a sequence of increasing natural numbers. Then
+    $$n_k \geq k.$$
+    \end{lemma}
     \begin{proof}
         By induction (left as an exercise).
     \end{proof}
@@ -495,7 +611,10 @@
         (because $x_k \rightarrow x$). From previous Lemma (above), $n_k \geq k \geq N(\varepsilon)$ so we have
         $$|x - \underbrace{x_{n_k}}_{ = y_k}| \leq \varepsilon \ \forall n_k \geq N(\varepsilon).$$
     \end{proof}
-    \item \textbf{Lemma}. Any subsequence of a bounded sequence is bounded.
+    \item[]
+    \begin{lemma}
+        Any subsequence of a bounded sequence is bounded.
+    \end{lemma}
     \begin{proof}
         Left as an exercise.
     \end{proof}
@@ -504,8 +623,14 @@
 \subsection{Bolzano-Weirstrass}
 
 \begin{itemize}
-    \item \textbf{Definition}. A \textbf{peak point} of a sequence $\seq{x}{n}$ is a term $x_p$ such that $x_p > q_p$ means $q > p$.
-    \item \textbf{Lemma (Monotone Subsequence)}. Every sequence has a monotone subsequence.
+    \item[]
+    \begin{definition}
+        A \textbf{peak point} of a sequence $\seq{x}{n}$ is a term $x_p$ such that $x_p > q_p$ means $q > p$.
+    \end{definition}
+    \item[]
+    \begin{lemma}[Monotone Subsequence]
+        Every sequence has a monotone subsequence.
+    \end{lemma}
     \begin{proof}
         We argue on whether the sequence has either (A) no peak point, (B) finitely many peak points, or (C) infinitely many peak points.
         \begin{enumerate}[label=(\Alph*)]
@@ -523,12 +648,18 @@
             By definition, $x_{p_i} > x_{p_j}$ for $j > i$. So we have a decreasing subsequence taking $x_{n_k} = x_{p_k}$.
         \end{enumerate}
     \end{proof}
-    \item \textbf{Theorem (Bolzano-Weirstrass)}. Every bounded sequence has a convergent subsequence.
+    \item[]
+    \begin{theorem}[Bolzano-Weirstrass]
+        Every bounded sequence has a convergent subsequence.
+    \end{theorem}
     \begin{proof}
         We have that $\seq{x}{n}$ implies that $(x_{n_k})_{k \in \N}$ is monotone. Further, $\seq{x}{n}$ bounded implies that $(x_{n_k})_{k \in \N}$ is bounded. So we have a montone and bounded subsequence which is thus convergent.
     \end{proof}
-    \item \textbf{Lemma}. Let $\seq{x}{n}$ be a bounded sequence. There is a convergent subsequence $x_{n_k}$ such that
+    \item[]
+    \begin{lemma}
+        Let $\seq{x}{n}$ be a bounded sequence. There is a convergent subsequence $x_{n_k}$ such that
     $$\lim_{k \to \infty} x_{n_k} = \limsup_{n \to \infty} x_n.$$
+    \end{lemma}
     \begin{proof}
         We proceed by induction. Let $y = \lim_{n \to \infty} y_n$, $y_n = \sup\{x_k \ : \ k \geq n\}$ such that $y = \limsup_{n \to \infty} y_n$. \\\\
         $P(k)$: There are $n_1 < n_2 < \cdots < n_k$ and $x_{n_1}, x_{n_2}, \ldots, x_{n_k}$ such that
@@ -568,8 +699,11 @@
 \subsection{Cauchy Sequences}
 
 \begin{itemize}
-    \item \textbf{Definition}. A sequence $\seq{x}{n}$ is \textbf{Cauchy} if $\forall \varepsilon > 0, \exists N \in \N$ with
+    \item[] 
+    \begin{definition}
+        A sequence $\seq{x}{n}$ is \textbf{Cauchy} if $\forall \varepsilon > 0, \exists N \in \N$ with
     $$|x_m - x_n| \leq \varepsilon \ \forall m, n \geq N.$$
+    \end{definition}
     \item \textbf{Example}. Take $x_n = \nicefrac{1}{2}(x_{n - 1} + x_{n - 2}), x_0 = 0, x_1 = 1$. Then we compute
     \begin{align*}
         x_n - x_{n - 1} &= \frac{1}{2}(x_{n - 1} + x_{n - 2}) - x_{n - 1} \\
@@ -596,7 +730,10 @@
     Therefore, take $N = \lfloor \ln(\varepsilon) \rfloor + 2$, $n \geq \ln(\varepsilon) + 1$. So, for $m, n \geq N \implies |x_m - x_n| \leq \varepsilon \implies x_n$ Cauchy. In fact, $\lim_{n \to \infty} x_n = \nicefrac{2}{3}$ (details left to reader). \\\\
     \textbf{Warning}: Checking the difference between two subsequent terms of the sequence is not enough to ensure that the sequence is Cauchy. \\\\
     For example, consider $x_n = \sum_{k = 1}^n \nicefrac{1}{k}$ (which is not Cauchy).
-    \item \textbf{Lemma}. A sequence $\seq{x}{n}$ is convergent if and only if $\seq{x}{n}$ is Cauchy.
+    \item[]
+    \begin{lemma}
+        A sequence $\seq{x}{n}$ is convergent if and only if $\seq{x}{n}$ is Cauchy.
+    \end{lemma}
     \begin{proof}
         First, assume that $x_n \rightarrow x$. Therefore, $\forall \varepsilon > 0, \ \exists N \in \N$ such that
         $$|x_n - x| \leq \frac{\varepsilon}{2} \ \forall n \geq N.$$
@@ -644,11 +781,21 @@
 \subsection{Divergent Sequences to $\pm \infty$ (Unbounded Case)}
 
 \begin{itemize}
-    \item \textbf{Definition}. We say that a sequence $\seq{x}{n}$ is \textbf{diverging to} $+\infty$ if $\forall M \in \R, \ \exists N \in \N$ such that
+    \item[]
+    \begin{definition}
+        We say that a sequence $\seq{x}{n}$ is \textbf{diverging to} $+\infty$ if $\forall M \in \R, \ \exists N \in \N$ such that
     $$x_n \geq M \ \forall n \geq M.$$
     Similarly, we say that a sequence is \textbf{diverging to} $-\infty$ if $\forall M \in \R, \ \exists N \in \N$ such that
     $$x_n \leq M \ \forall n \geq N.$$
-    \item \textbf{Lemma}. If $\seq{x}{n}$ is converging to $\pm \infty$, then every subsequence is convering to $\pm \infty$ (respectively).
+    \end{definition}
+    \item[]
+    \begin{lemma}
+        If $\seq{x}{n}$ is converging to $\pm \infty$, then every subsequence is convering to $\pm \infty$ (respectively).
+    \end{lemma}
 \end{itemize}
+
+\newpage
+
+\listoftheorems[]
  
 \end{document}
