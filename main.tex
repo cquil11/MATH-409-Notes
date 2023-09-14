@@ -7,9 +7,10 @@
 \usepackage{nicefrac}
 \usepackage{tikz}
 \usepackage[inline,shortlabels]{enumitem}
+\usepackage{hyperref}
 
 \title{Analysis on the Real Line}
-\author{Cam Quilici}
+\author{Cam Quilici - Instructor Dr. Andrea Bonito}
 \date{Fall 2023}
 
 
@@ -19,6 +20,7 @@
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\seq}[2]{(#1_{#2})_{#2 \in \N}}
+\newcommand{\sseq}[3]{(#1_{#2_#3})_{#3 \in \N}}
 \newcommand{\set}[2]{\{ #1 \mid #2 \}}
 \newcommand{\sg}[1]{\langle#1\rangle}
 \newcommand{\mylim}[2]{\lim_{#1 \to #2}}
@@ -42,9 +44,13 @@
 \noindent
 \rule{\linewidth}{0.4pt}
 
-\section*{The Real Numbers}
+\tableofcontents
 
-\subsection*{Introduction}
+\newpage
+
+\section{The Real Numbers}
+
+\subsection{Introduction}
 
 \begin{itemize}
     \item \textbf{Lemma}. The equation $x^2 - 2 = 0$ has no solution in $\Q$.
@@ -60,7 +66,7 @@
     \end{proof}
 \end{itemize}
 
-\subsubsection*{Axioms of the Real Numbers}
+\subsubsection{Axioms of the Real Numbers}
 
 \begin{itemize}
     \item Binary operations:
@@ -121,7 +127,7 @@
     \end{enumerate}
 \end{itemize}
 
-\subsubsection*{Bounded Intervals}
+\subsubsection{Bounded Intervals}
 
 \begin{itemize}
     \item Given $a < b$, the set $X$ of real numbers is a bounded interval if it is in the form:
@@ -135,7 +141,7 @@
     \end{itemize}
 \end{itemize}
 
-\subsection*{Supremum and Infimum}
+\subsection{Supremum and Infimum}
 
 \begin{itemize}
     \item \textbf{Definition}. Let $X \subseteq \R$ be non-empty. A number $m \in \R$ (not necessarily in $X$) is a \textbf{lower bound} for $X$ if for all $x \in X$, $m \leq x$. \\\\
@@ -214,7 +220,7 @@
     \end{proof}
 \end{itemize}
 
-\subsubsection*{Absolute Value}
+\subsubsection{Absolute Value}
 
 \begin{itemize}
     \item \textbf{Definition}. For some $x \in \R$, the \textbf{absolute value} function is defined as follows:
@@ -232,9 +238,9 @@
     \end{enumerate}
 \end{itemize}
 
-\section*{Sequences}
+\section{Sequences}
 
-\subsection*{Convergence}
+\subsection{Convergence}
 
 \begin{itemize}
     \item \textbf{Definition}. A sequence of real numbers $\seq{x}{n}$ is said to be \textbf{convergent} if there exists $x \in \R$ such that $\forall \varepsilon > 0 \ \exists N(\varepsilon) \in \N$ such that
@@ -334,7 +340,7 @@
     \item \textbf{Corollary}. Let $\seq{x}{n}$ be a monotone sequence. Then $\seq{x}{n}$ is convergent if and only if $\seq{x}{n}$ is bounded.
 \end{itemize}
 
-\subsection*{Algebraic Manipulations of Limits}
+\subsection{Algebraic Manipulations of Limits}
 
 \begin{itemize}
     \item \textbf{Lemma}. Let $\seq{x}{n}, \seq{y}{n}$ be convergent sequences. Set $\lim_{n \to \infty} x_n = x, \lim_{n \to \infty} y_n = y$. Three things are true:
@@ -372,7 +378,7 @@
     \end{proof}
 \end{itemize}
 
-\subsection*{Comparison Results}
+\subsection{Comparison Results}
 
 \begin{itemize}
     \item \textbf{Lemma}. Let $\seq{x}{n}$ and $\seq{y}{n}$ be two convergent sequences such that there exists $N_0 \in \N$ such that
@@ -415,7 +421,7 @@
         \end{proof}
 \end{itemize}
 
-\subsection*{Limit Infimum and Limit Supremum}
+\subsection{Limit Infimum and Limit Supremum}
 
 \begin{itemize}
     \item Let $\seq{x}{n}$ be a bounded sequence. Construct a new sequence $y_n = \{x_k \ : \ k \geq n\}$. We want to show two things about this sequence:
@@ -473,7 +479,7 @@
     \end{proof}
 \end{itemize}
 
-\subsection*{Subsequences}
+\subsection{Subsequences}
 
 \begin{itemize}
     \item \textbf{Definition}. A \textbf{subsequence} $\seq{x}{n}$ is a sequence $\seq{y}{n}$ such that for all $k \in \N$, there exists $n_1, n_2, \ldots, n_k \in \N$ with $n_1 < n_2 < \cdots < n_k$ with $y_k = x_{n_k}$.
@@ -495,7 +501,7 @@
     \end{proof}
 \end{itemize}
 
-\subsection*{Bolzano-Weirstrass}
+\subsection{Bolzano-Weirstrass}
 
 \begin{itemize}
     \item \textbf{Definition}. A \textbf{peak point} of a sequence $\seq{x}{n}$ is a term $x_p$ such that $x_p > q_p$ means $q > p$.
@@ -552,6 +558,97 @@
     \item \textbf{Remark}. Every bounded sequence $\seq{x}{n}$ has a convergent subsequence $(x_{n_k})_{k \in \N}$ such that
     $$\lim_{k \to \infty} x_{n_k} = \liminf_{n \to \infty} x_n.$$
     (Proof is the same).
+    \item \textbf{Result} (forgot to mention last class). If $\seq{x}{n}$ is bounded, then every convergent subsequence $\sseq{x}{n}{k}$ satisfies
+    $$\liminf_{n \to \infty} x_n \leq \lim_{k \to \infty} x_{n_k} \leq \limsup_{n \to \infty} x_n.$$
+    \item \textbf{Example}. Take $x_n = (-1)^n$. We want to find the $\limsup$. \\\\
+    Show that $\seq{x}{n}$ is bounded, i.e., $x_n \leq 1 \implies \limsup_{n \to \infty} \leq 1$. Then, consider the subsequence $(x_{2k}) = (1)_{k \in \N}$. Then show that $(x_{2k}) \rightarrow_{k \to \infty} 1 \implies 1 \leq \limsup_{n \to \infty} x_n$. \\\\
+    Since we have shown that $\limsup_{n \to \infty} x_n \leq 1 \leq \limsup_{n \to \infty} x_n$, we know that $\limsup_{n \to \infty} x_n = 1$.
+\end{itemize}
+
+\subsection{Cauchy Sequences}
+
+\begin{itemize}
+    \item \textbf{Definition}. A sequence $\seq{x}{n}$ is \textbf{Cauchy} if $\forall \varepsilon > 0, \exists N \in \N$ with
+    $$|x_m - x_n| \leq \varepsilon \ \forall m, n \geq N.$$
+    \item \textbf{Example}. Take $x_n = \nicefrac{1}{2}(x_{n - 1} + x_{n - 2}), x_0 = 0, x_1 = 1$. Then we compute
+    \begin{align*}
+        x_n - x_{n - 1} &= \frac{1}{2}(x_{n - 1} + x_{n - 2}) - x_{n - 1} \\
+        &= \frac{1}{2}(x_{n - 2} - x_{n - 1}) \\
+        x_2 - x_1 &= -\frac{1}{2} \implies x_2 = -\frac{1}{2} + 1 = \frac{1}{2} \\
+        x_3 - x_2 &= \frac{1}{2}(1 - \frac{1}{2}) = \left(\frac{1}{2}\right)^2.
+    \end{align*}
+    Then, by induction we can show that
+    $$x_n - x_{n - 1} = \left(-\frac{1}{2}\right)^{n - 1}.$$
+    Now take $m \geq n$ and compute
+    \begin{align*}
+        x_m - x_n &= x_m - x_{m - 1} + x_{m - 1} - x_{m - 2} \pm \cdots \pm x_{n + 1} - x_n \\
+        |x_m - x_n| &\leq \left(\frac{1}{2}\right)^{m - 1} + \left(\frac{1}{2}\right)^{m - 2} + \cdots + \left(\frac{1}{2}\right)^n \\
+        &= \left(\frac{1}{2}\right)^n\left(1 + \frac{1}{2} + \left(\frac{1}{2}\right)^2 + \cdots + \left(\frac{1}{2}\right)^{m - n - 1}\right) \\
+        &= \frac{1 - \left(\frac{1}{2}\right)^{m - 2}}{1 - \frac{1}{2}} \leq 2 \text{ (by geometric sum)} \\
+        &\leq 2^{-n + 1}.
+    \end{align*}
+    Given $\varepsilon > 0$, if we want $2^{-n + 1} \leq \varepsilon$, compute
+    \begin{align*}
+        2^{-n + 1} &\leq \varepsilon \\
+        -n + 1 &\leq \ln(\varepsilon) \\
+        n \geq \ln(\varepsilon) + 1.
+    \end{align*}
+    Therefore, take $N = \lfloor \ln(\varepsilon) \rfloor + 2$, $n \geq \ln(\varepsilon) + 1$. So, for $m, n \geq N \implies |x_m - x_n| \leq \varepsilon \implies x_n$ Cauchy. In fact, $\lim_{n \to \infty} x_n = \nicefrac{2}{3}$ (details left to reader). \\\\
+    \textbf{Warning}: Checking the difference between two subsequent terms of the sequence is not enough to ensure that the sequence is Cauchy. \\\\
+    For example, consider $x_n = \sum_{k = 1}^n \nicefrac{1}{k}$ (which is not Cauchy).
+    \item \textbf{Lemma}. A sequence $\seq{x}{n}$ is convergent if and only if $\seq{x}{n}$ is Cauchy.
+    \begin{proof}
+        First, assume that $x_n \rightarrow x$. Therefore, $\forall \varepsilon > 0, \ \exists N \in \N$ such that
+        $$|x_n - x| \leq \frac{\varepsilon}{2} \ \forall n \geq N.$$
+        Therefore, for $\varepsilon > 0$ and $m, n \geq N$,
+        $$|x - x_m| \leq \frac{\varepsilon}{2} \text{ and } |x - x_n| \leq \frac{\varepsilon}{2}.$$
+        This implies that
+        \begin{align*}
+            |x_m - x_n| &= |x - x_m + x - x_n| \\
+            &\leq |x - x_n| + |x - x_m| \\
+            &\leq \frac{\varepsilon}{2} + \frac{\varepsilon}{2} = \varepsilon \\
+            &\implies x_n \text{ Cauchy}.
+        \end{align*}
+        For the other direction, assume $\seq{x}{n}$ is Cauchy. First, we must prove some claims that will lead us to this proof.
+        \begin{enumerate}[label=(\arabic*)]
+            \item \textbf{Claim}. If $\seq{x}{n}$ is Cauchy, then $\seq{x}{n}$ bounded.
+            \begin{proof}
+                This proof is omitted because it is almost identical to the proof as convergent implies bounded.
+            \end{proof}
+            \item \textbf{Claim}. If $\seq{x}{n}$ has a convergent subsequence $(x_{n_k})_{k \in \N}$, then $\seq{x}{n}$ is convergent (to the same limit).
+            \begin{proof}
+                To see this, assume there exists some $(x_{n_k})$ convergent subsequence and
+                \begin{enumerate}[label=(\roman*)]
+                    \item We know $x_n$ is Cauchy, i,e,, $\forall \varepsilon > 0, \ \exists N_1 \in \N$ such that
+                    $$|x_m - x_n| \leq \frac{\varepsilon}{2} \ \forall m, n \geq N_1.$$
+                    \item There exists an $x \in \N$ such that $\forall \varepsilon > 0, \ \exists N_2 \in \N$ such that
+                    $$|x - x_{n_k}| \leq \frac{\varepsilon}{2} \ \forall k \geq N_2.$$
+                \end{enumerate}
+                Now, we will show that the entire sequence $(x_n)$ converges to $x$. \\\\
+                For every $\varepsilon > 0$, set $N = \max{N_1, N_2}$. Then compute
+                \begin{align*}
+                    |x - x_k| &\leq |x - x_{n_k}| + |x_{n_k} - x_k| \\
+                    &\leq \frac{\varepsilon}{2} + \frac{\varepsilon}{2} \ \forall k \geq N.
+                \end{align*}
+            \end{proof}
+        \end{enumerate}
+        So, we have
+        \begin{alignat*}{2}
+            (x_n) \text{ Cauchy } &&\xRightarrow{\text{(1)}} (x_n) &\text{ bounded } \\
+            &&\xRightarrow{\text{(B.W.)}} (x_n) &\text{ has a convergent subsequence} \\
+            &&\xRightarrow{\text{(2)}} (x_n) &\text{ convergent}.
+        \end{alignat*}
+    \end{proof}
+\end{itemize}
+
+\subsection{Divergent Sequences to $\pm \infty$ (Unbounded Case)}
+
+\begin{itemize}
+    \item \textbf{Definition}. We say that a sequence $\seq{x}{n}$ is \textbf{diverging to} $+\infty$ if $\forall M \in \R, \ \exists N \in \N$ such that
+    $$x_n \geq M \ \forall n \geq M.$$
+    Similarly, we say that a sequence is \textbf{diverging to} $-\infty$ if $\forall M \in \R, \ \exists N \in \N$ such that
+    $$x_n \leq M \ \forall n \geq N.$$
+    \item \textbf{Lemma}. If $\seq{x}{n}$ is converging to $\pm \infty$, then every subsequence is convering to $\pm \infty$ (respectively).
 \end{itemize}
  
 \end{document}
