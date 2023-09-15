@@ -52,7 +52,7 @@
     nobreak=true,
     backgroundcolor=lightgray,
     skipabove=1em,
-    innertopmargin=1em, % space added at the top
+    innertopmargin=.5em, % space added at the top
     innerbottommargin=.5em, % space added at the bottom
     innerleftmargin=1em, % space added on the left
     innerrightmargin=1em, % space added on the right
@@ -60,7 +60,7 @@
 \newmdtheoremenv[
     nobreak=true,
     skipabove=1em,
-    innertopmargin=1em, % space added at the top
+    innertopmargin=.5em, % space added at the top
     innerbottommargin=.5em, % space added at the bottom
     innerleftmargin=1em, % space added on the left
     innerrightmargin=1em, % space added on the right
@@ -68,7 +68,7 @@
 \newmdtheoremenv[
     nobreak=true,
     skipabove=1em,
-    innertopmargin=1em, % space added at the top
+    innertopmargin=.5em, % space added at the top
     innerbottommargin=.5em, % space added at the bottom
     innerleftmargin=1em, % space added on the left
     innerrightmargin=1em, % space added on the right
@@ -792,6 +792,69 @@
     \begin{lemma}
         If $\seq{x}{n}$ is converging to $\pm \infty$, then every subsequence is convering to $\pm \infty$ (respectively).
     \end{lemma}
+\end{itemize}
+
+\section{Continuous Functions}
+
+\begin{itemize}
+    \item[]
+    \begin{definition}
+        Let $a < b$, $x_0 \in (a, b), f:(a, b) \setminus \{x_0\} \mapsto \R$. We say that $f$ \textbf{has a limit} $l$ at $x_0$ if $\forall \varepsilon > 0 \ \exists \delta > 0$ such that, for $x \in (a, b)$
+        $$0 < |x - x_0| \leq \delta \implies |f(x) - l| \leq l.$$
+        If $f$ has a limit $l$, we write
+        $$\lim_{x \to \infty} f(x) = l.$$
+    \end{definition}
+    \item[]
+    \begin{proposition}
+        Let $x_0 \in (a, b), f: (a, b) \setminus \{x_0\} \mapsto \R$. If $f$ has a limit at $x_0$, then the limit must be unique.    
+    \end{proposition}
+    \begin{proof}
+        For the sake of contradiction, assume that $l_1, l_2$ are two limits of $f$ at $x_0$ and further assume that $l_1 < l_2$. Take $\varepsilon = (l_2 - l_1) / 4$. Then we have
+        \begin{itemize}[label=\smallblacksquare]
+            \item $l_1$ a limit means $\exists \delta_1 > 0$ such that
+            $$0 < |x - x_0| \leq \delta_1 \implies |f(x) - l_1| \leq \varepsilon.$$
+            \item $l_2$ a limit means $\exists \delta_2 > 0$ such that
+            $$0 < |x - x_0| \leq \delta_2 \implies |f(x) - l_2| \leq \varepsilon.$$
+        \end{itemize}
+        Then, compute for $0 < |x - x_0| \leq \min\{\delta_1, \delta_2\}$
+        \begin{align*}
+            l_2 - l_1 &\leq |l_2 - f(x)| + |l_1 - f(x)| \\ 
+            &\leq \varepsilon + \varepsilon = 2\varepsilon \\
+            &= \frac{l_2 - l_1}{2} < l_2 - l_1.
+        \end{align*}
+        Of course, this is a contradiction so $l_1 = l_2$.
+    \end{proof}
+    \item \textbf{Example}. Take $f(x) = x^2$. We wish to show that $\lim_{x \to 2} f(x) = 4$. To show, we have $\forall \varepsilon > 0 \ \exists \delta > 0$ such that 
+    $$0 < |x - 2| \leq \delta \implies |x^2 - 4| \leq \varepsilon.$$
+    Then, compute
+    \begin{align*}
+        |x^2 - 4| &= \underbrace{|x - 2|}_{\leq \delta}|x + 2| \\
+        &\leq \delta(|x| + 2) \\
+        &\leq \delta(4 + \delta) \\
+        \implies |x| &\leq 2 + \delta
+    \end{align*}
+    (since $|x| = |x - 2 + 2| \leq |x - 2| + 2$). Now we want $\delta(4 + \delta) \leq \varepsilon$. Further, restrict $\delta \leq 1 \implies \delta^2 \leq \delta$ and $\delta(4 + \delta) \leq 5\delta$. We must now show that $5\delta \leq \varepsilon$. \\\\
+    So, $\forall \varepsilon > 0$, set $\delta = \min\{1, \nicefrac{\varepsilon}{5}\}$. Then
+    $$0 < |x - 2| \leq \delta \implies |x^2 - 4| \leq 5\delta \leq \varepsilon.$$
+    So indeed $\lim_{x \to 2} f(x) = 4$.
+    \item \textbf{Example}. Take $f(x) = (x - 1)/(x - 1), x \neq 1$. This function is not defined at $x = 1$, so take $f: (-2, 2) \setminus \{1\} \mapsto \R$. However, we claim still that $\lim_{x \to \infty} f(x) = 1$. We show $\forall \varepsilon > 0$, set $\delta = 1$. Then we have 
+    $$0 < |x - 1| \leq \delta \implies |f(x) - 1| = |1 - 1| = 0 \leq \varepsilon.$$
+    \item[]
+    \begin{proposition}
+        Let $x_0 \in (a, b), f: (a, b) \setminus \{x_0\} \mapsto \R$. Then $f$ has the limit $l$ at $x_0$ if and only if for every sequence $\seq{z}{n}$, $z_n \in (a, b) \setminus \{x_0\}$ with $z_n \rightarrow x_0$, then the sequence $(f(z_n))_{n \in \N}$ has
+        $$f(z_n) \rightarrow l.$$
+    \end{proposition}
+    \begin{proof}
+        No proof provided in class.
+    \end{proof}
+    \item \textbf{Example}. Take $f(x) = \nicefrac{x}{|x|}, x \neq 0$. How do we show that this does not have a limit at $x = 0$? We could use the epsilon-delta proof technique, but this could be long and tedious. Instead, consider
+    \begin{align*}
+        \text{Let } z_n &= -\frac{1}{n} \rightarrow 0 \\
+        f(z_n) &= -1 \rightarrow -1 \\
+        \text{Let } \widetilde{z_n}& = \frac{1}{n} \rightarrow 0 \\
+        f(\widetilde{z_n}) &= 1 \rightarrow 1
+    \end{align*}
+    $\implies f(x)$ does not have a limit at $x_0$.
 \end{itemize}
 
 \newpage
