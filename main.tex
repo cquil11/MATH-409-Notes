@@ -507,6 +507,7 @@
         $$x_n \leq y_n \leq z_n \ \forall n \geq N_0.$$
         Then $\seq{y}{n}$ is convergent and $\mylim{n}{\infty} = L$.
     \end{itemize}
+    \label{thm:squeeze}
     \end{theorem}
         \begin{proof}
             Since $\mylim{n}{\infty} x_n = L$ and $\mylim{n}{\infty} z_n = L$, we have that $\forall \varepsilon > 0 \ \exists N(\varepsilon) \in \N$ such that
@@ -839,13 +840,27 @@
     So indeed $\lim_{x \to 2} f(x) = 4$.
     \item \textbf{Example}. Take $f(x) = (x - 1)/(x - 1), x \neq 1$. This function is not defined at $x = 1$, so take $f: (-2, 2) \setminus \{1\} \mapsto \R$. However, we claim still that $\lim_{x \to \infty} f(x) = 1$. We show $\forall \varepsilon > 0$, set $\delta = 1$. Then we have 
     $$0 < |x - 1| \leq \delta \implies |f(x) - 1| = |1 - 1| = 0 \leq \varepsilon.$$
+\end{itemize}
+
+\subsection{Sequential Limits}
+
+\begin{itemize}
     \item[]
     \begin{proposition}
         Let $x_0 \in (a, b), f: (a, b) \setminus \{x_0\} \mapsto \R$. Then $f$ has the limit $l$ at $x_0$ if and only if for every sequence $\seq{z}{n}$, $z_n \in (a, b) \setminus \{x_0\}$ with $z_n \rightarrow x_0$, then the sequence $(f(z_n))_{n \in \N}$ has
         $$f(z_n) \rightarrow l.$$
+        \label{prop:seq_lim}
     \end{proposition}
     \begin{proof}
-        No proof provided in class.
+        First, suppose $\lim_{x \to x_0} f(x) = l$ and $\seq{z}{n}, z_n \in (a, b) \setminus \{x_0\}$ with $z_n \rightarrow x_0$. Then, we know the following
+        \begin{enumerate}[label=(\arabic*)]
+            \item $\lim_{x \to x_0} f(x) = l \implies \forall \varepsilon > 0 \ \exists \delta > 0$ such that $0 < |x - x_0| \leq \delta \implies |f(x) - l| \leq \varepsilon$ and
+            \item $z_n \rightarrow x_0 \implies \forall \widetilde{\varepsilon} \ \exists \widetilde{N} \in \N$ such that $|z_n - x_0| \leq \widetilde{\varepsilon} \ \forall n \geq \widetilde{N}$.
+        \end{enumerate}
+        Then, let $\varepsilon > 0$ be given. Set $\widetilde{\varepsilon} = \delta$ so that $n \geq N \implies 0 < |z_n - x_0| \leq \delta$ and then together with (1) this implies $|f(z_n) - l| \leq \varepsilon$. Of course, this means $\lim_{n \to \infty} f(z_n) = l$ by definition. \\\\
+        For the other direction, assume by contradiction that $\lim_{x \to x_0} f(x) \neq l$. By definition, this implies that $\exists \varepsilon_0 \geq 0$ such that $\forall \delta > 0$ and $0 < |x - x_0| \leq \delta \implies |f(x) - l| > \varepsilon_0$. Now, let $n \in \N$ and $z_n \in (x_0 - \nicefrac{1}{n}, x_0 + \nicefrac{1}{n}) \setminus \{x_0\}$. By the Squeeze Theorem (Theorem~\ref{thm:squeeze})
+        $$x_0 - \frac{1}{n} \leq z_n \leq x_0 + \frac{1}{n} \implies z_n \rightarrow x_0.$$
+        By assumption, $\lim_{n \to \infty} f(z_n) = l$, i.e., $\forall \varepsilon > 0 \ \exists n \in \N$ such that $\forall n \geq N$, $|f(z_n) - l| \leq \varepsilon$. Taking $\delta = \nicefrac{1}{n}$, we obtain a contradiction. Therefore, our contradiction assumption must be false and $\lim_{x \to x_0} f(x) = l$.
     \end{proof}
     \item \textbf{Example}. Take $f(x) = \nicefrac{x}{|x|}, x \neq 0$. How do we show that this does not have a limit at $x = 0$? We could use the epsilon-delta proof technique, but this could be long and tedious. Instead, consider
     \begin{align*}
@@ -855,6 +870,41 @@
         f(\widetilde{z_n}) &= 1 \rightarrow 1
     \end{align*}
     $\implies f(x)$ does not have a limit at $x_0$.
+    \item \textbf{Corollary}. Let $x_0 \in (a, b) \setminus \{x_0\}$, $f: (a, b) \mapsto \R$. Assume that every sequence $\seq{z}{n}$, $z_n \in (a, b) \setminus \{x_0\}$, $z_n \rightarrow x_0$, one has $(f(z_n))_{n \in \N}$ is convergent. Then $f$ has a limit at $x_0$.
+    \begin{proof}
+        We will show that for $\seq{v}{n}$, $\seq{w}{n}$ two sequences with $v_n, w_n \in (a, b) \setminus \{z_0\}$ and $v_n \rightarrow x_0, w_n \rightarrow x_0$, one has $\lim_{n \to \infty} f(v_n) = \lim_{n \to \infty} f(w_n)$. \\\\
+        For the sake of contradiction, assume $l_1 = \lim{n \to \infty} f(v_n) \neq \lim_{n \to \infty} f(w_n) = l_2$. Set
+        \[ y_n =
+        \begin{cases}
+            v_n & n \text{ even} \\
+            w_n & n \text{ odd}.
+        \end{cases}
+        \]
+        Then we have (1) $y_n \in (a, b) \setminus \{x_0\}$ and (2) $y_n \rightarrow x_0$ together imply $(f(y_n))_{n \in \N}$ convergent. However,
+        \[
+        f(y_n) =
+        \begin{cases}
+            f(v_n) & n \text{ even} \\
+            f(w_n) & n \text{ odd}
+        \end{cases}
+        \]
+        cannot be convergent since $f(y_{2n}) \rightarrow l_2$ and $f(y_{2n + 1}) \rightarrow l_2$ which contradicts our assumption that $l_1 \neq l_2$. Therefore, our assumption must be false and $l_1 = l_2$. Combining this with our previous result (Proposition~\ref{prop:seq_lim}) we get that $\lim_{x \to x_0} f(x) = l_1 = l_2$.
+    \end{proof}
+    \begin{lemma}[Cauchy Criteria for Functions]
+        Let $x_0 \in (a, b) \setminus \{x_0\}, f: (a, b) \setminus \{x_0\} \mapsto \R$. Then $f$ has a limit at $x_0$ if and only if for every $\varepsilon > 0$, there exists $\delta > 0$ such that for every $x_1, x_2$ satisfying
+        $$0 < |x_1 - x_0| \leq \delta \qquad 0 < |x_2 - x_1| \leq \delta,$$
+        one has
+        $$|f(x_1) - f(x_2)| \leq \varepsilon.$$
+    \end{lemma}
+    \begin{proof}
+        First, assume that $\lim_{x \to x_0} f(x) = l$. This implies that $\forall \varepsilon > 0 \ \exists \delta > 0$ such that $|0 < |x - x_0| \leq \delta \implies |f(x) - l| \leq \nicefrac{\varepsilon}{2}$. Let $\varepsilon > 0$ be given, then there exists some $\delta > 0$ such that $0 < |x_1 - x_2| \leq \delta$ and $0 < |x_2 - x_1| \leq \delta \implies |f(x_i) - l| \leq \nicefrac{\delta}{2}$ for $i = 1, 2$. Therefore,
+        \begin{align*}
+            |f(x_1) - f(x_2)| &\leq |f(x_1) - l| + |f(x_2) - l| \\
+            &\leq \frac{\varepsilon}{2} + \frac{\varepsilon}{2} = \varepsilon.
+        \end{align*}
+        For the other direction, we will show that for every sequence $\seq{z}{n}$, $z_n \in (a, b) \setminus \{x_0\}$, $(f(z_n))_{n \in \N}$ is convergent (Corollary implies $f$ has a limit at $x_0$). Recall the fact that $(f(z_n))_{n \in \N}$ convergent $\iff (f(z_n))_{n \in \N}$ Cauchy. Thus, we only need to show that $\forall \varepsilon > 0 \ \exists n \in \N$ such that $\forall m, n \geq N$, $|f(z_n) - f(z_m)| \leq \varepsilon$. Since $z_n \rightarrow x_0$ by assumption, we also know that for every $\delta > 0, \ \exists N \in \N$ such that $\forall n \geq N$, $0 < |z_n - x_0| \leq \delta$. \\\\
+        Putting everything together, we get that $\forall \varepsilon > 0, \ \exists N \in \N$ and $0 < |x_0 - z_n| \leq \delta \ \forall n \geq N$ which in turn implies that $|f(z_n) - f(z_m)| \leq \varepsilon \ \forall m, n \geq N$. So, we know that $(f(z_n))_{n \in \N}$ is Cauchy. Therefore, $(f(z_n))_{n \in \N}$ is convergent.
+    \end{proof}
 \end{itemize}
 
 \newpage
