@@ -895,6 +895,7 @@
         $$0 < |x_1 - x_0| \leq \delta \qquad 0 < |x_2 - x_1| \leq \delta,$$
         one has
         $$|f(x_1) - f(x_2)| \leq \varepsilon.$$
+        \label{lemma:cauchy_crit}
     \end{lemma}
     \begin{proof}
         First, assume that $\lim_{x \to x_0} f(x) = l$. This implies that $\forall \varepsilon > 0 \ \exists \delta > 0$ such that $|0 < |x - x_0| \leq \delta \implies |f(x) - l| \leq \nicefrac{\varepsilon}{2}$. Let $\varepsilon > 0$ be given, then there exists some $\delta > 0$ such that $0 < |x_1 - x_2| \leq \delta$ and $0 < |x_2 - x_1| \leq \delta \implies |f(x_i) - l| \leq \nicefrac{\delta}{2}$ for $i = 1, 2$. Therefore,
@@ -905,6 +906,96 @@
         For the other direction, we will show that for every sequence $\seq{z}{n}$, $z_n \in (a, b) \setminus \{x_0\}$, $(f(z_n))_{n \in \N}$ is convergent (Corollary implies $f$ has a limit at $x_0$). Recall the fact that $(f(z_n))_{n \in \N}$ convergent $\iff (f(z_n))_{n \in \N}$ Cauchy. Thus, we only need to show that $\forall \varepsilon > 0 \ \exists n \in \N$ such that $\forall m, n \geq N$, $|f(z_n) - f(z_m)| \leq \varepsilon$. Since $z_n \rightarrow x_0$ by assumption, we also know that for every $\delta > 0, \ \exists N \in \N$ such that $\forall n \geq N$, $0 < |z_n - x_0| \leq \delta$. \\\\
         Putting everything together, we get that $\forall \varepsilon > 0, \ \exists N \in \N$ and $0 < |x_0 - z_n| \leq \delta \ \forall n \geq N$ which in turn implies that $|f(z_n) - f(z_m)| \leq \varepsilon \ \forall m, n \geq N$. So, we know that $(f(z_n))_{n \in \N}$ is Cauchy. Therefore, $(f(z_n))_{n \in \N}$ is convergent.
     \end{proof}
+\end{itemize}
+
+\subsection{Algebraic Manipulation of Continuous Limits}
+
+\begin{itemize}
+    \item The theme of this subsection is: ``everything we know about sequences holds for limits of continuous functions."
+    \item[]
+    \begin{lemma}
+        Let $f, g: (a, b) \setminus\{x_0\} \mapsto \R$ with $\lim_{x \to x_0} f(x) = l_1$ and $\lim_{x \to x_0} g(x) = l_2$. Then
+        \begin{enumerate}[label=(\arabic*)]
+            \item $f + g$ has a limit at $x_0$ and $\lim_{x \to x_0} (f + g) = l_1 + l_2$.
+            \item For $\lambda \in \R$, $\lambda \cdot f$ has a limit at $x_0$ and $\lim_{x \to x_0} (\lambda \cdot f) = \lambda \cdot l_1$.
+            \item $f \cdot g$ has a limit at $x_0$ and $\lim_{x \to x_0} (f \cdot g) = l_1 \cdot l_2$.
+            \item Assume $f(x) \neq 0, x \in (a, b) \setminus\{x_0\}$ and $l_1 \neq 0$. Then $\nicefrac{g}{f}$ has a limit at $x_0$ and $\lim_{x \to x_0} (\nicefrac{g}{f}) = \nicefrac{l_2}{l_1}$.
+        \end{enumerate}
+    \end{lemma}
+    \begin{proof}
+        \begin{enumerate}[label=(\arabic*)]
+            \item Let $\seq{z}{n}$, $z_n \in (a, b) \setminus\{x_0\}$, $z_n \rightarrow x_0$. We know that 
+            \begin{align*}
+                \lim_{x \to x_0} f(x) = l_1 &\implies f(z_n) \rightarrow l_1, \\
+                \lim_{x \to x_0} g(x) = l_2 &\implies g(z_n) \rightarrow l_2.
+            \end{align*}
+            Then, using the properties of sequences,
+            $$\lim_{n \to \infty} (f(z_n) + g(z_n)) = l_1 + l_2$$
+            which implies that $\lim_{x \to x_0} (f + g)(x) = l_1 + l_2$.
+        \end{enumerate}
+    \end{proof}
+\end{itemize}
+
+\subsection{Comparison Results}
+
+\begin{itemize}
+    \item[]
+    \begin{lemma}
+        Let $f, g: (a, b) \setminus\{x_0\} \mapsto \R$. Assume further that
+        \begin{enumerate}[label=(\arabic*)]
+            \item $\lim_{x \to x_0} f(x) = l_1$ and $\lim_{x \to x_0} g(x) = l_2$ and
+            \item $\exists \alpha > 0$ such that $0 < |x - x_0| \leq \alpha \implies f(x) \geq g(x)$.
+        \end{enumerate}
+        Then $l_1 \geq l_2$.
+        \label{lemma:three_four_one}
+    \end{lemma}
+    \begin{proof}
+        Let $\seq{z}{n}$, $z_n \in (a, b) \setminus\{x_0\}, z_n \rightarrow x_0$. This tells us that $\exists N \in \N$ such that $\forall n \geq N, 0 < |z_n - x_0| \leq \alpha \overset{(2)}{\implies} f(z_n) \geq g(z_n) \ \forall n \geq N$. \\\\
+        Then, using the properties of sequences, we get that
+        $$l_1 = \lim_{n \to \infty} f(z_n) \geq \lim_{n \to \infty} g(z_n) = l_2.$$
+    \end{proof}
+    \item[]
+    \begin{lemma}
+        Let $f: (a, b) \setminus \{x_0\} \mapsto \R$ such that $\lim_{x \to x_0} f(x) = l$. Then $\lim_{x \to x_0} |f(x)| = |l|$.
+    \end{lemma}
+    \begin{proof}
+        By the reverse triangle inequality, we have $0 \leq ||f| - |l|| \leq |f - l|$. Then, let
+        \[
+        f(x) =
+        \begin{cases}
+            1 & x \in \Q \\
+            -1 & x \in \R \setminus \Q.
+        \end{cases}
+        \]
+        Then $|f(x)| = 1 \implies \lim_{x \to 0} |f|(x) = 1$. But $\delta > 0$ in $(0, \delta)$ there is always
+        \begin{align*}
+            x_1 &\in \Q \cap (0, \delta) \\
+            x_2 &\in \R \setminus \Q \cap (0, \delta).
+        \end{align*}
+        We know further that $|f(x_1) - f(x_2)| = 2$ which implies that $f$ does not have a limit at 0 since $x_1$ and $x_2$ do not satisfy the criteria of a Cauchy sequence (Lemma ~\ref{lemma:cauchy_crit}).
+    \end{proof}
+    \item[]
+    \begin{theorem}[Squeeze Theorem]
+        Let $f, g, h: (a, b) \setminus \{x_0\} \mapsto \R$. Further, assume
+        \begin{enumerate}[label=(\arabic*)]
+            \item $\lim_{x \to x_0} f(x) = l = \lim_{x \to x_0} g(x)$ and
+            \item $\exists \alpha > 0$ such that $0 < |x - x_0| \leq \alpha$.
+        \end{enumerate}
+        Then $\lim_{x \to x_0} h(x) = l$.
+    \end{theorem}
+    \begin{proof}
+        Let $\seq{z}{n}$, $z_n \in (a, b) \setminus \{x_0\}, z_n \rightarrow x_0$. This means $\exists N \in \N$ such that $\forall n \geq N$, $0 < |z_n - x_0| \leq \alpha$. By (2) of Lemma ~\ref{lemma:three_four_one}, we have that $$f(z_n) \leq h(z_n) \leq g(z_n) \ \forall n \geq N.$$
+        Therefore, we have $\lim_{n \to \infty} h(z_n) = l$ and because $\seq{z}{n}$ is arbitrary, $\lim_{x \to x_0} h(x) = l$.
+    \end{proof}
+    \item \textbf{Example}. Take $f: (-\nicefrac{\pi}{2}, \nicefrac{\pi}{2}) \setminus \{0\} \mapsto \R$ defined by $f(x) = \nicefrac{\sin x}{x}, x > 0$. How can we show that $\lim_{x \to 0} f(x) = 1$? We could show this rigorously with the definition of limits, however this would be tedious. Instead, consider that we know $\sin x \leq x$. In particular,
+    \begin{align*}
+        |1 - \cos x| &= 2\left|\sin^2 \frac{x}{2}\right| \leq \frac{x^2}{2}.
+    \end{align*}
+    This implies that $\lim_{x \to 0} \cos x = 1$. On the other hand,
+    $$\frac{\sin x}{2} \leq \pi \cdot \frac{x}{2\pi} \leq \frac{\tan x}{2}$$
+    and for $x \neq 0$, we obtain
+    $$1 \leq \frac{x}{\sin x} \leq 1.$$
+    Since $\cos x \underset{x \to 0}{\longrightarrow} 1$ and $1 \underset{1 \to 0}{\longrightarrow} 1$, we have by the squeeze theorem for functions that $\lim_{x \to 0} \nicefrac{\sin x}{x} = 1$.
 \end{itemize}
 
 \newpage
