@@ -5,6 +5,7 @@
 \usepackage{enumerate}
 \usepackage{mathtools}
 \usepackage{nicefrac}
+\usepackage{fourier}
 \usepackage{tikz}
 \usepackage[inline,shortlabels]{enumitem}
 \usepackage{hyperref}
@@ -53,7 +54,7 @@
     backgroundcolor=lightgray,
     skipabove=1em,
     innertopmargin=.5em, % space added at the top
-    innerbottommargin=.5em, % space added at the bottom
+    innerbottommargin=1em, % space added at the bottom
     innerleftmargin=1em, % space added on the left
     innerrightmargin=1em, % space added on the right
 ]{theorem}{Theorem}[subsection]
@@ -61,7 +62,7 @@
     nobreak=true,
     skipabove=1em,
     innertopmargin=.5em, % space added at the top
-    innerbottommargin=.5em, % space added at the bottom
+    innerbottommargin=1em, % space added at the bottom
     innerleftmargin=1em, % space added on the left
     innerrightmargin=1em, % space added on the right
 ]{lemma}[theorem]{Lemma} % shares counter with theorem
@@ -69,7 +70,7 @@
     nobreak=true,
     skipabove=1em,
     innertopmargin=.5em, % space added at the top
-    innerbottommargin=.5em, % space added at the bottom
+    innerbottommargin=1em, % space added at the bottom
     innerleftmargin=1em, % space added on the left
     innerrightmargin=1em, % space added on the right
 ]{proposition}{Proposition}[subsection] % Proposition environment
@@ -195,13 +196,13 @@
 
 \begin{itemize}
     \item[] 
-    \begin{definition}
+    \begin{definition}[Boundedness]
         Let $X \subseteq \R$ be non-empty. A number $m \in \R$ (not necessarily in $X$) is a \textbf{lower bound} for $X$ if for all $x \in X$, $m \leq x$.
     \end{definition}
     If a set has a lower bound, it is called \textbf{bounded below} (for instance, $\Z$).
     \item \textbf{Remark}. $X$ either has no lower bounds or infinitely many.
     \item[]
-    \begin{definition}
+    \begin{definition}[Infimum]
         Let $X \subseteq \R$ be non-empty. A number $s \in \R$ (not necessarily in $X$) is called an \textbf{infimum} of the set $X$ if it is
     \begin{enumerate}[label=(\arabic*)]
         \item A lower bound and
@@ -211,7 +212,7 @@
     $$r = \inf(X).$$
     \end{definition}
     \item[]
-    \begin{definition}
+    \begin{definition}[Supremum]
         Let $X \subseteq \R$ be non-empty. A number $s \in \R$ (not necessarily in $X$) is called a \textbf{supremum} of the set $X$ if it is
     \begin{enumerate}[label=(\arabic*)]
         \item An upper bound and
@@ -292,7 +293,7 @@
 
 \begin{itemize}
     \item[]
-    \begin{definition}
+    \begin{definition}[Absolute value]
         For some $x \in \R$, the \textbf{absolute value} function is defined as follows:
     \[ |x| := \begin{cases}
         -x & \text{, if } x < 0 \\
@@ -318,7 +319,7 @@
 
 \begin{itemize}
     \item[]
-    \begin{definition}
+    \begin{definition}[Sequential convergence]
         A sequence of real numbers $\seq{x}{n}$ is said to be \textbf{convergent} if there exists $x \in \R$ such that $\forall \varepsilon > 0 \ \exists N(\varepsilon) \in \N$ such that
     $$|x - x_n| \leq \varepsilon \ \forall n \geq N(\varepsilon).$$
     Furthermore, we write $\lim_{n \to \infty} x_n = x$.
@@ -390,7 +391,7 @@
     \end{proof}
     \item \textbf{Recall}. A sequence $(x_n)_{n \in \N}$ convergent $\implies \exists M \in \N$ such that $|x_n| \leq M \ \forall n \in \N$.
     \item[]
-    \begin{definition}
+    \begin{definition}[Sequential monotonicity]
         A sequence $\seq{x}{n}$ is said to be
     \begin{itemize}[label=\smallblacksquare]
         \item \textbf{Increasing} if $x_m \geq x_n$ when $m \geq n$,
@@ -531,7 +532,7 @@
         Since $\seq{x}{n}$ is bounded below, so is $\seq{y}{n}$.
     \end{enumerate}
     \item[]
-    \begin{definition}
+    \begin{definition}[$\limsup$ and $\liminf$]
         Let $\seq{x}{n}$ be a sequence that is bounded above. Then we define the \textbf{limit superior} as
     $$\limsup_{n \to \infty} x_n = \mylimmm{n}{\infty} \left(\underbrace{\sup\{x_k \ : \ k \geq n\}}_{y_n}\right).$$
     Similarly, when $\seq{x}{n}$ is bounded above, we define the \textbf{limit inferior} as
@@ -588,7 +589,7 @@
 
 \begin{itemize}
     \item[]
-    \begin{definition}
+    \begin{definition}[Subsequences]
         A \textbf{subsequence} $\seq{x}{n}$ is a sequence $\seq{y}{n}$ such that for all $k \in \N$, there exists $n_1, n_2, \ldots, n_k \in \N$ with $n_1 < n_2 < \cdots < n_k$ with $y_k = x_{n_k}$.
     \end{definition}
     \item[]
@@ -625,7 +626,7 @@
 
 \begin{itemize}
     \item[]
-    \begin{definition}
+    \begin{definition}[Peak points]
         A \textbf{peak point} of a sequence $\seq{x}{n}$ is a term $x_p$ such that $x_p > q_p$ means $q > p$.
     \end{definition}
     \item[]
@@ -701,7 +702,7 @@
 
 \begin{itemize}
     \item[] 
-    \begin{definition}
+    \begin{definition}[Cauchy sequences]
         A sequence $\seq{x}{n}$ is \textbf{Cauchy} if $\forall \varepsilon > 0, \exists N \in \N$ with
     $$|x_m - x_n| \leq \varepsilon \ \forall m, n \geq N.$$
     \end{definition}
@@ -783,7 +784,7 @@
 
 \begin{itemize}
     \item[]
-    \begin{definition}
+    \begin{definition}[Divergence to $\pm \infty$]
         We say that a sequence $\seq{x}{n}$ is \textbf{diverging to} $+\infty$ if $\forall M \in \R, \ \exists N \in \N$ such that
     $$x_n \geq M \ \forall n \geq M.$$
     Similarly, we say that a sequence is \textbf{diverging to} $-\infty$ if $\forall M \in \R, \ \exists N \in \N$ such that
@@ -799,11 +800,11 @@
 
 \begin{itemize}
     \item[]
-    \begin{definition}
+    \begin{definition}[Functional limits]
         Let $a < b$, $x_0 \in (a, b), f:(a, b) \setminus \{x_0\} \mapsto \R$. We say that $f$ \textbf{has a limit} $l$ at $x_0$ if $\forall \varepsilon > 0 \ \exists \delta > 0$ such that, for $x \in (a, b)$
-        $$0 < |x - x_0| \leq \delta \implies |f(x) - l| \leq l.$$
+        $$0 < |x - x_0| \leq \delta \implies |f(x) - l| \leq \varepsilon.$$
         If $f$ has a limit $l$, we write
-        $$\lim_{x \to \infty} f(x) = l.$$
+        $$\lim_{x \to x_0} f(x) = l.$$
     \end{definition}
     \item[]
     \begin{proposition}
@@ -996,6 +997,184 @@
     and for $x \neq 0$, we obtain
     $$1 \leq \frac{x}{\sin x} \leq 1.$$
     Since $\cos x \underset{x \to 0}{\longrightarrow} 1$ and $1 \underset{1 \to 0}{\longrightarrow} 1$, we have by the squeeze theorem for functions that $\lim_{x \to 0} \nicefrac{\sin x}{x} = 1$.
+\end{itemize}
+
+\subsection{Composition of Functions}
+
+\begin{itemize}
+    \item[]
+    \begin{lemma}[Composition of Functions]
+        Let $f: (a, b) \setminus \{x_0\} \mapsto (c, d)$ such that $\lim_{x \to x_0} f(x) = y_0$. Let $g: (c, d) \setminus \{y_0\} \mapsto \R$ and assume that $\lim_{y \to y_0} g(y) = l$. Then $g \circ f$ has a limit at $x_0$ and $\lim_{x \to x_0} (g \circ f)(x) = l$. \\\\
+        Note: we must assume $\exists \alpha > 0$ such that $0 < |x - x_0| \leq \alpha \implies f(x) = y_0$).
+    \end{lemma}
+    \begin{proof}
+        We know two things by assumption:
+        \begin{enumerate}[label=(\arabic*)]
+            \item $\lim_{x \to x_0} f(x) = y_0$ means
+            $$\forall \varepsilon_1 > 0 \ \exists \delta_1 > 0 \text{ such that } 0 < |x - x_0| \leq \delta_1 \implies |f(x) - y_0| \leq \varepsilon_1.$$
+            \item $\lim_{y \to y_0} g(y) = l$ means
+            $$\forall \varepsilon_2 > 0 \ \exists \delta_2 > 0 \text{ such that } 0 < |y - y_0| \leq \delta_2 \implies |g(y) - l| \leq \varepsilon_2.$$
+            Here, we further assume that $\exists \alpha > 0$ such that $0 < |x - x_0| \leq \alpha \implies f(x) \neq y_0$. Altogether this implies that
+            $$0 \leq |x - x_0| \leq \min\{\delta_1, \alpha\} \implies 0 < |f(x) - y_0| \leq \varepsilon_1.$$
+        \end{enumerate}
+        So we want to show that $\forall \varepsilon > 0 \ \exists \delta > 0$ such that
+        $$0 < |x - x_0| \leq \delta \implies |g(f(x)) - l| \leq \varepsilon.$$
+        Let $\varepsilon > 0$ be given. Set $\varepsilon_2 = \varepsilon \implies \exists \delta_2$, set $\varepsilon_1 = \delta_2 \implies \delta_1$ and then set $\delta = \min\{\delta_1, \alpha\}$. Thus, 
+        \begin{align*}
+            0 < |x - x_0| \leq \delta &\implies 0 < |\underbrace{f(x)}_{= y} - y_0| \leq \varepsilon_1 = \delta_2 \\
+            &\implies |g(f(x)) - l| \leq \varepsilon.
+        \end{align*}
+    \end{proof}
+\end{itemize}
+
+\subsection{Infinite Limits}
+
+\begin{itemize}
+    \item[]
+    \begin{definition}[Infinite functional limits]
+        We say that $f: (a, b) \setminus \{x_0\} \mapsto \R$ \textbf{tends to} $+\infty$ when $x$ tends to $x_0$ if $\forall M \in \R \ \exists \delta > 0$ such that
+        $$0 < |x - x_0| \leq \delta \implies f(x) \geq M.$$
+        We write $\lim_{x \to x_0} f(x) = +\infty$. \\\\
+        Similarly, we say that $f$ \textbf{tends to } $-\infty$ when $x$ tends to $x_0$ if $\forall M \in \R \ \exists \delta > 0$ such that
+        $$0 < |x - x_0| \leq \delta \implies f(x) \leq M.$$
+        We write $\lim_{x \to x_0} f(x) = -\infty$.
+    \end{definition}
+    \item[]
+    \begin{definition}[Infinite functional limits]
+        We say that $f: (a, +\infty) \mapsto \R$ has a limit $l$ when $x$ tends to $+\infty$ if $\forall \varepsilon > 0 \ \exists D \in \R$ such that
+        $$x \geq D \implies |f(x) - l| \leq \varepsilon.$$
+        We write $\lim_{x \to +\infty} f(x) = l$. \\\\
+        Similarly, we say that $f: (-\infty, b) \mapsto \R$ has a limit $l$ when $x$ tends to $-\infty$ if $\forall \varepsilon > 0 \ \exists D \in \R$ such that
+        $$x \leq D \implies |f(x) - l| \leq \varepsilon.$$
+        We write $\lim_{x \to -\infty} f(x) = l$.
+    \end{definition}
+    \item[]
+    \begin{definition}[Combined infinite functional limits]
+        We say that $f: (a, +\infty) \mapsto \R$ tends to $+\infty$ when $x \rightarrow +\infty$ if $\forall M \in \R \ \exists D \in \R$ such that
+        $$x \geq D \implies f(x) \geq M.$$
+        We write $\lim_{x \to +\infty} f(x) = +\infty$. \\\\
+        Similarly, we say that $f: (-\infty, b) \mapsto \R$ tends to $-\infty$ when $x \rightarrow -\infty$ if $\forall M \in \R \ \exists D \in \R$ such that
+        $$x \leq D \implies f(x) \leq M.$$
+        We write $\lim_{x \to -\infty} f(x) = -\infty$.
+    \end{definition}
+\end{itemize}
+
+\subsection{Continuity}
+
+\begin{itemize}
+    \item[]
+    \begin{definition}[Functional continuity]
+        We say that $f: (a, b) \mapsto \R$ is \textbf{continuous} at $x_0 \in (a, b)$ if
+        $$\lim_{x \to x_0} f(x) = f(x_0).$$
+        This is equivalent to:
+        \begin{enumerate}[label=(\roman*)]
+            \item $\forall \varepsilon > 0 \ \exists \delta(\varepsilon, x_0) > 0$ such that $|x - x_0| \leq \delta \implies |f(x) - f(x_0)| \leq \varepsilon$.
+            \begin{proof}
+                Left as an exercise. 
+            \end{proof}
+            \item $\forall \varepsilon > 0 \ \exists \delta(\varepsilon, x_0) > 0$ such that $|x_1 - x_0| \leq \delta$ and $|x_2 - x_0| \leq \delta \implies |f(x_1) - f(x_2)| \leq \varepsilon$.
+            \begin{proof}
+                Left as an exercise.
+            \end{proof}
+        \end{enumerate}
+    \end{definition}
+    \item[]
+    \begin{lemma}
+        Let $x_0 \in (a, b)$ and $f: (a, b) \mapsto \R$. Then $f$ is continuous at $x_0$ if and only if for every sequence $\seq{z}{n}$, $z_n \in (a, b)$, $z_n \rightarrow x_0$,
+        $$f(z_n) \rightarrow f(x_0).$$
+    \end{lemma}\
+    \begin{proof}
+        First, assume that $f$ is continuous at $x_0$. In other words, $\lim_{x \to x_0} f(x) = f(x_0)$. Let the sequence $\seq{z}{n}$, $z_n \in (a, b)$, $z_n \rightarrow x_0$. Let $\varepsilon > 0$ be given. Then $\exists N \in \N$ such that $\forall n \geq N (z_n \neq x_0)^*$,
+        \begin{align*}
+            &|f(z_n) - f(x_0)| \leq \varepsilon \\
+            \implies& f(z_n) \longrightarrow f(x_0).
+        \end{align*}
+        For the other direction, assume that every sequence $\seq{z}{n}$, $z_n \in (a, b)$, $z_n \rightarrow x_0 \implies f(z_n) \rightarrow f(x_0)$. In particular, consider the sequences $\seq{z}{n}$, $z_n \in (a, b) \setminus \{x_0\}$, $z_n \rightarrow x_0 \implies f(z_n) \rightarrow f(x_0) \implies \lim_{x \to x_0} f(x) = \lim_{n \to \infty} f(z_n) = f(x_0)$.
+    \end{proof}
+    \item \textbf{Example}. Take $f: (0, +\infty) \mapsto \R$ be defined by $f(x) = \sqrt{x}$. We claim that $f$ is continuous at every $x_0 \in (0, +\infty)$. Set $x \in (0, +\infty$ and compute
+    \begin{align*}
+        |f(x) - f(x_0)| = |\sqrt{x} - \sqrt{x_0}| = \frac{|x - x_0|}{\underbrace{\sqrt{x}}_{> 0} + \sqrt{x_0}} \leq \frac{|x - x_0|}{\sqrt{x_0}}.
+    \end{align*}
+    Now, $\forall \varepsilon > 0$ set $\delta = \varepsilon \cdot \sqrt{x_0}$, then we have
+    $$|x - x_0| \leq \delta \implies |f(x) - f(x_0)| \leq \frac{\delta}{\sqrt{x_0}} \leq \varepsilon$$
+    $\implies \sqrt{x}$ is continuous at $x_0$.
+\end{itemize}
+
+\subsubsection{Algebraic Operations}
+
+\begin{itemize}
+    \item[]
+    \begin{proposition}
+        Let $f, g: (a, b) \mapsto \R$ continuous at $x_0 \in (a, b)$. Then
+        \begin{enumerate}[label=(\roman*)]
+            \item $f + g$ is continuous at $x_0$
+            \item For $\lambda \in \R$, $\lambda \cdot f$ is continuous at $x_0$
+            \item $f \cdot g$ is continuous at $x_0$
+            \item $f \neq 0$ on $(a, b)$, $\nicefrac{g}{f}$ is continuous at $x_0$
+            \item $f: (a, b) \mapsto (c, d), g: (c, d) \mapsto \R$, $f$ is continuous at $x_0 \in (a, b)$ and $g$ is continuous at $f(x_0) \in (c, d)$, then $g \circ f$ is continuous at $x_0$.
+        \end{enumerate}
+    \end{proposition}
+    \begin{proof}
+        Left as an exercise.
+    \end{proof}
+    \item \textbf{Example}. Let $f: (0, +\infty) \mapsto \R$. We claim $f(x) = \sqrt{x}$ is continuous at every $x_0 \in (0, +\infty)$. \\\\
+    Consider $f: \R \mapsto \R$ defined by
+    \[
+    f(x) =
+    \begin{cases}
+        1 & x \in \Q \\
+        0 & x \in \R \setminus \Q
+    \end{cases}
+    \]
+    which is discontinuous everywhere. Then let $x_0 \in \R, n \in \N$. We know that there exists $a_n, b_n \in (x_0 - \nicefrac{1}{n}, x_0 + \nicefrac{1}{n})$ such that $a_n \in \Q, b_n \in \R \setminus \Q$ such that $a_n, b_n \underset{n \rightarrow \infty}{\longrightarrow} x_0$. Then we have
+    \begin{align*}
+        f(a_n) &= 1 \rightarrow 1 \\
+        f(b_n) &= 0 \rightarrow 0
+    \end{align*}
+    $\implies f$ discontinuous at $x_0$.
+    \item[]
+    \begin{definition}[Continuity on an interval]
+        We say $f: (a, b) \mapsto \R$ is \textbf{continuous on $(a, b)$} if it is continuous at \textit{every} $x_0 \in (a, b)$. \\\\
+        We write $f \in C^0 \big((a, b)\big)$.
+    \end{definition}
+    \item[]
+    \begin{definition}[Left/right limits]
+        Let $f: (a, b) \setminus \{x_0\} \mapsto \R$. We say that $f$ has a \textbf{left-sided limit} $l \in \R$ at $x_0$ if $\forall \varepsilon > 0 \ \exists \delta(x_0, \varepsilon) > 0$ such that
+        $$\underbrace{0 < |x - x_0| \leq \delta}_{x - \delta \leq x \leq x_0} \implies |f(x) - l| \leq \varepsilon.$$ 
+        We write $\lim_{x \to x_0^-} f(x) = x_0$. \\\\
+        Similarly, we say that $f$ has a \textbf{right-sided limit} $l \in \R$ at $x_0$ if $\forall \varepsilon > 0 \ \exists \delta(x_0, \varepsilon) > 0$ such that
+        $$\underbrace{0 < |x - x_0| \leq \delta}_{x_0 \leq x \leq x_0 + \delta} \implies |f(x) - l| \leq \varepsilon.$$
+        We write $\lim_{x \to x_0^+} f(x) = x_0$.
+    \end{definition}
+    \item[]
+    \begin{definition}[Left/right continuous]
+        We say that $f: (a, b) \mapsto \R$ is \textbf{left-continuous} at $x_0 \in (a, b]$ if $\lim_{x \to x_0^-} f(x) = f(x_0) \iff \forall \varepsilon > 0 \ \exists \delta > 0$ such that
+        $$x_0 - \delta \leq x \leq x_0 \implies |f(x) - l| \leq \varepsilon.$$
+        Similarly, we say that $f: (a, b) \mapsto \R$ is \textbf{right-continuous} at $x_0 \in [a, b)$ if $\lim_{x \to x_0^+} f(x) = f(x_0) \iff \forall \varepsilon > 0 \ \exists \delta > 0$ such that
+        $$x_0 \leq x \leq x_0 + \delta \implies |f(x) - l| \leq \varepsilon.$$
+    \end{definition}
+    \item \textbf{Example}. Let $f(x) = \sqrt{x}$. Is $f(x)$ is right-continuous at 0? i.e., $\lim_{x \to x_0^+} f(x) \overset{?}{=} 0$. We note that $f(x)$ is continuous on $(0, 1)$ but does not have a right limit at 0.
+    \item[]
+    \begin{lemma}
+        Let $f: (a, b) \mapsto \R, x_0 \in (a, b)$. Then $f$ is continuous at $x_0$ if and only if
+        $$\lim_{x \to x_0^-} f(x) = \lim_{x \to x_0^+} f(x) = f(x_0).$$
+    \end{lemma}
+    \begin{proof}
+        Left as an exercise.
+    \end{proof}
+    \item[]
+    \begin{definition}[Continuity on a closed interval]
+        We say $f: [a, b] \mapsto \R$ is \textbf{continuous on a closed interval} if it is continuous on $(a, b)$ and $\lim_{x \to x_0^+} f(x) = f(a), \lim_{x \to x_0^-} f(x) = f(b)$. \\\\
+        We write $f \in C^0\big([a, b]\big)$.
+    \end{definition}
+    \item[]
+    \begin{theorem}[Intermediate Value Theorem]
+        Let $f: (a, b) \mapsto \R$ be a continuous function such that $f(a) < f(b)$. Then for every $y_0 \in \R$ such that $f(a) < y_0 < f(b)$, there exists $x_0 \in (a, b)$ such that $f(x_0) = y_0$ (symmetrical for $f(b) < f(a)$). \\\\
+        \danger \textbf{Caution}: $y_0$ may not be unique.
+    \end{theorem}
+    \begin{proof}
+        Next class.
+    \end{proof}
 \end{itemize}
 
 \newpage
