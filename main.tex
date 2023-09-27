@@ -1166,7 +1166,7 @@
     \item[]
     \begin{theorem}[Intermediate Value Theorem]
         Let $f: (a, b) \mapsto \R$ be a continuous function such that $f(a) < f(b)$. Then for every $y_0 \in \R$ such that $f(a) < y_0 < f(b)$, there exists $x_0 \in (a, b)$ such that $f(x_0) = y_0$ (symmetrical for $f(b) < f(a)$). \\\\
-        \warning \textbf{Caution}: $y_0$ may not be unique.
+        \caution \textbf{Caution}: $y_0$ may not be unique.
     \end{theorem}
     \begin{proof}
         Let $X = \set{x \in [a, b]}{f(x) < y_0} \subset [a, b]$. We know that $X \neq \emptyset$ since $a \in X$ by definition. Further, since $X$ is a subset of a bounded set, we know that $X$ is bounded. Therefore, we know that $s = \sup(X)$ exists. \\\\
@@ -1197,7 +1197,7 @@
         \end{enumerate}
         Together, (i) and (ii) imply that $f(s) = y_0$.
     \end{proof}
-    \item \warning \textbf{Warning}: If $f: [a, b] \mapsto \R$ such that $f(a) < f(b)$ and $\forall y_0 \in \R$ with $f(a) < y_0 < f(b) \implies \exists x_0 \in (a, b)$ with $f(x_0) = y_0$
+    \item \caution \textbf{Warning}: If $f: [a, b] \mapsto \R$ such that $f(a) < f(b)$ and $\forall y_0 \in \R$ with $f(a) < y_0 < f(b) \implies \exists x_0 \in (a, b)$ with $f(x_0) = y_0$
     $$\centernot\implies f \text{ is continuous on } [a, b]!$$
     \item[]
     \begin{definition}[Monotone functions]
