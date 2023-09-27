@@ -5,6 +5,7 @@
 \usepackage{enumerate}
 \usepackage{mathtools}
 \usepackage{nicefrac}
+\usepackage{centernot}
 \usepackage{fourier}
 \usepackage{tikz}
 \usepackage[inline,shortlabels]{enumitem}
@@ -1098,11 +1099,6 @@
     Now, $\forall \varepsilon > 0$ set $\delta = \varepsilon \cdot \sqrt{x_0}$, then we have
     $$|x - x_0| \leq \delta \implies |f(x) - f(x_0)| \leq \frac{\delta}{\sqrt{x_0}} \leq \varepsilon$$
     $\implies \sqrt{x}$ is continuous at $x_0$.
-\end{itemize}
-
-\subsubsection{Algebraic Operations}
-
-\begin{itemize}
     \item[]
     \begin{proposition}
         Let $f, g: (a, b) \mapsto \R$ continuous at $x_0 \in (a, b)$. Then
@@ -1170,10 +1166,52 @@
     \item[]
     \begin{theorem}[Intermediate Value Theorem]
         Let $f: (a, b) \mapsto \R$ be a continuous function such that $f(a) < f(b)$. Then for every $y_0 \in \R$ such that $f(a) < y_0 < f(b)$, there exists $x_0 \in (a, b)$ such that $f(x_0) = y_0$ (symmetrical for $f(b) < f(a)$). \\\\
-        \danger \textbf{Caution}: $y_0$ may not be unique.
+        \warning \textbf{Caution}: $y_0$ may not be unique.
     \end{theorem}
     \begin{proof}
-        Next class.
+        Let $X = \set{x \in [a, b]}{f(x) < y_0} \subset [a, b]$. We know that $X \neq \emptyset$ since $a \in X$ by definition. Further, since $X$ is a subset of a bounded set, we know that $X$ is bounded. Therefore, we know that $s = \sup(X)$ exists. \\\\
+        Now, we want to show
+        \begin{enumerate}[label=(\roman*)]
+            \item $a < s < b$ and
+            \item $f(x) = y_0$.
+        \end{enumerate}
+        If we can show these two things then we get that $x_0 = s$.
+        \begin{enumerate}[label=(\roman*)]
+            \item We want to show that $a < s$. Recall that $f$ is right-continuous at a means that $\forall \varepsilon > 0 \ \exists \delta > 0$ such that
+            $$a \leq x \leq a + \delta \implies |f(x) - f(a)| \leq \varepsilon.$$
+            In particular, for $e = (y_0 - f(a)) / 2$, we obtain
+            \begin{align*}
+                a \leq x \leq a + \delta &\implies |f(x) - f(a)| \leq \varepsilon = \frac{y_0 - f(a)}{2} \\
+                &\implies f(x) \leq f(a) + \varepsilon = \frac{f(a) + y_0}{2} < y_0
+            \end{align*}
+            by construction. Now for the sake of contradiction, assume that $\sup(X) = s = a$. Then take $z = \nicefrac{(a + \delta)}{2}$ and $f(z) < y_0$ by construction which further implies that $z \in X$. However, $z > a = s$ which contradicts the initial assumption that $s = \sup(X)$. Therefore, our contradiction assumption must be false and $a < s$. \\\\
+            Next, we must show that $s < b$. Recall that since $f$ is left-continuous at $b$, we have $\forall \varepsilon > 0 \ \exists \delta > 0$ such that
+            $$b - \delta \leq x \leq b \implies |f(x) - f(b)| \leq \varepsilon \implies f(x) \geq f(b) - \varepsilon.$$
+            Therefore, take $\varepsilon = f(b) - y_0 \implies f(x) \geq y_0$ by construction. For the sake of contradiction, assume that $\sup(X) = s = b$. Then we have that $b - \delta \leq x \leq b \implies x \not\in X$. So take $z = b - \nicefrac{\delta}{2}$ which means that $z \geq x \ \forall x \in X$. However, this contradicts the initial assumption that $s$ is the \textit{smallest} upper bound of $X$. Therefore our contradiction assumption must be false and $s < b$.
+            \item We want to show that $f(s) = y_0$. First, we will show that $f(s) \geq y_0$. Let $\seq{z}{n}, z_n \in (s, s + \nicefrac{1}{n}), z_n \rightarrow s$. Then we surely have that $z_n > s, z_n \not\in X$ which implies that (by the definition of $X$) $f(z_n) \geq y_0$. Note that by comparison theorems, we have that $\lim_{n \to \infty} f(z_n) \geq y_0$ (since $f(z_n) \geq y_0 \ \forall n \in \N$). Also, since $f$ is continuous on the interval, we have
+            $$y_0 \leq \lim_{n \to \infty} f(z_n) = f\big(\lim_{n \to \infty} z(n)\big) = f(s) \implies f(s) \geq y_0.$$
+            Next, we will show that $f(s) \leq y_0$. Recall the property of supremum: $\exists z_n \in X$ such that $z_n \rightarrow s$. Then we know that $f(z_n) < y_0$ since $z_n \in X$. Similarly to before, we have
+            \begin{align*}
+                y_0 \geq \lim_{n \to \infty} f(z_n) = f\left(\lim_{n \to \infty} f(z_n)\right) = f(s) \implies f(s) \leq y_0.
+            \end{align*}
+        \end{enumerate}
+        Together, (i) and (ii) imply that $f(s) = y_0$.
+    \end{proof}
+    \item \warning \textbf{Warning}: If $f: [a, b] \mapsto \R$ such that $f(a) < f(b)$ and $\forall y_0 \in \R$ with $f(a) < y_0 < f(b) \implies \exists x_0 \in (a, b)$ with $f(x_0) = y_0$
+    $$\centernot\implies f \text{ is continuous on } [a, b]!$$
+    \item[]
+    \begin{definition}[Monotone functions]
+        A function $f: [a, b] \mapsto \R$ is \textbf{monotone increasing} if
+        $$\forall x, y \in [a, b] \text{ with } x \leq y \implies f(x) \leq f(y).$$
+        Similarly, such a function is \textbf{monotone decreasing} if
+        $$\forall x, y \in [a, b] \text{ with } x \leq y \implies f(x) \geq f(y).$$
+    \end{definition}
+    \item[]
+    \begin{lemma}
+        Let $f: [a, b] \mapsto \R$ be monotone and the conditions of the Intermediate Value Theorem hold. Then $f$ is continuous.
+    \end{lemma}
+    \begin{proof}
+        Details of proof omitted. 
     \end{proof}
 \end{itemize}
 
