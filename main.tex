@@ -656,6 +656,19 @@
     \begin{theorem}[Bolzano-Weirstrass]
         Every bounded sequence has a convergent subsequence.
     \end{theorem}
+    \begin{center}
+        \begin{tikzpicture}[decoration={brace, amplitude=6pt}]
+             \draw (-6,0) -- (6,0) (0,0.2) -- (0,-0.2) node[below]{$0$}
+              foreach \X in {-,} {(\X5.5,0.2) -- (\X5.5,-0.2) node[below] {$\X M$}} ;
+             \draw[only marks,mark=*] 
+              plot[samples at={1,...,15}] ({-1+5*(1+5*pow(-1,\x)/(2+\x))/\x},0)
+              plot[samples at={1,...,5}] ({-\x},0);
+             \draw[decorate,thick] (-5.5,0.4) -- node[above=1ex](I1){$I_1$} (0,0.4);
+             \draw[decorate,thick] (0,-0.8) -- node[below=1ex]{$I_2$} (I1|-0,-0.8);
+             \draw[latex-] (-4,-0.1) --++ (0,-1) node[below]{$a_{n_1}$};
+             \draw[latex-] (-1,0.1) --++ (0,1) node[above]{$a_{n_2}$};
+        \end{tikzpicture}
+    \end{center}
     \begin{proof}
         We have that $\seq{x}{n}$ implies that $(x_{n_k})_{k \in \N}$ is monotone. Further, $\seq{x}{n}$ bounded implies that $(x_{n_k})_{k \in \N}$ is bounded. So we have a montone and bounded subsequence which is thus convergent.
     \end{proof}
@@ -1230,7 +1243,137 @@
     \begin{proof}
         Details of proof omitted. 
     \end{proof}
+    \item \textbf{Corollary}. Let $f: [a, b] \mapsto \R$ be a continuous function such that $f(a) \cdot f(b) \leq 0$. Then there exists $x_0 \in [a, b]$ such that $f(x_0) = 0$.
+    \begin{proof}
+        There are two cases to consider:
+        \begin{enumerate}[label=(\arabic*)]
+            \item Either $f(a) = 0$ or $f(b) = 0$.
+            \item Both $f(a) \neq 0$ and $f(b) \neq 0 \implies f(a) \cdot f(b) < 0$.
+        \end{enumerate}
+        Without loss of generality, assume $f(a) < 0$ and $f(b) > 0$. Then by the Intermediate Value Theorem, $y_0 = 0$ and $f(a) < y_0 < f(b)$ and $\exists x_0 \in (a, b)$ such that $f(x_0) = y_0 = 0$.
+    \end{proof}
+    \item \textbf{Corollary} (Fixed Point). Let $f: [a, b] \mapsto [a, b]$ be a continuous function. Then there exists $x_0 \in [a, b]$ such that $x_0 = f(x_0)$.
+    \begin{proof}
+        Let $g(x) = x - f(x)$ be continuous on $[a, b]$. Then we have
+        \begin{align*}
+            g(a) &= a - f(a) \leq 0 \\
+            g(b) &= b - f(b) \geq 0
+        \end{align*}
+        since $f: [a, b] \mapsto [a, b]$. Then, by the previous corollary we have
+        $$g(a) \cdot g(b) \leq 0 \implies \exists x_0 \in [a, b] \ \land \ g(x) = 0 \implies x_0 = f(x_0).$$
+    \end{proof}
+    \item[]
+    \begin{definition}[Boundedness on a set]
+            Let $X \subset \R$ be non-empty. A function $f: X \mapsto \R$ is said to be \textbf{bounded on X} iof there is $M \geq 0$ such that
+            $$|f(x)| \leq M \ \forall x \in X.$$
+    \end{definition}
+    \item[]
+    \begin{lemma}
+        Let $X \subset \R$ be non-empty. If $f: X \mapsto \R$ is not bounded on $X$, then $\exists \seq{z}{n} \in X$ such that $|f(z_n)| \geq n$.
+    \end{lemma}
+    \begin{proof}
+        Boundedness implies that $\exists M \geq 0$ such that $|f(x)| \leq M \ \forall x \in X$ so by negation unboundedness implies $\forall M \geq 0 \ \exists x \in X$ such that $|f(x)| > M$. Then consider $m = n, \seq{z}{n} \in X$ and we have $|f(z_n)| \geq n$.
+    \end{proof}
+    \item[]
+    \begin{theorem}[Extreme Value Theorem]
+        Let $f: [a, b] \mapsto \R$ be a continuous function. Then $f$ is bounded on $[a, b]$ and there are $x_i, x_g \in [a, b]$ such that
+        \begin{align*}
+            \sup\{f(x) \ : \ x \in [a, b]\} &= f(x_g) \\
+            \inf\{f(x) \ : \ x \in [a, b]\} &= f(x_i).
+        \end{align*}
+        We denote these as
+        \begin{align*}
+            \sup_{x \in [a, b]} f(x) &= \sup\{f(x) \ : \ x \in [a, b]\} \\
+            \inf_{x \in [a, b]} f(x) &= \inf\{f(x) \ : \ x \in [a, b]\}.
+        \end{align*}
+    \end{theorem}
+    \begin{proof}
+        We first must show that $f$ is bounded on $[a, b]$. \\\\
+        For the sake of contradiction, assume that $f$ is unbounded (not bounded). Then there exists a sequence $\seq{z}{n} \in [a, b]$ with $|f(z_n)| \geq n \implies f$ divergent. However, $\seq{z}{n}$ is bounded and Bolzano-Weirstrass implies that $\exists \sseq{z}{n}{k}$ such that $z_{n_k} \rightarrow l \in [a, b]$. Further, by comparison results we have
+        $$\lim_{k \to \infty} f(z_{n_k}) = f(\lim_{k \to \infty} z_{n_k}) = f(l).$$
+        But we know that $(f(z_{n_k}))_{k \in \N}$ converges to $f(l)$ which implies that $f$ is convergent which is a contradiction. Therefore $f$ must be unbounded. \\\\
+        Now we must show that $f$ bounded $\implies X$ bounded $\implies M = \sup(X)$ and $m = \inf(X)$ exists. So we need to show that $M = f(x_g), x_g \in [a, b]$ and $m = f(x_i), x_i \in [a, b]$. From the characterization of infimum, we know $\forall \varepsilon > 0 \ \exists q_\epsilon \in X$ such that $q_\varepsilon - m \leq \varepsilon$. Then we have that $q_\varepsilon \in X \rightarrow f(x_\varepsilon)$, $x_\varepsilon \in [a, b]$. This means that $f(x_\varepsilon) - m \leq \varepsilon$. Taking $\varepsilon = \nicefrac{1}{n}$ we obtain $m \leq f(x_n) \leq m + \nicefrac{1}{n} \implies f(x_n) \rightarrow m$ by the Squeeze Theorem. \\\\
+        But $\seq{x}{n}$ bounded implies there exists some subsequence $\sseq{x}{n}{k}$ such that $x_{n_k} \in [a, b] \implies x_{n_k} \rightarrow l \in [a, b]$. So
+        $$m = \lim_{k \to \infty} f(x_{n_k}) = f(\lim_{k \to \infty} x_{n_k}) = f(l).$$
+        Take $x_i = l \in [a, b]$.
+    \end{proof}
+    \item[]
+    \begin{definition}[Supremum and max of a function]
+        Let $f: X \to \R$, $X$ non-empty. If there is $x \in X$ such that $f(x) = \sup\{f(x) \ : \ x \in X\}$, we write $\sup_{x \in X} f(x) = \max_{x \in X} f(x)$. Similarly for $\inf$. \\\\
+        For $f: [a, b] \mapsto \R$, the EVT guarantees that $\sup_{x \in [a, b]} f(x) = \max_{x \in [a, b]} f(x)$ and $\inf_{x \in [a, b]} f(x) = \min_{x \in [a, b]} f(x)$.
+    \end{definition}
 \end{itemize}
+
+\subsection{Uniform Continuity}
+
+\begin{itemize}
+    \item \textbf{Remark}. If $\seq{z}{n}$ is bounded and $f$ is a continuous function, then $(f(z_n))_{n \in \N}$ is bounded.
+    \item \textbf{Remark}. However, $\seq{z}{n}$ convergent $\centernot\implies (f(z_n))_{n \in \N}$ convergent!
+    \item \textbf{Example}. Consider $f(x) = \nicefrac{1}{x}$ which is continuous on $(0, 1)$. Indeed, $x_0 \in (0, 1), \varepsilon > 0 \ \exists \delta = \delta(\varepsilon, x_0)$ such that
+    \begin{alignat*}{2}
+        &&|x - x_0| \leq \delta \implies |f(x) - f(x_0)| &\leq \varepsilon \\
+        \iff&& \left|\frac{1}{x} - \frac{1}{x_0}\right| = \left|\frac{x - x_0}{x \cdot x_0}\right| \leq \frac{4|x - x_0|}{3x_0^2} &\leq \varepsilon \tag{ by (*)}
+    \end{alignat*}
+    since
+    \begin{align*}
+        x_0 - \delta &\leq x \leq x_0 + \delta \\
+        \delta \leq \frac{x_0}{4} &\implies x \geq \frac{3}{4}x_0 \tag{*} 
+    \end{align*}
+    However, since the definition of continuity is dependent on $x_0$ which is not constant, we have a problem. Take $z_n = \nicefrac{1}{n} \rightarrow 0$. But $f$ is continuous on $(0, 1)$. So $f(z_n) = \nicefrac{1}{(1/n)} = n$ is not convergent.
+    \item[]
+    \begin{definition}[Uniform continuity]
+        Let $X \subset \R$ be non-empty. We say that $f: X \mapsto \R$ is \textbf{uniformly continuous} on $X$ if $\forall \varepsilon > 0 \ \exists \delta = \delta(\varepsilon)$ such that $|X - y| \leq \delta \implies |f(x) - f(y)| \leq \varepsilon$.
+    \end{definition}
+    \item[]
+    \begin{lemma}
+        Let $f: X \mapsto \R$, $X \subset \R$ non-empty where $f$ is uniformly continuous. Then $f$ is continuous.
+    \end{lemma}
+    \begin{proof}
+        To show $f$ is continuous at $x_0 \in X$, we need to show that $\forall \varepsilon > 0 \ \exists \delta = \delta(\varepsilon, x_0) > 0$ such that
+        $$|x - x_0| \leq \delta \implies |f(x) - f(x_0)| \leq \varepsilon.$$
+        Since $f$ is assumed to be uniformly continuous, we know that $\forall \widetilde{\varepsilon} > 0 \ \exists \widetilde{\delta} = \widetilde{\delta}(\widetilde{\varepsilon})$ such that
+        $$|x - y| \leq \widetilde{\varepsilon} \implies |f(x) - f(y)| \leq \widetilde{\varepsilon}.$$
+        Then let $\varepsilon > 0$ be given. Let $\widetilde{\varepsilon} = \varepsilon$ and $\widetilde{\delta} = \widetilde{\delta}(\widetilde{\varepsilon})$ and write uniformly continuous for $y = x_0$. Then
+        $$|x - x_0| \leq \widetilde{\delta} \implies |f(x) - f(x_0)| \leq \widetilde{\varepsilon} = \varepsilon.$$
+        It suffices to take $\delta = \widetilde{\delta}$.
+    \end{proof}
+    \item \textbf{Example (re-visited)}. Consider $f(x) = \nicefrac{1}{x}$ which is uniformly continuous on $(1, 2)$. Because $\forall \varepsilon > 0, x, y \in (1, 2)$,
+    $$|f(x) - f(y)| = \left| \frac{1}{x} - \frac{1}{y}\right| = \frac{|x - y|}{xy} \leq |x - y|.$$
+    Let $\delta = \varepsilon$, then clearly
+    $$|x - y| \leq \delta \implies |f(x) - f(y)| \leq \varepsilon.$$
+    Now, let us show that $f$ is not uniformly continuous on $(0, 1).$ \\\\
+    \textbf{Remark}. A function $f: X \mapsto \R$, $X \subset \R$ non-empty is not uniformly continuous om $X$ if $\exists \varepsilon_0 > 0$ and $\seq{x}{n}, \seq{y}{n} \in X$ with $|x_n - y_n| \leq \nicefrac{1}{n}$ and $|f(x_n) - f(y_n)| \geq \varepsilon_0$. \\\\
+    So, coming back to the example, let $x_n = \nicefrac{1}{n}, y_n = \nicefrac{1}{(n + 1)}$. Then compute
+    \begin{align*}
+        |x_n - y_n| &= \frac{1}{n(n + 1)} \leq \frac{1}{n} \\
+        |f(x_n) - f(y_n)| &= |n - (n + 1)| = 1.
+    \end{align*}
+    In other words, the difference between any terms of the same index of the image sequences is 1 while the difference between any two terms of the same index in the domain sequence tends to 0.
+    \item[]
+    \begin{proposition}
+        Let $f: (a, b) \mapsto \R$ be uniformly continuous. If $\seq{z}{n}$ is Cauchy with $z_n \in (a, b)$, then $(f(z_n))_{n \in \N}$ is Cauchy.
+    \end{proposition}
+    \begin{proof}
+        Since $f$ is uniformly continuous, we have that $\forall \widetilde{\varepsilon} > 0 \ \exists \widetilde{\delta} = \widetilde{\delta}(\widetilde{\varepsilon}) > 0$ such that
+        $$|x - y| \leq \widetilde{\delta} \implies |f(x) - f(y)| \leq \widetilde{\varepsilon} \quad x, y \in (a, b).$$ Also, since $\seq{z}{n}$ Cauchy, we have that $\forall \overline{\varepsilon} > 0 \ \exists \overline{N} \in \N$ such that $\forall m, n \geq \overline{N}$,
+        $$|z_m - z_n| \leq \overline{\varepsilon}.$$
+        Next, we need to show that $\forall \varepsilon > 0 \ \exists N \in \N$ such that $\forall m, n \geq N$, $|f(z_n) - f(z_m)| \leq \varepsilon$. Let $\varepsilon > 0$ be given. Set $\widetilde{\varepsilon} = \varepsilon$ which implies that there exists $\widetilde{\delta} > 0$ such that 
+        $$|x - y| \leq \widetilde{\delta} \implies |f(x) - f(y)| \leq \varepsilon.$$
+        Then, set $\overline{\varepsilon} = \widetilde{\delta} \implies \exists \overline{N} \in \N$ such that $\forall m, n \geq \overline{N}, |z_n - z_m| \leq \overline{\varepsilon} = \widetilde{\delta}$. Finally, set $N = \overline{N}$ and we get that, for all $m, n \geq N$,
+        $$|f(z_n) - f(z_m)| \leq \varepsilon.$$
+    \end{proof}
+    \begin{theorem}
+        Let $f: [a, b] \mapsto \R$ be a continuous function. Then $f: [a, b] \mapsto \R$ is uniformly continuous.
+    \end{theorem}
+    \begin{proof}
+        For the sake of contradiction, assume $f$ is not uniformly continuous. Then $\exists \varepsilon_0 > 0$ and sequences $\seq{x}{n}, \seq{y}{n}$ such that $x_n, y_n \in [a, b]$ with
+        $$|x_n - y_n| \leq \frac{1}{n} \text{ and } |f(x_n) - f(y_n)| \geq \varepsilon_0.$$
+        Further, since $x_n \in [a, b]$, we know that $x_n$ is bounded and by the Bolzano-Weirstrass Theorem, there exists a subsequence $\sseq{x}{n}{k}$ such that $x_{n_k} \rightarrow l_1 \in [a, b]$. \\\\
+        Next, consider another subsequence $\sseq{y}{n}{k}$ which not necessarily convergent (this is because, we are taking the indices the same as $x_{n_k}$ so we know the subsequence exists but not that it converges). However, since $y_{n_k}$ is bounded, the Bolzano-Weirstrass Theorem implies that it \textit{also} has a convergent sub-subsequence, say $y_{m_k}$ of the subsequence $y_{n_k}$ such that $y_{m_k} \rightarrow l_2 \in [a, b]$. Also, we can similarly say that $\sseq{x}{m}{k}$ is a subsequence of $x_{n_k}$ so $x_{m_k} \rightarrow l_1$. \\\\
+        We now must show that $l_1 = l_2$. Consider $|x_{m_k} - y_{m_k}| \leq \nicefrac{1}{m_k}$. As $k \to \infty$, the difference $(x_{m_k} - y_{m_k}) \rightarrow 0$ and $\nicefrac{1}{m_k} \rightarrow 0$. Therefore, $\lim_{k \to \infty} x_{n_k} = l_1 = l_2 = \lim_{k \to \infty} y_{m_k}$. \\\\
+        Now, we know $f$ is continuous, so $\lim_{k \to \infty} f(x_{m_k}) = f(l_1)$ and $\lim_{k \to \infty} f(y_{m_k}) = f(l_2)$ and $l_1 = l_2$. Together, these two things imply that $f(l_1) = f(l_2)$. This means that $\lim_{k \to \infty}|f(x_{m_k} - y_{m_k})| = 0$ which contradicts the assumption that $|f(x_{m_k}) - f(y_{m_k})| \geq \varepsilon_0$. Therefore, our initial assumption is false and $f$ must be uniformly continuous.
+    \end{proof}
+ \end{itemize}
 
 \newpage
 
