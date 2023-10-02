@@ -3,6 +3,7 @@
 \usepackage{amssymb}
 \usepackage{amsthm}
 \usepackage{enumerate}
+\usepackage{pgfplots}
 \usepackage{mathtools}
 \usepackage{nicefrac}
 \usepackage{centernot}
@@ -807,6 +808,22 @@
         If $f$ has a limit $l$, we write
         $$\lim_{x \to x_0} f(x) = l.$$
     \end{definition}
+    \begin{center}
+        \begin{tikzpicture}]
+            \begin{axis}[ axis lines=middle, xlabel = $x$, ylabel = {$y$}, ymax=20, ymin=0,
+                    extra x ticks={3,5,7},
+                    extra y ticks={4.5,6.5,8.5}, xtick={\empty}, ytick={\empty},
+                    extra y tick labels={$L-\varepsilon$,$L$,$L+\varepsilon$},
+                    extra x tick labels={$a-\delta$,$a$,$a+\delta$},
+                    extra tick style={grid=major}, grid style={dashed},
+                    axis y line=left, axis x line=bottom, ]
+            \addplot[domain=-4:8, color=red]{0.5*(x-2)^2+2} node[pos=.1,right] {$f(x)$};
+            \addplot coordinates {(5,6.5)};
+            \draw[dashed,blue] (axis cs:5,0)--(axis cs:5,20);
+            \draw[dashed,blue] (axis cs:-4,6.5)--(axis cs:8,6.5);
+            \end{axis}
+        \end{tikzpicture}
+    \end{center}
     \item[]
     \begin{proposition}
         Let $x_0 \in (a, b), f: (a, b) \setminus \{x_0\} \mapsto \R$. If $f$ has a limit at $x_0$, then the limit must be unique.    
