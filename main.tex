@@ -1430,14 +1430,14 @@
                 ylabel=\( f(x) \),
                 xmin=-1.6, xmax=1.6, % Setting the x domain: -pi/2 to pi/2
                 ymin=-1.2, ymax=1.2,    % Setting a slightly extended y range to make sure y=1 and y=-1 are visible
-                xtick={-pi/2,pi/2},
+                xtick={-3.1415/2,3.1415/2},
                 xticklabels={$-\pi/2$,$\pi/2$},
                 ytick={-1,1},
                 trig format=rad, % To use radians
                 width=9cm,      % Adjusted width
                 height=9cm,      % Adjusted height
             ]
-            \addplot[blue, thick, domain=-pi/2:pi/2] {sin(x)} node[pos=0.9,above left]{$\sin(x)$};
+            \addplot[blue, thick, domain=-3.1415/2:3.1415/2] {sin(x)} node[pos=0.9,above left]{$\sin(x)$};
             \end{axis}
         \end{tikzpicture}
     \end{center}
@@ -1449,7 +1449,7 @@
                 ylabel=\( x \),
                 ymin=-1.6, ymax=1.6, % Setting the y domain: -pi/2 to pi/2
                 xmin=-1, xmax=1,    % Setting a slightly extended x range to make sure x=1 and x=-1 are visible
-                ytick={-pi/2,pi/2},
+                ytick={-3.1415/2,3.1415/2},
                 yticklabels={$-\pi/2$,$\pi/2$}, % Label ticks with pi symbols
                 xtick={-1,1},
                 trig format=rad, % To use radians
