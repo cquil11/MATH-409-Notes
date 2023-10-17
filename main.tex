@@ -894,7 +894,7 @@
               $$x_0 - \frac{1}{n} \leq z_n \leq x_0 + \frac{1}{n} \implies z_n \rightarrow x_0.$$
               By assumption, $\lim_{n \to \infty} f(z_n) = l$, i.e., $\forall \varepsilon > 0 \ \exists n \in \N$ such that $\forall n \geq N$, $|f(z_n) - l| \leq \varepsilon$. Taking $\delta = \nicefrac{1}{n}$, we obtain a contradiction. Therefore, our contradiction assumption must be false and $\lim_{x \to x_0} f(x) = l$.
           \end{proof}
-    \item \textbf{Example}. Take $f(x) = \nicefrac{x}{|x|}, x \neq 0$. How do we show that this does not have a limit at $x = 0$? We could use the epsilon-delta proof technique, but this could be long and tedious. Instead, consider
+    \item \textbf{Example}. \label{example_seq_lim} Take $f(x) = \nicefrac{x}{|x|}, x \neq 0$. How do we show that this does not have a limit at $x = 0$? We could use the epsilon-delta proof technique, but this could be long and tedious. Instead, consider
           \begin{align*}
               \text{Let } z_n             & = -\frac{1}{n} \rightarrow 0 \\
               f(z_n)                      & = -1 \rightarrow -1          \\
@@ -1343,7 +1343,7 @@
           Let $\delta = \varepsilon$, then clearly
           $$|x - y| \leq \delta \implies |f(x) - f(y)| \leq \varepsilon.$$
           Now, let us show that $f$ is not uniformly continuous on $(0, 1).$ \\\\
-          \textbf{Remark}. A function $f: X \mapsto \R$, $X \subset \R$ non-empty is not uniformly continuous om $X$ if $\exists \varepsilon_0 > 0$ and $\seq{x}{n}, \seq{y}{n} \in X$ with $|x_n - y_n| \leq \nicefrac{1}{n}$ and $|f(x_n) - f(y_n)| \geq \varepsilon_0$. \\\\
+          \textbf{Remark}. A function $f: X \mapsto \R$, $X \subset \R$ non-empty is not uniformly continuous on $X$ if $\exists \varepsilon_0 > 0$ and $\seq{x}{n}, \seq{y}{n} \in X$ with $|x_n - y_n| \leq \nicefrac{1}{n}$ and $|f(x_n) - f(y_n)| \geq \varepsilon_0$. \\\\
           So, coming back to the example, let $x_n = \nicefrac{1}{n}, y_n = \nicefrac{1}{(n + 1)}$. Then compute
           \begin{align*}
               |x_n - y_n|       & = \frac{1}{n(n + 1)} \leq \frac{1}{n} \\
@@ -1481,8 +1481,97 @@
         \label{theorem:inverse_cont}
     \end{theorem}
     \begin{proof}
-        Next class.
+        Never got around to this in class.
     \end{proof}
+\end{itemize}
+
+\section{Differentiation}
+
+\begin{itemize}
+    \item[]
+    \begin{definition}[Locally differentiable]
+        Let $f: (a, b) \mapsto \R$ and $x_0 \in (a, b)$. If $\lim_{x \to x_0} (f(x) - f(x_0))/(x - x_0)$ exists and is finite, then we say that $f$ is \textbf{locally differentiable} at $x_0$ and write
+        $$f'(x_0) = \lim_{x \to x_0} \frac{f(x) - f(x_0)}{x - x_0}.$$
+    \end{definition}
+    \item \textbf{Remark}.
+    \begin{enumerate}[label=(\arabic*)]
+        \item By function composition and taking $g(x) = x_0 + h$, we note that
+        $$\lim_{x \to x_0} \frac{f(x) - f(x_0)}{x - x_0} = \lim_{h \to 0} \frac{f(x_0 + h) - f(x_0)}{h}.$$
+        \item Since $f$ is differentiable at $x_0$, it is also continuous at $x_0$. This is because you can always write
+        $$f(x) = f(x_0) + \frac{f(x) - f(x_0)}{x - x_0} (x - x_0) \qquad (x \neq x_0)$$
+    \end{enumerate}
+    \item[]
+    \begin{definition}[Globally differentiable]
+        Let $f: (a, b) \mapsto \R$. We say $f$ is \textbf{globally differentiable} on the interval $(a, b)$ if $f$ is differentiable on every $x_0 \in (a, b)$. In that case, we have
+        $$x \mapsto \lim_{\overline{x} \to x} \frac{f(\overline{x}) - f(x)}{\overline{x} - x} = f'(x)$$
+        is a well-defined function on $(a, b)$ called the \textbf{derivative} of $f$ on $(a, b)$.
+    \end{definition}
+    \item \textbf{Examples}.
+    \begin{enumerate}[label=(\arabic*)]
+        \item Let $f(x) = \alpha$. We claim this is differentiable on $\R$. \\\\
+        Let $x_0 \in \R, x_0 \neq x$. Compute
+        $$\frac{f(x) - f(x_0)}{x - x_0} = \frac{\alpha - \alpha}{x - x_0} = 0.$$
+        So $\lim_{x \to x_0} \frac{f(x) - f(x_0)}{x - x_0}$ exists and is finite and equals 0.
+        \item Let $f(x) = x^3$. We claim this is differentiable on $\R$. Let $x_0 \in \R, x_0 \neq x$. Compute
+        $$\frac{f(x) - f(x_0)}{x - x_0} = \frac{x^3 - x_0^3}{x - x_0} = x^2 + x_0x + x_0^2.$$
+        So $\lim_{x \to x_0} \frac{f(x) - f(x_0)}{x - x_0}$ exists and is finite and equals $3x_0^2$.
+        \item $Let f(x) = |x|$. We claim this is differentiable on $(-\infty, 0) \cup (0, \infty)$ but not at 0. First, consider $x_0 > 0$. Subsequently, $f(x) = x_0 > 0$. Then compute
+        $$\frac{f(x) - f(x_0)}{x - x_0} = \frac{x - x_0}{x - x_0} = 1 \implies f'(x_0) = 1.$$
+        Similarly, for $x_0 < 0$, $f'(x_0) = -1$. When $x_0 = 0$, we have
+        $$\lim_{x \to x_0} \frac{f(x) - f(x_0)}{x - x_0} = \lim_{x \to x_0 }\frac{|x|}{x}.$$
+        As previously established (similar to Example \ref{example_seq_lim}), this limit does not exist, so $f$ is not differentiable at 0.
+        \item Let $f(x) = \sin(x)$. We claim this is differentiable on $\R$. Take $x_0 \in \R$. Compute
+        $$\frac{f(x) - f(x_0)}{x - x_0} = \frac{\sin(x) - \sin(x_0)}{x - x_0} = \frac{\frac{1}{2}\sin(\frac{x - x_0}{2}) \cdot \cos(\frac{x + x_0}{2})}{x - x_0} = \frac{\sin(\frac{x - x_0}{2})}{\frac{x - x_0}{2}} \cdot \cos(\frac{x + x_0}{2}).$$
+        Then, we have
+        \begin{align*}
+            \lim_{x \to x_0} \left(\frac{\sin(\frac{x - x_0}{2})}{\frac{x - x_0}{2}} \cdot \cos\left(\frac{x + x_0}{2}\right)\right) &= \frac{\lim_{x \to x_0} \sin(\frac{x - x_0}{2})}{\lim_{x \to x_0} \frac{x - x_0}{2}} \cdot \lim_{x \to x_0} \cos(\frac{x + x_0}{2}) \\
+            &= 1 \cdot \cos(x_0).
+        \end{align*}
+        Since this limit exists and is finite, we have $f'(x_0) = \cos(x_0)$. Similarly, $f(x) = \cos(x) \implies f'(x_0) = \sin(x_0)$.
+    \end{enumerate}
+    \item[]
+    \begin{theorem}[Caratheodory's Theorem]
+        Let $f: (a, b) \mapsto \R, x_0 \in (a, b)$. The function $f$ is differentiable at $x_0$ if and only if there is $\varphi: (a, b) \mapsto \R$ that is continuous at $x_0$ and $f(x) = f(x_0) + \varphi(x)(x - x_0) \ \forall x \in (a, b)$. Furthermore, $f'(x_0) = \varphi(x_0)$.
+    \end{theorem}
+    \begin{proof}
+        First, suppose such a $\varphi$ exists. Further, suppose $x \neq x_0$. Then we have
+        $$\frac{f(x) - f(x_0)}{x - x_0} = \varphi(x).$$
+        Furthermore,
+        \begin{align*}
+            \lim_{x \to x_0} \frac{f(x) - f(x_0)}{x - x_0} = \lim_{x \to x_0} \varphi(x) &= \varphi(x_0) \longleftarrow \varphi \text{ continuous at } x_0 \\
+            &\rightarrow f'(x_0) = \varphi(x_0).
+        \end{align*}
+        Next, suppose $f'(x_0)$ is well-defined. In particular, set
+        \[
+        \varphi = \begin{cases}
+            \frac{f(x) - f(x_0)}{x - x_0} & x \neq x_0 \\
+            f'(x_0) & x = x_0.
+        \end{cases}
+        \]
+        Clearly, $\varphi(x)$ is continuous at $x_0$, so
+        $$\lim_{x \to x_0} \varphi(x) = \lim_{x \to x_0} \frac{f(x) - f(x_0)}{x - x_0} = f'(x_0) = \varphi(x_0).$$
+        On the other hand, when $x \neq x_0$, we have
+        \begin{alignat*}{2}
+            && \varphi(x) &= \frac{f(x) - f(x_0)}{x - x_0} \\
+            \iff&& f(x) &= f(x_0) + \varphi(x_0)(x - x_0) \\
+            \iff&& f(x) &= f(x_0) + \varphi(x)(x - x_0).
+        \end{alignat*}
+    \end{proof}
+    \item[]
+    \begin{lemma}
+        Let $f: (a, b) \mapsto \R$, If $f$ is differentiable at $x_0 \in (a, b)$, then $f$ is continuous at $x_0$.
+    \end{lemma}
+    \begin{proof}
+        If $f$ is differentiable at $x_0$, then there exists $\varphi$ which is continuous at $x_0$ such that $f(x) = f(x_0) + \varphi(x)(x - x_0)$ and $\lim_{x \to x_0} f(x) = f(x_0) + \varphi(x_0) \cdot 0 = f(x_0)$.
+    \end{proof}
+    \item \textbf{Remark}. There exists functions whose derivatives are not continuous. For example, consider
+    \[
+    f(x) =
+    \begin{cases}
+        x^2 \sin\left(\frac{1}{x}\right) & x \neq 0 \\
+        0 & x = 0.
+    \end{cases}
+    \]
 \end{itemize}
 
 \newpage
