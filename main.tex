@@ -12,6 +12,7 @@
 \usepackage[inline,shortlabels]{enumitem}
 \usepackage{hyperref}
 \usepackage{imakeidx}
+\usepackage{hyperref}
 \usepackage{thmtools}
 \usepackage[framemethod=TikZ]{mdframed} % Needed for the box and shading
 \usepackage{xcolor} % To define custom colors
@@ -1287,6 +1288,7 @@
                   \sup_{x \in [a, b]} f(x) & = \sup\{f(x) \ : \ x \in [a, b]\}  \\
                   \inf_{x \in [a, b]} f(x) & = \inf\{f(x) \ : \ x \in [a, b]\}.
               \end{align*}
+              \label{thm:evt}
           \end{theorem}
           \begin{proof}
               We first must show that $f$ is bounded on $[a, b]$. \\\\
@@ -1532,6 +1534,7 @@
     \item[]
     \begin{theorem}[Caratheodory's Theorem]
         Let $f: (a, b) \mapsto \R, x_0 \in (a, b)$. The function $f$ is differentiable at $x_0$ if and only if there is $\varphi: (a, b) \mapsto \R$ that is continuous at $x_0$ and $f(x) = f(x_0) + \varphi(x)(x - x_0) \ \forall x \in (a, b)$. Furthermore, $f'(x_0) = \varphi(x_0)$.
+        \label{thm:caratheodory}
     \end{theorem}
     \begin{proof}
         First, suppose such a $\varphi$ exists. Further, suppose $x \neq x_0$. Then we have
@@ -1585,6 +1588,7 @@
     \item[]
     \begin{theorem}[Fermat]
         Let $f: (a, b) \mapsto \R$. If $f$ has an extremum at $c \in (a, b)$ and is differentiable at $c$, then $f'(c) = 0$.
+        \label{thm:fermat_1}
     \end{theorem}
     \begin{proof}[Proof (Minimum).]
         Let $c$ be such an element. We have $c$ is a local minimum which implies that there exists $\delta > 0$ such that $f(x) \geq c \ \forall x \in (c - \delta, c + \delta)$. Take $x \in (c, c + \delta)$ and compute the ration
@@ -1677,6 +1681,156 @@
             &= \frac{f'(x_0)g(x_0) + f(x_0)g'(x_0)}{(g(x_0))^2}.
         \end{align*}
     \end{proof}
+    \item[]
+    \begin{proposition}[Chain Rule]
+        Let $f: (a, b) \mapsto (c, d)$ be differentiable at $x_0 \in (a, b)$ and let $g: (c, d) \mapsto \R$ be differentiable at $f(x_0) \in (c, d)$. Then $g \circ f$ is differentiable at $x_0$ with
+        $$(g \circ f)'(x_0) = g'(f(x_0))f'(x_0).$$
+    \end{proposition}
+    \begin{proof}
+        Recall Caratheodory's Theorem (\ref{thm:caratheodory}) which states that a function $f$ is differentiable at $x_0$ if and only if there exists a continuous function $\varphi: (a, b) \mapsto \R$ such that $f(x) = f(x_0) + \varphi(x)(x - x_0)$ and $\varphi(x_0) = f'(x_0)$. We can tweak this equation for $g$ as follows: 
+        \begin{center}
+            The function $g$ is differentiable at $f(x_0)$ if and only if there exists a continuous function $\Phi: (c, d) \mapsto \R$ such that $g(y) = g(f(x_0)) + \Phi(y)(y - f(x_0))$ and $\Phi(f(x_0)) = g'(f(x_0))$.
+        \end{center}
+        Now compute for $x \in (a, b) \setminus \{x_0\}$.
+        \begin{align*}
+            \frac{(g \circ f)(x) - (g \circ f)(x_0)}{x - x_0} &= \frac{g(f(x)) - g(f(x_0))}{x - x_0} \\
+            &= \frac{\Phi(f(x))(f(x) - f(x_0))}{x - x_0}.
+        \end{align*}
+        Now,
+        \begin{align*}
+            \lim_{x \to x_0} \Phi(f(x)) \cdot \lim_{x \to x_0} \frac{f(x) - f(x_0)}{x - x_0} &= \Phi(f(x_0)) \cdot f'(x_0) \\
+            &= g'(f(x_0)) \cdot f'(x_0)
+        \end{align*}
+        since $\Phi$ is continuous and $f$ is differentiable at $x_0$. All of this together implies that $(g \circ f)(x_0) = g'(f(x_0)) \cdot f'(x_0)$.
+    \end{proof}
+\end{itemize}
+
+\subsection{Mean Value Theorem and Applications}
+
+\begin{itemize}
+    \item[]
+    \begin{theorem}[Rolle's Theorem]
+        Let $f: [a, b] \mapsto \R$ be continuous on $[a, b]$ and differentiable on $(a, b)$. If $f(a) = f(b)$, then there exists $c \in (a, b)$ such that $f'(c) = 0$.
+        \label{thm:rolles}
+    \end{theorem}
+    \begin{proof}
+        First note that $f$ continuous on $[a, b]$ implies (by the \hyperref[thm:evt]{Extreme Value Theorem}) that there exists $r, s \in [a, b]$ such that $\underbrace{f(r)}_{m} \leq f(x) \leq \underbrace{f(s)}_{M} \ \forall x \in [a, b]$. Then consider three cases:
+        \begin{enumerate}[label=(\arabic*)]
+            \item If $m = M$, then $f(x) = m = M \ \forall x \in [a, b]$ which further implies that $f'(x) = 0 \ \forall x \in (a, b)$ taking any $c \in (a, b)$.
+            \item If $m < M$, then either $r \in (a, b)$ or $s \in (a, b)$ because $f(a) = f(b)$ by assumption.
+            \begin{enumerate}[label=(\roman*)]
+                \item If $r \in (a, b)$, then $f$ achieves its minimum at $r$ and is thus differentiable at $r$, then Fermat's Theorem (\ref{thm:fermat_1}) implies that $f'(r) = 0$, taking $c = r$ we get our desired result.
+                \item Take $s \in (a, b)$ and the same result is obtained.
+            \end{enumerate}
+            \item The case where $m > M$ is symmetric and left as an exercise.
+        \end{enumerate}
+    \end{proof}
+    \item[]
+    \begin{theorem}[Mean Value Theorem]
+        Let $f: [a, b] \mapsto \R$ be continuous on $[a, b]$ and differentiable on $(a, b)$. Then there exists a $c \in (a, b)$ such that
+        $$f'(c) = \frac{f(b) - f(a)}{b - a}.$$
+        \label{thm:mvt}
+    \end{theorem}
+    \begin{proof}
+        Define $h(x) = f(x)(b - a) + (a- x)(f(b) - f(a))$. Since $h$ is a composition of two differentiable and continuous functions, $h$ is continuous on $[a, b]$ and differentiable on $(a, b)$. Then compute
+        \begin{align*}
+            h(a) &= f(a) \cdot b - f(a) \cdot a \\
+            h(b) &= f(b)(b - a) - (b - a)(f(b) - f(a)) \\
+            &= (b - a) \cdot f(a) = h(a)
+        \end{align*}
+        Then Rolle's Theorem (\ref{thm:rolles}) implies that there exists a $c \in (a, b)$ such that $h'(c) = 0$ which means that
+        \begin{align*}
+            h'(x) &= f'(x)(b - a) - (f(b) - f(a)) \\
+            0= h'(c) &= f'(c)(b - a) - (f(b) - f(a)) \\
+            \iff f'(c) &= \frac{f(b) - f(a)}{b - a}.
+        \end{align*}
+    \end{proof}
+    \item[]
+    \begin{theorem}[Mean Value Theorem (Cauchy)]
+        Let $f, g: [a, b] \mapsto \R$ be continuous on $[a, b]$ and differentiable on $(a, b)$. Further assume $g'(x) \neq 0 \ \exists x \in (a, b)$. Then there exists $c \in (a, b)$ such that
+        $$\frac{f'(c)}{g'(c)} = \frac{f(b) - f(a)}{g(b) - g(a)}.$$
+        \label{thm:mvt_cauchy}
+    \end{theorem}
+    \begin{proof}
+        First, note that $g(a) \neq g(b)$ because otherwise, Rolle's Theorem implies that there exists some $d \in (a, b)$ such that $g'(d) = 0$, which is a contradiction. Thus, our ratio is well-defined. \\\\
+        Let $h(x) = f(x)(g(b) - g(a)) - (g(x) - g(a))(g(b) - f(a))$. As before, $h$ us continuous and differentiable on $[a, b]/(a, b)$, respectively. Then
+        \begin{align*}
+            h(a) &= f(a)g(b) - f(a)g(a) \\
+            h(b) &= f(b)(g(b) - g(a)) - (g(b) - g(a))(f(b) - f(a)) \\
+            &= g(b)f(a) - g(a)f(a) = h(a).
+        \end{align*}
+        Then Rolle's Theorem implies that there exists some $c \in (a, b)$ such that $h'(c) = 0$ and we have
+        \begin{align*}
+            h'(x) &= f'(x)(g(b) - g(a)) - (g'(x)(f(b) - f(a))) \\
+            0 = h'(c) &= f'(c)(g(b) - g(a)) - g'(c)(f(b) - f(a)) \\
+            \iff \frac{f'(c)}{g'(c)} &= \frac{f(b) - f(a)}{g(b) - g(a)}.
+        \end{align*}
+    \end{proof}
+    \item[]
+    \begin{proposition}[L'Hospital's Rule]
+        Let $f, g: (a, b) \mapsto \R$ be two continuous functions differentiable on $(a, b) \setminus \{x_0\}$ with
+        \begin{itemize}[label=\smallblacksquare]
+            \item $g'(x) \neq 0 \ \forall x \in (a, b) \setminus\{x_0\}$,
+            \item $\lim_{x \to x_0} f(x) = \lim_{x \to x_0} g(x) = 0$,
+            \item and there is $l \in \R$ such that $\lim_{x \to x_0} f'(x)/g'(x) = l$.
+        \end{itemize}
+        Then
+        $$\lim_{x \to x_0} \frac{f(x)}{g(x)} = l.$$
+    \end{proposition}
+    \begin{proof}
+        We show that $\lim_{x \to x_0^+} f(x)/g(x) = l = \lim_{x \to x_0^-} f(x)/g(x)$. We first show that $g$ cannot vanish (become zero) more than once on the interval $(a, x_0)$. Let $a < x_1 < x_2 < x_0$.
+        \begin{center}
+            \begin{tikzpicture}
+                \draw[latex-latex, thick] (-1,0) -- (5,0); % draws 1-d coordinate axes
+            
+                % define positions of the points
+                \def\posA{0.5}
+                \def\posXone{1.5}
+                \def\posXtwo{3}
+                \def\posXzero{4}
+            
+                % draw points on the number line
+                \foreach \x/\y in {\posA/a, \posXone/x_1, \posXtwo/x_2, \posXzero/x_0} {
+                    \draw[shift={(\x,0)},color=black] (0pt,3pt) -- (0pt,-3pt);
+                    \node[below] at (\x,-0.2) {\(\y\)};
+                }
+            \end{tikzpicture}
+        \end{center}
+        What can be said about $g: [x_1, x_2] \mapsto \R$? Certainly, $g$ is continuous since it is differentiable on the entire interval, so $g$ is continuous on $[x_1, x_2]$ and differentiable on $(x_1, x_2)$. Then, the MVT (Theorem \ref{thm:mvt}) implies that there exists a $c \in (x_1, x_2) \subset (a, b)$ such that
+        $$0 \neq g'(c) = \frac{g(x_2) - g(x_1)}{x_2 - x_1}$$
+        which implies that $g$ cannot vanish at $x_1$ or $x_2$. \\\\
+        Say that $g$ does vanish on $\gamma$ such that $a < \gamma < x$, if it doesn't vanish, then $\gamma = a$. By assumption, we now that $\forall \varepsilon > 0 \ \exists \delta > 0$ such that if $x \in (a, x_0)$ and (WLOG) $\gamma < x_0 - \delta \leq x \leq x_0$, then
+        $$\left|\frac{f'(x)}{g'(x)} - l\right| \leq \varepsilon.$$
+        Let $\gamma < x_0 - \delta \leq x < y < x_0$. Then, since $f$ and $g$ are continuous on the entire interval, the MVT Cauchy Version (Theorem \ref{thm:mvt_cauchy}) implies that there exists a $c \in (x, y)$ such that
+        $$\frac{f'(c)}{g'(c)} = \frac{f(y) - f(x)}{g(y) - g(x)}.$$
+        \begin{center}
+            \begin{tikzpicture}
+                \draw[latex-latex, thick] (-1,0) -- (5,0); % draws 1-d coordinate axes
+            
+                % define positions of the points
+                \def\posGamma{-0.5}
+                \def\posXzeroDelta{0.5}
+                \def\posX{1.5}
+                \def\posY{3}
+                \def\posXzero{4}
+                \def\posC{2.25}
+            
+                % draw points on the number line
+                \foreach \x/\y in {\posGamma/\gamma, \posXzeroDelta/x_0-\delta, \posX/x, \posY/y, \posXzero/x_0, \posC/c} {
+                    \draw[shift={(\x,0)},color=black] (0pt,3pt) -- (0pt,-3pt);
+                    \node[below] at (\x,-0.2) {\(\y\)};
+                }
+            \end{tikzpicture}
+        \end{center}
+        Then consider
+        \begin{alignat*}{2}
+            &&\left|\frac{f'(x)}{g'(x)} - l \right| &= \left|\frac{f(y) - f(x)}{g(y) - g(x)} - l\right| \leq \varepsilon \\
+            \overset{\text{comp.}}{\implies}&& \lim_{y \to x_0}  \left|\frac{f'(x)}{g'(x)} - l \right| &\leq \varepsilon \\
+            && = \left|\frac{f(x)}{g(x)} - l \right| &\leq \varepsilon \\
+            \implies&& \lim_{x \to x_0^-} \frac{f(x)}{g(x)} &= l.
+        \end{alignat*}
+        Similarly, $\lim_{x \to x_0^+} f(x)/g(x) = l$.
+     \end{proof}
 \end{itemize}
 
 \newpage
