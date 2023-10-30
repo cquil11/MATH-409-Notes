@@ -76,10 +76,10 @@
     innerbottommargin=1em, % space added at the bottom
     innerleftmargin=1em, % space added on the left
     innerrightmargin=1em, % space added on the right
-]{proposition}{Proposition}[subsection] % Proposition environment
+]{proposition}[theorem]{Proposition} % Proposition environment
 
 \theoremstyle{definition} % This style is typically used for definitions, examples, etc.
-\newtheorem{definition}[subsection]{Definition} % Numbered by subsection
+\newtheorem{definition}[theorem]{Definition} % Numbered by subsection
 
 \makeindex
 
@@ -1831,6 +1831,249 @@
         \end{alignat*}
         Similarly, $\lim_{x \to x_0^+} f(x)/g(x) = l$.
      \end{proof}
+\end{itemize}
+
+\subsection{Limited Expansion}
+
+\begin{itemize}
+    \item[]
+    \begin{definition}
+        For $n \in \N$, we say that $f: (a, b) \mapsto \R$ is \textbf{$n$-times differentiable} on $(a, b)$ if
+        \begin{center}
+            $f$ is differentiable, $f'$ is differentiable, $\ldots$, $f^{(n)}$ is differentiable.
+        \end{center}
+    \end{definition}
+    \item[]
+    \begin{theorem}[Taylor]
+        Let $f: (a, b) \mapsto \R$ be $(n + 1)$ times differentiable ($n$ derivatives are continuous, but $(n + 1)^{\text{th}}$ may not be). Then
+        $$f(x) = P_n(x) + \varepsilon(x)(x - a)^n$$
+        where
+        $$P_n(x) = f(a) + \frac{f'(a)}{1!}(x - a) + \cdots + \frac{f^{(n)}(a)}{n!}(x - a)^n$$
+        and $\varepsilon(x) = \nicefrac{f^{(n + 1)}(c)}{(n + 1)!}(x - a) \ \exists c \in (a, b)$.
+        \label{thm:taylor_expansion}
+    \end{theorem}
+    \begin{proof}
+        Since $P_n$ is a polynomial of degree $n$ in $x$, rewrite as follows:
+        $$P_n(x) = \sum_{i = 0}^{n} \frac{f^{(i)}(a)}{i!}(x - a)^i$$
+        where $f^{(0)} = f$. \\\\
+        Then
+        $$P_n'(x) = \sum_{i = 1}^{n} \frac{f^{(i)}(a)}{i!}i \cdot (x - a)^{i - 1} = \sum_{i = 1}^{n} \frac{f^{(i)}(a)}{(i - 1)!}(x - a)^{i - 1}$$
+        and similarly (for $1 \leq j \leq n$)
+        $$P_n^{(j)}(x) = \sum_{i = j}^{n} \frac{f^{(i)}(a)}{(i - j)!}(x - a)^{i - j}$$
+        where $P_n^{(j)}(a) = f^{(j)}(a)$ for $j = 0, \ldots, n$. \\\\
+        Let
+        $$g(x) = f(x) - P_n(x) + \frac{P_n(y) - f(y)}{(y - a)^{n + 1}}(x - a)^{n + 1} \ \exists y \in (a, b).$$
+        Then $g$ is $(n + 1)$ times differentiable and
+        $$0 = g(a) = g'(a) = \cdots = g^{(n)}(a).$$
+        In addition, $g(y) = 0$, so by Rolle's Theorem (\ref{thm:rolles}), since
+        \begin{align*}
+            g(a) &= g(y) = 0, \ \exists c_1 \in (a, b) \text{ such that } g'(c_1) = 0 \\
+            g'(a) &= g'(c_1) = 0, \ \exists c_2 \in (a, b) \text{ such that } g''(c_2) = 0 \\
+            &\vdotswithin{=} \\
+            g^{(n)}(a) &= g^{(n)}(c_n) = 0, \ \exists c \in (a, b) \text{ such that } g^{(n + 1)}(c) = 0 .
+        \end{align*}
+        Then we have
+        \begin{alignat*}{2}
+            && g^{(n + 1)}(x) &= f^{(n + 1)}(x) + \frac{P_n(y) - f(y)}{(y - a)^{n + 1}}(n + 1)! \\
+            \iff&& 0 &= f^{(n + 1)}(c) + \frac{P_n(y) - f(y)}{(y - a)^{n + 1}}(n + 1)! \\
+            \iff&& f(y) &= P_n(y) + \underbrace{\frac{f^{(n + 1)}(c)}{(n + 1)!}(y - a)^{n + 1}}_{\varepsilon(y)(y - a)^n}.
+        \end{alignat*}
+        This is the result for $x = y$.
+    \end{proof}
+    \item \textbf{Example}. Compute the Taylor Expansion for $f(x) = \sin(x)$.
+    $$\sin(x) = 0 + x - \underbrace{\frac{x^3}{3!} + \frac{x^5}{5!}}_{P_5(x)} + \underbrace{\frac{\sin(c)}{6!}x^6}_{\varepsilon(x)x^5} \ \exists c \in (0, x).$$
+    \item[]
+    \begin{lemma}[Taylor Expansion uniqueness]
+        Let $f: (a, b) \mapsto \R$ be $(n + 1)$ times differentiable such that
+        $$f(x) = b_0 + b_1(x - a) + \cdots + b_n(x - a)^n + \widetilde{\varepsilon}(x)(x - a)^n \ \exists b_i \in \R, \widetilde{\varepsilon}(x) \underset{x \rightarrow 0}{\longrightarrow} 0.$$
+        Then
+        $$b_i = \frac{f^{(i)(a)}}{i!}, i = 0, \ldots, n \quad \text{and} \quad \widetilde{\varepsilon}(x) = \varepsilon(x) = \frac{f^{(n + 1)}(c)}{(n + 1)!}(y - a) \ \exists c \in (a, x).$$
+    \end{lemma}
+    \begin{proof}
+        We have two expansions of $f$:
+        \begin{enumerate}[label=(\roman*)]
+            \item $f(x) = \sum_{i = 0}^{n} b_i(x - a)^i + \widetilde{\varepsilon}(x)(x - a)$ and
+            \item $f(x) = \sum_{i = 0}^{n} \big[f^{(i)}(a)/i! \cdot (x - a)^i\big] + \varepsilon(x)(x - a)^n$.
+        \end{enumerate}
+        Consider $f(x) - f(x) = 0$
+        \begin{align*}
+            0 = \sum_{i = 0}^{n}\left(\frac{f^{(i)}(a)}{i!}\right)(x - a)^i + \left(\varepsilon(x) - \widetilde{\varepsilon}(x)\right)(x - a)^n.
+        \end{align*}
+        Assume by contradiction that $\nicefrac{f^{(k)}(a)}{k!} \neq b_k 0 \leq k \leq n$. Without loss of generality, we take the smallest of such $k$'s and get
+        \begin{align*}
+            0 &= \sum_{i = k}^{n} \left(\frac{f^{(i)}(a)}{i!} - b_i\right)(x - a)^i + (\varepsilon(x) - \widetilde{\varepsilon}(x))(x - a)^n \\
+            0 &= \sum_{i = k}^{n} \left(\frac{f^{(i)}(a)}{i!} - b_i\right)(x - a)^{i - k} + (\varepsilon(x) - \widetilde{\varepsilon}(x))(x - a)^{n - k} \tag{*} \\
+            \implies &\lim_{x \to a} \sum_{i = k}^{n} \left(\frac{f^{(i)}(a)}{i!} - b_i\right)(x - a)^{i - k} + (\varepsilon(x) - \widetilde{\varepsilon}(x))(x - a)^{n - k} \\
+            &= 0 = \frac{f^{(k)}(a)}{k!} - b_k.
+        \end{align*}
+        Therefore, $\nicefrac{f^{(i)}(a)}{i!} = b_i \ \forall i = 0, \ldots, n$ and by (*) we have
+        \begin{alignat*}{2}
+            && 0 &= (\varepsilon(x) - \widetilde{\varepsilon}(x))(x - a)^n \\
+            \iff&& \varepsilon(x) &= \widetilde{\varepsilon}(x).
+        \end{alignat*}
+    \end{proof}
+    \item \textbf{Remark}. Let $f, g: (a, b) \mapsto \R$ be $(n + 1)$ times differentiable functions such that
+    \begin{align*}
+        f(x) &= \sum_{i = 0}^{n} b_i (x - a)^i + \varepsilon(x)(x - a)^n \quad b_i \in \R, \quad \varepsilon(x) \underset{x \rightarrow a}{\longrightarrow} 0 \\
+        g(x) &= \sum_{i = 0}^{n} d_i (x - a)^i + \varepsilon(x)(x - a)^n \quad d_i \in \R, \quad \widetilde{\varepsilon}(x) \underset{x \rightarrow a}{\longrightarrow} 0.
+    \end{align*}
+    Then
+    \begin{align*}
+        (f + g) = \sum_{i = 0}^{n} (b_i + d_i)(x - a)^i + (\varepsilon(x) + \widetilde{\varepsilon}(x))(x - a)^n \\
+        (f \cdot g) = \sum_{i = 0}^{n} (b_i \cdot d_i)(x - a)^i + (\varepsilon(x) \cdot \widetilde{\varepsilon}(x))(x - a)^n \\
+        (f / g) = \sum_{i = 0}^{n} (b_i / d_i)(x - a)^i + (\varepsilon(x) / \widetilde{\varepsilon}(x))(x - a)^n \quad g \neq 0.
+    \end{align*}
+    \item \textbf{Example}. Consider the Taylor expansion of $f(x) = \nicefrac{1}{(1 + x)}$. First realize that
+    $$(1 + x)(1 - x + x^2 + \cdots) = 1.$$
+    The point is:
+    $$f(x) = \frac{1}{1 + x} = 1 - x + x^2 - x^3 + \cdots + )-1)^nx^n + \varepsilon(x)x^n$$
+    where $\varepsilon(x) = (-1)^{n + 1}x + (-1)^{n + 2}x^2 + \cdots$. Then $f^{(n)}(0) = (-1)^{n} \cdot n!$.
+    \item \textbf{Example}. Consider
+    $$f(x) = \frac{1}{(1 + x^2)} = 1 - x^2 + x^4 - x^6 + \cdots + (-1)^nx^{2n} + \varepsilon(x)x^{2n}.$$
+    \item \textbf{Example}. Consider $f(x) = (\sin^2(x) - x^2\cos(x))/(x^2(1 - \cos(x))$ defined on $(-\pi/2, 0) \cup (\pi/2, 0)$. How can we compute $\lim_{x \to 0} f(x)$? One could employ L'Hopital's rule, but this would be extremely messy. A slightly more convenient way to compute this limit is the following. Let us consider the Taylor expansions of the terms that comprise $f$:
+    \begin{align*}
+        \sin(x) &= x - \frac{x^3}{3!} + \varepsilon(x)x^3 \\
+        (\sin(x))^2 &= x^2 - \frac{2x^4}{3!} + \varepsilon(x)x^4 \\
+        \cos(x) &= 1 - \frac{x^2}{2!} + \varepsilon(x)x^3 \\
+        x^2\cos(x) &= x^2 + \frac{x^4}{2!} + \varepsilon(x)x^5 \\
+        x^2(1 - \cos(x)) &= \frac{x^4}{2!} + \varepsilon(x)x^5.
+    \end{align*}
+    Now compute
+    \begin{align*}
+        \lim_{x \to 0} \frac{\sin^2(x) - x^2\cos(x)}{x^2(1 - \cos(x))} &= \lim_{x \to 0} \frac{\frac{1}{6}x^4 + \varepsilon(x)x^4}{\frac{x^4}{2} + \varepsilon(x)x^5} \\
+        &= \frac{\frac{1}{6} + \varepsilon(x)}{\frac{1}{2} + \varepsilon(x) \cdot x} \\
+        &= \frac{1}{3}
+    \end{align*}
+    since $\varepsilon(x) \underset{x \rightarrow 0}{\longrightarrow} 0$.
+    \item[]
+    \begin{lemma}
+        Let $f: (a, b) \mapsto \R$ be $n + 1$ times differentiable. Suppose
+        $$f'(x) = b_0 + b_1(x - a) + b_2(x - a)^2 + \cdots + b_{n - 1}(x - a)^{n - 1} + \varepsilon(x)(x - a)^{n - 1}.$$
+        Let
+        $$g(x) = f(a) + b_0(x - a) + \frac{b_1}{2}(x - a)^2 + \cdots + \frac{b_{n - 1}}{n}(x - a)^n + \widetilde{\varepsilon}(x)(x - a)^n.$$
+        Then $f(x) = g(x)$.
+    \end{lemma}
+    \begin{proof}
+        Compute $g'(x)$ and realize that $g'(x) = f'(x)$ and then use the result that says if two derivatives are equal on an interval, then the functions are equal up to a constant (Homework 9, Exercise 1) and we obtain
+        \begin{align*}
+            g(x) &= f(x) + c \\
+            g(a) &= f(a) + \alpha \\
+            \implies \alpha &= 0.
+        \end{align*}
+    \end{proof}
+\end{itemize}
+
+\subsubsection{Local Extremum (Re-Visited)}
+
+\begin{itemize}
+    \item[]
+    \begin{lemma}
+        Let $x_0 \in (a, b), f: (a, b) \mapsto \R$ be $n$ times differentiable. Assume that $f^{(n)}$ is continuous at $x_0$. Furthermore, assume that
+        $$f'(x_0) = f''(x_0) = \cdots = f^{(n - 1)}(x_0) = 0 \quad \text{and} \quad f^{(n)}(x_0) \neq 0.$$
+        Then $x_0$ is a local minimum if $f^{(n)}(x_0) > 0$ and a local maximum if $f^{(n)} < 0$.
+    \end{lemma}
+    \begin{proof}[Proof ($f^{(n)}(x_0) > 0$).]
+        Since $f^{(n)}(x_0) > 0$ and $f^{(n)}$ is continuous at $x_0$, there is $\delta > 0$ such that $f^{(n)}(x) > 0 \ \exists x \in (x_0 - \delta, x_0 + \delta)$. By Taylor's Theorem,
+        \begin{align*}
+            f(x) &= f(x_0) + \underbrace{f'(x_0)(x - x_0)}_{0} + \cdots + \underbrace{\frac{f^{(n + 1)}(x_0)}{(n - 1)!}(x - x_0)^{n - 1}}_{0} + \underbrace{\frac{f^{(n)}(c)}{n!}(x - x_0)^n}_{> 0} \\
+            \implies f(x) &\geq f(x_0) \ \exists x \in (x_0 - \delta, x_0 + \delta)
+        \end{align*}
+        which implies that $x_0$ is a local minimum by definition.
+    \end{proof}
+    \item \textbf{Example}. Let $f: (a, b) \mapsto \R$ be twice differentiable and $x_0 \in (a, b)$ with $f''(x_0)$ continuous and $f'(x_0) = 0$. If $f''(x_0) > 0$ then $x_0$ is a local minimum and if $f''(x_0) < 0$ then $x_0$ is a local maximum. \\\\
+    For instance, consider $f(x) = -x^2, f'(x) = -2x, f''(x) = -2, f'(0) = 0, f''(0) < 0 \implies 0$ is a local maximum.
+\end{itemize}
+
+\section{Integration}
+
+\begin{itemize}
+    \item[]
+    \begin{definition}
+        Let $a < b$. A \textbf{partition} $\sigma$ of a closed interval $(a, b)$ is a list of ordered pairs such that
+        $$a = x_0 < x_1 < \cdots < x_n = b.$$
+        We write
+        $$\sigma_n = \{x_0, \ldots, x_n\} = (x_i)_{i = 1}^{n}.$$
+    \end{definition}
+    \item[]
+    \begin{definition}
+        The \textbf{step} of a partition $\sigma_n$ is defined as
+        $$h(\sigma_n) = \max_{i = 1, \ldots, n}(x_i - x_{i - 1}).$$
+        The particular case when
+        $$x_i = x_i + i \cdot \frac{b - a}{n} \quad i = 0, \ldots, n$$
+        is called the \textbf{regular/uniform partition} with
+        $$h(\sigma_n) = \frac{b - a}{n}.$$
+    \end{definition}
+    \item[]
+    \begin{definition}
+        Let $f: [a, b] \mapsto \R$ be continuous on $[a, b]$ and $\sigma_n = (x_i)_{i = 1}^{n}$ be a partition of $[a, b]$. The real number
+        $$\underline{S}_{\sigma}(f) = \sum_{i = 1}^{n} m_i(x_i - x_{i - 1})$$
+        where $m_i = \min_{x \in [x_{i - 1}, x_i]} f(x)$ is called the \textbf{lower Darboux sum}. \\\\
+        Similarly,
+        $$\overline{S}_{\sigma}(f) = \sum_{i = 1}^{n} M_i(x_i - x_{i - 1})$$
+        where $M_i = \max_{x \in [x_{i - 1}, x_i]} f(x)$ is called the \textbf{upper Darboux sum}.
+    \end{definition}
+    \item \textbf{Remark}. We have that
+    $$m(b - a) \leq \underline{S}_{\sigma}(f) \leq \overline{S}_{\sigma}(f) \leq M(b - a)$$
+    where $m$ and $M$ are defined as above. \\\\
+    This implies that
+    \begin{align*}
+        \overline{S}(f) &= \inf\{\overline{S}_{\sigma}(f) \ : \ \sigma \text{ a partition of } [a, b]\} \\
+        \underline{S}(f) &= \sup\{\underline{S}_{\sigma}(f) \ : \ \sigma \text{ a partition of } [a, b]\}
+    \end{align*}
+    are well-defined.
+    \item[]
+    \begin{lemma}
+        Let $\sigma, \sigma_*$ be two partitions of $[a, b]$ such that $\sigma \subset \sigma_*$. Then 
+        $$\overline{S}_{\sigma_*}(f) \leq \overline{S}_{\sigma}(f) \quad \text{and} \quad \underline{S}_{\sigma} \leq \underline{S}_{\sigma_{*}}(f).$$
+    \end{lemma}
+    \begin{proof}
+        Consider $\sigma = \{x_0, \ldots, x_n\}$ and $\sigma_* = \{x_0^*, \ldots, x_{n}^*\}$. Let $x_{i - 1}^j$ be the point in $\sigma_*$ such that
+        $$x_{i - 1} \leq x_{i - 1}^j \leq x_i \quad j = 0, \ldots, k_i.$$
+        Then
+        \begin{align*}
+            \underline{S}_{\sigma}(f) &= \sum_{i = 1}^n \left(\min_{x \in [x_{i - 1}, x_i]} f(x)\right)(x_i - x_{i - 1}) \\
+            &\leq \sum_{i = 1}^n \sum_{j = 1}^{k_i} \min_{x \in [x_{i - 1}^j, x_{i}^j]} (x_{i - 1}^j - x_{i - 1}^{j - 1}) \\
+            &= \sum_{i = 1}^{n_*} \min_{x \in [x_{i - 1}^*, x_i^*]} f(x) (x_i^* - x_{i - 1}^*) = \underline{S}_{\sigma_*}(f).
+        \end{align*}
+    \end{proof}
+    \item[]
+    \begin{lemma}
+        Suppose $a < b$ and let $f: [a, b] \mapsto \R$ be a continuous function. Then $\underline{S}(f) = \overline{S}(f)$.
+    \end{lemma}
+    \begin{proof}
+        Since $f$ is continuous on $[a, b]$, $f$ is uniformly continuous by Theorem $\ref{theorem:unif_cont}$. Recall that this means that $\forall \varepsilon > 0 \ \exists \delta > 0$ such that
+        $$|x - y| \leq \delta \implies |f(x) - f(y)| \leq \frac{\varepsilon}{3(b - a)}.$$
+        Let $\sigma$ be a partition with $h(\sigma) \leq \delta$ and $\sigma = \{x_0, \ldots, x_n\}$. Note that $\max_{x \in [x_{i - 1}, x_i]} f(x) = f(\alpha_i) \ \exists \alpha_i \in [x_{i - 1}, x_i]$ by the Extreme Value Theorem (Theorem \ref{thm:evt}). Similarly, $\lim_{x \in [x_{i - 1}, x_i]} f(x) = f(\beta_i) \ \exists \beta_i \in [x_{i - 1}, x_i]$. This implies that
+        $$\max_{x \in [x_{i - 1}, x_i]} f(x) - \min_{x \in [x_{i - 1}, x_i]} f(x) = f(\alpha_i) - f(\beta_i) \leq \frac{\varepsilon}{3(b - a)}$$
+        since
+        $$|\alpha_i - \beta_i| \leq \delta$$
+        since $\alpha_i, \beta_i \in [x_{i - 1}, x_i]$ and $h(\sigma) = \max\{x_i - x_{i - 1}\} \leq \delta$. \\\\
+        Therefore,
+        \begin{align*}
+            \overline{S}_{\sigma}(f) - \underline{S}_{\sigma}(f) &= \sum_{i = 1}^n (M_i - m_i)(x_{i - 1} - x_i) \\
+            &\leq \frac{\varepsilon}{3}.
+        \end{align*}
+        Additionally, by definition
+        $$\underline{S}_{\sigma}(f) = \sup\{\underline{S}_{\sigma}(f) \ : \ \sigma \text{ a partition of } [a, b]\}.$$
+        Therefore, by the characterization of suprema, there exists $\sigma_1$, a partition of $[a, b]$, such that
+        $$\underline{S}_{\sigma}(f) - \underline{S}_{\sigma_1} \leq \frac{\varepsilon}{3}.$$
+        Similarly, there exists $\sigma_2$, a partition of $[a, b]$, such that
+        $$\overline{S}_{\sigma_2}(f) - \overline{S}(f) \leq \frac{\varepsilon}{3}.$$
+        Set $\sigma = \sigma_1 \cup \sigma_2$ such that $\sigma_1 \subset \sigma$ and $\sigma_2 \subset \sigma$ (which is even smaller than $\sigma_1$ and $\sigma_2$, i.e., a refinement of the two). Using the result from the previous lemma, we have
+        $$\overline{S}_{\sigma}(f) \geq \overline{S}_{\sigma}(f) \quad \text{and} \quad \underline{S}_{\sigma}(f) \leq \underline{S}_{\sigma_1}(f)$$
+        which implies that
+        $$\overline{S}_{\sigma}(f) - \overline{S}(f) \leq \frac{\varepsilon}{3} \quad \text{and} \quad \underline{S}(f) - \underline{S}_{\sigma}(f) \leq \frac{\varepsilon}{3}.$$
+        Without loss of generality, we can assume that $h(\sigma) \leq \delta$ (if it were not, we can simply consider the uniform partition such that $\nicefrac{b - a}{n} \leq \delta$ and perform the same "trick"). Now, for every $\varepsilon > 0$, we have
+        \begin{align*}
+            \overline{S}(f) - \underline{S}(f) &= \underbrace{\overline{S}(f) - \overline{S}_{\sigma}(f)}_{\leq \frac{\varepsilon}{3}} + \overline{S}_{\sigma}(f) - \underline{S}_{\sigma}(f) + \underbrace{\underline{S}_{\sigma}(f) - \underline{S}(f)}_{\leq \frac{\varepsilon}{3}} \\
+            \implies \overline{S}(f) &= \underline{S}(f).
+        \end{align*}
+    \end{proof}
+    \item[]
+    \begin{definition}
+        Let $a < b$ and $f: [a, b] \mapsto \R$ be a continuous function. We call $\overline{S}(f) = \underline{S}(f)$ the \textbf{integral of $f$} over $[a, b]$. We use the notation
+        $$\int_{a}^{b} f(x) \ dx = \overline{S}(f) = \underline{S}(f).$$
+    \end{definition}
 \end{itemize}
 
 \newpage
