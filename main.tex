@@ -35,6 +35,8 @@
 \newcommand{\sseq}[3]{(#1_{#2_#3})_{#3 \in \N}}
 \newcommand{\set}[2]{\{ #1 \mid #2 \}}
 \newcommand{\sg}[1]{\langle#1\rangle}
+\newcommand{\verteq}{\rotatebox{90}{$\,=$}}
+\newcommand{\equalto}[2]{\underset{\scriptstyle\overset{\mkern4mu\verteq}{#2}}{#1}}
 \newcommand{\mylim}[2]{\lim_{#1 \to #2}}
 \newcommand{\mylimmm}[2]{\lim\limits_{#1 \to #2}}
 \newcommand{\bigslant}[2]{{\raisebox{.2em}{$#1$}\left/\raisebox{-.2em}{$#2$}\right.}}
@@ -2070,9 +2072,89 @@
         \end{align*}
     \end{proof}
     \item[]
-    \begin{definition}
+    \begin{definition}[Integral]
         Let $a < b$ and $f: [a, b] \mapsto \R$ be a continuous function. We call $\overline{S}(f) = \underline{S}(f)$ the \textbf{integral of $f$} over $[a, b]$. We use the notation
         $$\int_{a}^{b} f(x) \ dx = \overline{S}(f) = \underline{S}(f).$$
+    \end{definition}
+    \item \textbf{Extensions}: 
+    \begin{itemize}[label=\smallblacksquare]
+        \item If $b < a$, then
+    $$\int_a^b f(x) \ \, dx = -\int_a^b f(x) \, dx.$$
+        \item If $b = a$, then
+        $$\int_a^b f(x) \, dx = 0.$$
+    \end{itemize}
+    \item \textbf{Remark}. The integral $\int_a^b f(x) \, dx$ is really just notation for the sum
+    $$\sum_{i = 1}^n M_i(x_i - x_{i - 1}).$$
+    \item[]
+    \begin{lemma}
+        Let $a < b, f: [a, b] \mapsto \R$ be a continuous function. Further, suppose $(\sigma_n)_{n = 1}^\infty$ be a sequence of partitions of $[a, b]$ such that $h(\sigma_n) \underset{n \rightarrow \infty}{\longrightarrow} 0$. Then
+        $$\lim_{n \to \infty}\overline{S}_{\sigma_n}(f) = \overline{S}(f) \quad \text{and} \quad \lim_{n \to \infty} \underline{S}_{\sigma_n}(f) = \underline{S}(f)$$
+        where of course
+        $$\overline{S}(f) = \underline{S}(f) = \int_a^b f(x) \, dx.$$
+    \end{lemma}
+    \begin{proof}
+        Since $f: [a, b] \mapsto \R$ is continuous, $f$ is uniformly continuous and $\forall \varepsilon > 0 \ \exists \delta > 0, h(\sigma_n) \leq \delta$ such that
+        \begin{align*}
+            \overline{S}_{\sigma_n} - \underline{S}_{\sigma_n} &\leq \varepsilon \tag{*} \\
+            \equiv \sum_{i = 1}^n (\underbrace{M_i - m_i}_{\lqe \varepsilon})(x_i - x_{i - 1}) &\leq \varepsilon.
+        \end{align*}
+        Note that because $h(\sigma_n) \underset{n \rightarrow \infty}{\longrightarrow} 0$, there exists $N > 0$ such that $h(\sigma_n) \leq \delta \ \forall n \geq N$. In addition,
+        \begin{align*}
+            \underline{S}_{\sigma_n} &\leq \underline{S}(f) \\
+            &= \int_a^b f(x) \, dx \\
+            &= \overline{S}(f) \leq \overline{S}_{\sigma_n}(f).
+        \end{align*}
+        This means that $\forall n \geq N$,
+        $$0 \leq \overline{S}_{\sigma_n}(f) - \overline{S}(f) \leq \varepsilon$$
+        and
+        $$0 \leq \underline{S}_{\sigma_n}(f) - \underline{S}(f) \leq \varepsilon$$
+        i.e.,
+        $$\lim_{n \to \infty} \overline{S}_{\sigma_n}(f) = \overline{S}(f) \quad \text{and} \lim_{n \to \infty} \underline{S}_{\sigma_n}(f) = \underline{S}(f).$$
+    \end{proof}
+    \item \textbf{Remark}. The proof of the previous lemma can also be used to show that if
+    $$\widetilde{S}_{\sigma_n}(f) = \sum_{i = 1}^n f(\widetilde{x_i})(x_i - x_{i - 1}) \quad \widetilde{x_i} \in [x_{i - 1}, x_i]$$
+    and $h(\sigma_n) \underset{n \rightarrow \infty}{\longrightarrow} 0$, then
+    $$\lim_{n \to \infty} \widetilde{S}_{\sigma_n}(f) = \int_a^b f(x) \, dx.$$
+    \item \textbf{Example}. Let $f(x) = e^x, x \in [a, b]$. Show that
+    $$\int_a^b e^x \, dx = e^b - e^a.$$
+    First we want to compute $\overline{S}(f)$. Consider
+    $$\sigma_n = \left\{\equalto{x_0}{a}, a + \frac{b - a}{n}, a + 2 \cdot \frac{b - a}{n}, \ldots, a + i \cdot \frac{b - a}{n}, \ldots, a + \equalto{n \cdot \frac{b - a}{n}}{b}\right\}.$$
+    Clearly, $h(\sigma_n) = \nicefrac{b - a}{n}$ and in particular $h(\sigma_n) \underset{n \rightarrow \infty}{\longrightarrow} 0$. Then compute
+    \begin{align*}
+        \underline{S}_{\sigma_n}(f) &= \sum_{i = 1}^n m_i\equalto{(x_i - x_{i - 1})}{\frac{b - a}{n}} \\
+        &= \frac{b - a}{n} \cdot \sum_{i = 1}^n e^{a + (i - 1) \cdot \frac{b - a}{n}} \\
+        &= \frac{b - a}{n} \cdot e^a \cdot  \sum_{i = 1}^{n}\left(e^{\frac{b - a}{n}}\right)^{i - 1} \\
+        &= \frac{b - a}{n} \cdot e^a \cdot \sum_{i = 0}^{n - 1} \left(e^{\frac{b - a}{n}}\right)^i \\
+        &= \frac{b - a}{n} \cdot e^a \left(\frac{1 - e^{\frac{b - a}{n} \cdot n}}{1 - e^{\frac{b - a}{n}}}\right) \\
+        &= e^a(1 - e^{b - a}) \cdot \frac{\frac{b - a}{n}}{1 - e^{\frac{b - a}{n}}}.
+    \end{align*}
+    where $m_i = \min_{x \in [x_{i - 1}, x_i]} e^x = e^{x_{i - 1}}$. Now consider
+    \begin{align*}
+        \lim_{n \to \infty} \left(e^a(1 - e^{b - a}) \cdot \frac{\frac{b - a}{n}}{1 - e^{\frac{b - a}{n}}}\right) &= \lim_{x \to 0^+} \frac{x}{1 - e^x} \\
+        &= \lim_{x \to 0^+} \frac{1}{-e^x} = -1.
+    \end{align*}
+    Therefore, $\lim_{n \to \infty} \underline{S}_{\sigma_n}(f) = (e^{b - a} - 1)e^a = e^b - e^a = \int_a^b f(x) \, dx$.
+\end{itemize}
+
+\subsection{Extension of Integrability}
+
+\begin{itemize}
+    \item If $\sigma$ is a partition of $f$ bounded on $[a, b]$ (not necessarily continuous), we can define
+    $$\overline{S}_\sigma(f) = \sum_{i = 1}^n \widetilde{M_i}(x_i - x_{i - 1})$$
+    where $\widetilde{M_i} = \sup_{x \in [x_{i - 1}, x_{i}]} f(x)$ and similarly
+    $$\underline{S}_\sigma(f) = \sum_{i = 1}^n \widetilde{m_i}(x_i - x_{i - 1})$$
+    where $\widetilde{m_i} = \inf_{x \in [x_{i - 1}, x_i]} f(x)$. \\\\
+    Because $f$ is bounded, we have $m \leq f(x) \leq M \ \forall x \in [a, b] \ \exists m, M \in \R$ which subsequently means
+    $$m(b - a) \leq \underline{S}_{\sigma}(f) \leq \overline{S}_{\sigma}(f) \leq M(b - a).$$
+    Then we have that the following are well-defined:
+    \begin{align*}
+        \overline{S}(f) &= \inf\{\overline{S}_{\sigma}(f) \ : \ \sigma \text{ a partition of } [a, b]\} \\
+        \underline{S}(f) &= \sup\{\underline{S}_{\sigma}(f) \ : \ \sigma \text{ a partition of } [a, b]\}.
+    \end{align*}
+    However, note that $\underline{S}(f) \neq \overline{S}(f)$ in general.
+    \item[]
+    \begin{definition}[Riemann integrability]
+        Let $f: [a, b] \mapsto \R$ be a bounded function. We say $f$ is \textbf{Riemann integrable} when $\underline{S}(f) = \overline{S}(f)$.
     \end{definition}
 \end{itemize}
 
