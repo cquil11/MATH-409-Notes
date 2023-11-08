@@ -2096,7 +2096,7 @@
         Since $f: [a, b] \mapsto \R$ is continuous, $f$ is uniformly continuous and $\forall \varepsilon > 0 \ \exists \delta > 0, h(\sigma_n) \leq \delta$ such that
         \begin{align*}
             \overline{S}_{\sigma_n} - \underline{S}_{\sigma_n} &\leq \varepsilon \tag{*} \\
-            \equiv \sum_{i = 1}^n (\underbrace{M_i - m_i}_{\lqe \varepsilon})(x_i - x_{i - 1}) &\leq \varepsilon.
+            \equiv \sum_{i = 1}^n (\underbrace{M_i - m_i}_{\leq \varepsilon})(x_i - x_{i - 1}) &\leq \varepsilon.
         \end{align*}
         Note that because $h(\sigma_n) \underset{n \rightarrow \infty}{\longrightarrow} 0$, there exists $N > 0$ such that $h(\sigma_n) \leq \delta \ \forall n \geq N$. In addition,
         \begin{align*}
@@ -2156,6 +2156,19 @@
     \begin{definition}[Riemann integrability]
         Let $f: [a, b] \mapsto \R$ be a bounded function. We say $f$ is \textbf{Riemann integrable} when $\underline{S}(f) = \overline{S}(f)$.
     \end{definition}
+\end{itemize}
+
+\subsection{Properties of Integrals}
+
+\begin{itemize}
+    \item[]
+    \begin{lemma}
+        Let $a < b$ and $f: [a, b] \mapsto \R$ be a continuous function. Further, let $c \in [a, b]$. Then
+        $$\int_a^b f(x) \, dx = \int_a^c f(x) \, dx + \int_c^b f(x) \, dx.$$
+    \end{lemma}
+    \begin{proof}
+        
+    \end{proof}
 \end{itemize}
 
 \newpage
