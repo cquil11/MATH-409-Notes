@@ -2167,7 +2167,88 @@
         $$\int_a^b f(x) \, dx = \int_a^c f(x) \, dx + \int_c^b f(x) \, dx.$$
     \end{lemma}
     \begin{proof}
-        
+        Assume that $c \neq a \neq b$. Then consider
+        \begin{align*}
+            \alpha_n &= \left\{a, a + \frac{c - a}{n}, a + 2 \cdot \frac{c - a}{n}, \ldots, c\right\} = \{x_i\}_{i = 0}^n \\
+            \beta &= \left\{c, c + \frac{b - c}{n}, c + 2 \cdot \frac{b - c}{n}, \ldots, b\right\} = \{x_i\}_{i = n}^{2n + 1}
+        \end{align*}
+        where both $\alpha_n$ and $\beta_n$ are regular partitions of $[a, c]/[c, b]$, respectively. Then consider
+        $$\sigma_n = \alpha_n \cup \beta_n,$$
+        which is a regular partition of $[a, b]$ with $h(\sigma_n) = \max\{h(\alpha_n), h(\beta_n)\} \underset{n \rightarrow \infty}{\longrightarrow} 0$. Then compute
+        \begin{align*}
+            \int_a^b f(x) \,dx = \lim_{n \to \infty} \overline{S}_{\sigma_n}(f) &= \lim_{n \to \infty} \left(\sum_{i = 1}^n M_i (x_i - x_{i - 1} + \sum_{i = n + 1}^{2n + 1} M_i (x_i - x_{i - 1}) \right) \\
+            &= \lim_{n \to \infty} \left(\overline{S}_{\sigma_n}(f) + \underline{S}_{\sigma_n}(f)\right) \\
+            &= \int_a^c f(x)\,dx + \int_c^b f(x) \,dx.
+        \end{align*}
+    \end{proof}
+    \item[]
+    \begin{lemma}
+        Let $f: [a, b] \mapsto \R$ be a continuous function and let $\lambda \in \R$. Then
+        $$\int_a^b f(x) \,dx = \lambda \int_a^b f(x) \,dx.$$
+    \end{lemma}
+    \begin{proof}
+        Let $\{\sigma_n\}_{n \in \N}$ be a sequence of partitions with $h(\sigma_n) \underset{n \rightarrow \infty}{\longrightarrow} 0$. Then we have
+        \begin{align*}
+            \int_a^b (\lambda f)(x) \,dx &= \lim_{n \to \infty} \left(\overline{S}_{\sigma_n}(\lambda f)\right) \\
+            &= \lim_{n \to \infty} \sum_{i = 1}^n \max_{x \in [x_{i - 1}, x_i]}(\lambda f)(x)(x_i - x_{i - 1}) \\
+            &= \lambda \cdot \lim_{n \to \infty} \sum_{i = 1}^n \underbrace{\max_{x \in [x_{i - 1}, x_i]} f(x)}_{\overline{S}_{\sigma_n}(f)} (x_{i} - x_{i - 1}) \\
+            &= \lambda \int_a^b f(x) \,dx.
+        \end{align*}
+    \end{proof}
+    \item[]
+    \begin{lemma}[Integral Mean Value Theorem]
+        Let $f: [a, b] \mapsto \R$ be a continuous function. Then there exists $c \in [a, b]$ such that
+        $$f(c) = \frac{1}{b - a} \int_a^b f(x) \,dx.$$
+        \label{thm:imvt}
+    \end{lemma}
+    \begin{proof}
+        Since $f$ is continuous on $[a, b]$, the Extreme Value Theorem (Theorem \ref{thm:evt}) implies that
+        $$m = \min_{x \in [a, b]} f(x) \leq f(x) \leq \max_{x \in [a, b]} = M.$$
+        Let $f(\alpha) = \min_{x \in [a, b]} f(x)$ and $f(\beta) = \max_{x \in [a, b]}$. Then we have
+        \begin{alignat*}{2}
+            &&m(b - a) &\leq \int_a^b f(x) \,dx \leq M(b - a) \\
+            \iff&& m &\leq \frac{1}{b - a} \int_a^b f(x) \,dx \leq M .
+        \end{alignat*}
+        Then, by the Intermediate Value Theorem (Theorem \ref{theorem:ivt}), there exists some $c \in [a, b]$ such that
+        $$f(c) = \frac{1}{b - a} \int_a^b f(x) \,dx.$$
+    \end{proof}
+\end{itemize}
+
+\subsection{Antiderivatives}
+
+\begin{itemize}
+    \item[]
+    \begin{definition}[Antiderivative]
+        Let $f: [a, b] \mapsto \R$ be a continuous function. We say $F: [a, b] \mapsto \R$ is an \textbf{antiderivative} of $f$ on $[a, b]$ if:
+        \begin{enumerate}
+            \item $F$ is continuous on $[a, b]$ and
+            \item $F'(x) = f(x) \ \forall x \in (a, b)$.
+        \end{enumerate}
+    \end{definition}
+    \item \textbf{Remark}. If $F$ and $G$ are two antiderivatives of $f$ on $[a, b]$, then $F' = f$ and $G' = f$ implies that $F' = G'$ on $(a, b)$.
+    \item[]
+    \begin{lemma}
+        Let $f: [a, b] \mapsto \R$ be a continuous function. Then
+        $$F(x) = \int_a^x f(t) \,dt = \lim_{n \to \infty} \overline{S}_{\sigma_n(x)}(f)$$
+        is an antiderivative of $f$ on $[a, b]$.
+    \end{lemma}
+    \begin{proof}
+        We first show that $F'(x_0) = f(x_0), x_0 \in (a, b)$. Let $x_0 \in (a, b), x \in (a, b) \setminus \{x_0\}$. The IMVT (Theorem \ref{thm:imvt}) on the interval $(x_0, x)$ or $(x, x_0)$ implies that there exists some $c(x) \in [x_0, x]$ such that
+        $$f(c(x))(x - x_0) = \int_{x_0}^x f(t) \,dt.$$
+        We have
+        \begin{alignat*}{2}
+            &&\int_{x_0}^x f(t) \,dt &= \int_a^x f(t) \,dt - \int_a^{x_0} f(t) \,dt \\
+            && &= F(x) - F(x_0) \\
+            \iff&& f(c(x)) &= \frac{F(x) - F(x_0)}{x - x_0} \\
+            \iff&&\lim_{x \to x_0} f(c(x)) &= f\left(\lim_{x \to x_0} c(x)\right) = f(x_0) \\
+            \iff&&f(x_0) &= \lim_{x \to x_0} \frac{F(x) - F(x_0)}{x - x_0} = f'(x_0)
+        \end{alignat*}
+        and we have $f(x) = F'(x), x \in (a, b)$ and $F$ is continuous on $(a, b)$. \\\\
+        It remains to show that
+        $$\lim_{x \to a^+} F(x) = F(a) \quad \text{and} \quad \lim_{x \to b^-} F(x) = F(b).$$
+        Take $x \in [a, b]$. By the IMVT, there exists some $c(x) \in [a, x]$ such that $f(c(x))(x - a) = \int_a^x f(t) \,dt = F(x)$ and
+        $$\lim_{x \to a^+} f(x) = \lim_{x \to a^+} f(c(x))(c - a) = 0 = F(a).$$
+        The argument is identical for $F(b) = f(b)$.
     \end{proof}
 \end{itemize}
 
