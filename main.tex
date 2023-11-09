@@ -2250,6 +2250,73 @@
         $$\lim_{x \to a^+} f(x) = \lim_{x \to a^+} f(c(x))(c - a) = 0 = F(a).$$
         The argument is identical for $F(b) = f(b)$.
     \end{proof}
+    \item[]
+    \begin{lemma}
+        Let $f: [a, b] \mapsto \R$ be a continuous function. Further, let $h, g: (c, d) \mapsto [a, b]$ be differentiable on $(c, d)$. Then
+        $$K(x) = \int_{h(x)}^{g(x)} f(t) \,dt$$
+        is differentiable on $(c, d)$ and $K'(x) = f(g(x))g'(x) - f(h(x))h'(x)$ for some $x \in (c, d)$.
+    \end{lemma}
+    \begin{proof}
+        Let
+        \[
+        \widetilde{f}(x) =
+        \begin{cases}
+            f(x) & x \in [a, b] \\
+            f(a) & x \in [a - 1, a] \\
+            f(b) & x \in [b, b + 1]
+        \end{cases}
+        \]
+        so $\widetilde{f}$ is continuous on the interval $[a - 1, b + 1]$. Then we have
+        $$F(x) = \int_{a - 1}^x \widetilde{f}(t) \,dt \quad \text{and} \quad K(x) = F(g(x)) - F(h(x))$$
+        with
+        \begin{align*}
+            K'(x) &= F'(g(x))g'(x) - F'(h(x))h'(x) \\
+            &= \widetilde{f}(g(x))g'(x) - \widetilde{f}(h(x))h'(x) \\
+            &= f(g(x))g'(x) - f(h(x))h'(x).
+        \end{align*}
+    \end{proof}
+    \item[]
+    \begin{theorem}[Fundamental Theorem of Calculus]
+        Let $f: [a, b] \mapsto \R$ be continuous and $G$ be an antiderivative of $f$ on $[a, b]$. Then
+        $$\int_a^b f(t) \,dt = G(b) - G(a) = G \bigg|_a^b$$
+        and
+        $$\int_a^b G'(t) \,dt = G(b) - G(a).$$
+        \label{thm:ftc}
+    \end{theorem}
+    \begin{proof}
+        We know that
+        $$F(x) = \int_a^x f(t) \,dt$$
+        is an antiderivative of $f$ which implies that $F(x) = G(x) + c$. Then we have that
+        \begin{align*}
+            F(b) &= G(b) + c \\
+            F(a) = G(a) + c
+        \end{align*}
+        and subsequently
+        $$\int_a^b f(t) \,dt = G(b) - G(a)$$
+        since $F(a)$ is zero by definition.
+    \end{proof}
+\end{itemize}
+
+\subsection{Properties of Integrals}
+
+\begin{itemize}
+    \item[]
+    \begin{lemma}
+        Let $f, g: [a, b] \mapsto \R$ be continuous functions and let $\lambda \in \R$. Then
+        $$\int_a^b (\lambda f + g)(x) \,dx = \lambda \int_a^b f(x) \,dx + \int_a^b g(x) \,dx.$$
+    \end{lemma}
+    \begin{proof}
+        Take
+        $$K(x) = \int_a^x (\lambda f + g)(t) \,dt - \lambda \int_a^x f(t) \,dt - \int_a^x g(t) \,dt.$$
+        Then consider that $K'(x) = (\lambda f + g)(x) - \lambda f(x) - g(x) = 0$ and $K(x) = c \ \exists c \in \R$ by the IMVT. Then we have $K(b) = K(a) = 0$.
+    \end{proof}
+    \item[]
+    \begin{lemma}
+        Let $f: [a, b] \mapsto \R$ be a continuous function such that $f(x) \geq 0 \ \forall x \in [a, b]$. Then, for every $c \in [a, b]$,
+        $$0 \leq \int_a^c f(x) \,dx \leq \int_a^b f(x) \,dx$$
+        and furthermore
+        $$\int_a^b f(x) \,dx = 0 \iff f(x) = 0 \ \forall x \in [a, b].$$
+    \end{lemma}
 \end{itemize}
 
 \newpage
