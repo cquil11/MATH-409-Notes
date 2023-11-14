@@ -6,6 +6,7 @@
 \usepackage{pgfplots}
 \usepackage{mathtools}
 \usepackage{nicefrac}
+\usepackage[makeroom]{cancel}
 \usepackage{centernot}
 \usepackage{fourier}
 \usepackage{tikz}
@@ -2389,6 +2390,121 @@
             \iff&& J_{n + 1}(x) &= \frac{2n - 1}{2n} \cdot J_n(x) + \frac{1}{2n} \cdot \frac{x}{(x^2 + 1)^n}.
         \end{alignat*}
     \end{enumerate}
+\end{itemize}
+
+\subsection{Taylor Expansion}
+
+\begin{itemize}
+    \item[]
+    \begin{lemma}
+        Let $f: [a, b] \mapsto \R$ be $(n + 1)$ times differentiable and $f^{(n + 1)}$ be continuous on $[a, b]$. Then
+        $$f(x) = f(a) + f'(a)(x - a) + \cdots + \frac{f^{(n)}(a)}{n!}(x - a)^n + \frac{1}{n!} \int_a^x (x - t)^nf^{(n + 1)}(t) \,dt.$$
+    \end{lemma}
+    \begin{proof}
+        Using integration by parts, compute for $k \in \N, n \geq 1$
+        \begin{align*}
+            \int_a^x \underbrace{(x - t)^{k - 1}}_{u'(t)} \underbrace{f^{(k)}(t)}_{v(t)} \,dt &= \frac{1}{k} \int_a^x (x - t)^k f^{(k + 1)}(t) \,dt + \left(-\frac{1}{k}(x - t)^kf^{(k)}(t)\right) \bigg|_a^x \\
+            &= \frac{1}{k} \int_a^x (x - t)^k f^{(k + 1)}(t) \,dt + \frac{1}{k}(x - a)^k f^{(k)}(a).
+        \end{align*}
+        We now proceed by induction on $n$. For $n = 0$, we can simply use the Fundamental Theorem of Calculus to obtain
+        $$f(x) - f(a) = \int_a^x f'(t) \,dt$$
+        and $P(0)$ is true. Now, assume that $P(k - 1)$ is true, i.e.,
+        $$f(x) = f(a) + \cdots + \frac{f^{(k - 1)}(a)}{(k - 1)!}(x - a)^{k - 1} + \frac{1}{(k - 1)!} \int_a^x (x - t)^{k - 1}f^{(k)}(t) \,dt.$$
+        Using the formula we just proved, we have that
+        \begin{align*}
+            f(x) = f(a) + \cdots + \frac{f^{(k - 1)}(a)}{k!}(x - a)^{k - 1} &+ \frac{1}{(k - 1)!} \Bigg(\frac{1}{k}(x - a)^kf^{(k)}(a) \\
+            &+ \frac{1}{k} \int_a^x (x - t)^kf^{(k + 1)}(t) \,dt\Bigg)
+        \end{align*}
+        which implies that $P(k)$ is true.
+    \end{proof}
+    \item \textbf{Example}. Apply this for $n = 1$ and obtain
+    \begin{alignat*}{3}
+        &&f(x) &= f(a) + f'(a)(x - a) + \int_a^x (x - a)f''(t) \,dt \\
+        \iff&& f'(a) &= \frac{f(x) - f(a)}{x - a} - \underbrace{\frac{1}{x - a} \int_a^x (x - t)f''(t) \,dx}_{\text{``error"}} \\
+        \iff&& \left|f'(a) - \frac{f(x) - f(a)}{x - a}\right| &\leq \frac{1}{x - a}\int_a^x |(x - t)| \cdot |f''(t)| \,dt \leq \sup_{[a, b]}\left|f''(t)\right| \frac{1}{2(x - a)}(x - a)^2 \\
+        \iff&&\phantom{\left|f'(a) - \frac{f(x) - f(a)}{x - a}\right|} & \phantom{{} \leq \frac{1}{x - a}\int_a^x |(x - t)| \cdot |f''(t)| \,dt} \leq \sup_{[a, b]} \left|f''(t) \cdot \frac{x - a}{2}\right|.
+    \end{alignat*}
+    Take the ODE:
+    $$y'(t) = f(t, y(t)), y(0) = \alpha, t \in [0, 1].$$
+    Let $\sigma_n$ be a regular partition of $[0, 1]$ such that $h(\sigma_n) = \nicefrac{1}{n}$. Then we have that
+    $$y'(x_i) \approx \frac{y(x_{i + 1}) - y(x_i)}{\equalto{h}{x_{i + 1} - x_i}} \quad \text{and} \quad \left|y'(x_i) - \frac{y(x_{i + 1}) - y(x_i)}{h}\right| \leq \sup_{[a, b]} \left|y''(x)\right| \cdot \frac{h}{2}.$$
+    This is a valid solution to the ODE since
+    $$\frac{y(x_{i + 1}) - y(x_i)}{h} \approx f(x_i, y(x_i)).$$
+    Let $Y_i$ be an approximation of $y(x_i)$ defined by:
+    \[
+    Y_i =
+    \begin{cases}
+        \frac{Y_{i + 1} - Y_i}{h} = f(x_i, Y_i) \ \forall i = 0, 1, \ldots, n - 1 \\
+        Y_0 = \alpha.
+    \end{cases}
+    \]
+    This is equivalent to
+    \[
+    Y_i =
+    \begin{cases}
+        Y_{i + 1} = Y_i + h \cdot f(x_i, Y_i) \ \forall i = 0, 1, \ldots, n - 1 \\
+        Y_0 = \alpha.
+    \end{cases}
+    \]
+\end{itemize}
+
+\subsection{Weak Derivatives}
+
+\begin{itemize}
+    \item[]
+    \begin{definition}[Weak derivative]
+        Let $f, g: [a, b] \mapsto \R$ be two continuous functions with
+        $$\int_a^b f'(x)g(x) \,dx = -\int_a^b f(x)g'(x) \,dx + fg\bigg|_a^b.$$
+        Now assume that $g$ is smooth and $g(a) = g(b) = 0$. With this condition, we now have
+        $$\int_a^b f'(x)g(x) \,dx = -\int_a^b f(x)g'(x) \,dx.$$
+        We say that $p: [a, b] \mapsto \R$ is the \textbf{weak derivative} of $f$ provided that $p$ is integrable and $\int_a^b pg = -\int_a^b fg'$ for every $g$ smooth with $g(c) = g(b) = 0$.
+    \end{definition}
+    \item \textbf{Remark}. If $p$ exists, it is unique and if $f$ is differentiable, then $p = f'$.
+    \item \textbf{Example}. Take $f(x) = |x|, x \in [-1, 1]$. We have
+    $$\int_{-1}^1 = -\int_{-1}^1 |x| \cdot g'(x) \,dx \ \forall g \text{ smooth }, g(-1) = g(1) = 0.$$
+    But
+    \begin{align*}
+        -\int_{-1}^1|x| \cdot g'(x) \,dx &= \int_{-1}^0 x \cdot g'(x) - \int_0^1 x \cdot g'(x) \\
+        &= \int_{-1}^0 1 \cdot g(x) + \cancel{x \cdot g(x) \bigg|_{-1}^0} + \int_0^1 g(x) \,dx + \cancel{x \cdot g(x) \bigg|_0^1} \tag{\text{IBP}} \\
+        &= \int_{-1}^1 p(x)g(x) \,dx
+    \end{align*}
+    where
+    \[
+    p(x) =
+    \begin{cases}
+        -1 & x < 0 \\
+        1 & x \geq 0.
+    \end{cases}
+    \]
+    \item[]
+    \begin{definition}[Diraq measure]
+        Consider the function
+        \[
+        \delta_n(x) =
+        \begin{cases}
+            0 & x > \frac{1}{n} \\
+            0 & x < -\frac{1}{n} \\
+            \frac{n}{2} & -\frac{1}{n} \leq x \leq \frac{1}{n}.
+        \end{cases}
+        \]
+        Compute
+        $$\int_{-1}^1 f(x) \delta_n(x) \,dx = \int_{\frac{-1}{n}}^{\frac{1}{n}} f(x) \cdot \frac{n}{2} \,dx = \frac{1}{2} \int_{\frac{-1}{n}}^{\frac{1}{n}} n \cdot f(x) \underset{n \rightarrow \infty}{\longrightarrow} f(0) = \int_{-1}^1 f(x) \delta_0(x) \,dx.$$
+        This is called the \textbf{Dirac measure}.
+    \end{definition}
+    \item \textbf{Example}. Now take
+    \[
+    f(x) =
+    \begin{cases}
+        1 & x \geq 0 \\
+        0 & x < 0.
+    \end{cases}
+    \]
+    Now try to make sense of a weak derivative. Consider $g$ smooth such that $g(-1) = g(1) = 0$. Then we have
+    \begin{align*}
+        -\int_{-1}^1 f(x)g'(x) \,dx &= -\int0^1 g'(x) \,dx \\
+        &= -g(1) + g(0) \tag{\text{FTC}} \\
+        &= g(0) = \int_{-1}^1 \delta_0(x)g(x) \,dx.
+    \end{align*}
 \end{itemize}
 
 \newpage
